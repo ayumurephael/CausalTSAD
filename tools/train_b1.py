@@ -110,13 +110,19 @@ def train(a):
     total_points=sum(p['labels'].size for p in train_pool.values())
     pos_weight=min(100.,max(1.,(2*total_points-positives)/max(1,positives)))
     order=batches(train_pool,config['batch_input_scalars'],config['data_seed'])
+    def linear_flops(c,points):
+        h,w,m=config['history'],config['width'],config['message_width']
+        return 2*points*(c*((h+1)*w+w*w+(w+m+1)*w+2*w+(w+4)*w+w)+c*c*(2*h*m+m*m))
+    one_pass_linear_flops=sum(linear_flops(c,p['x'].shape[0]*p['x'].shape[1]) for c,p in train_pool.items())
     status=dict(status='running',started_at=now(),mode=a.mode,seed=a.seed,pid=os.getpid(),
         parameters=parameter_count,initial_parameter_sha256=initial_sha,source_manifest_sha256=source_sha,
         config_sha256=sha256(a.config),code_sha256=sha256(Path(__file__)),
         local_commit=a.local_commit,github_commit=a.github_commit,updates=0,total_updates=len(order),
         optimized_original_observed_scalars=0,normal_twin_training_forward_scalars=0,
         density_loss_scalars=0,detection_loss_points=0,extra_source_evaluation_forward_scalars=0,
-        positive_weight=pos_weight,pretrained_weights=None,benchmark_arrays_in_training=False)
+        positive_weight=pos_weight,pretrained_weights=None,benchmark_arrays_in_training=False,
+        training_two_view_linear_forward_FLOPs=2*one_pass_linear_flops,
+        FLOPs_note='Dense Linear operations only; excludes normalization/nonlinearities/backward/validation. Same shapes and slots in all graph modes.')
     atomic_json(a.output/'progress.json',status)
     initial=evaluate_source(model,validation,config,device)
     atomic_json(a.output/'initial_source_validation.json',initial)
