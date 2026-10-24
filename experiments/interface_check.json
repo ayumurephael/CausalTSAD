@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "scope": "model interfaces only, not full C01 data/training/evaluation pipeline",
+  "no_optimizer": true,
+  "benchmark_arrays_opened": false,
+  "invalid_history_invariance": true,
+  "per_channel_frozen_encoding_independent": true,
+  "nonparent_head_invariance": true,
+  "head_equivariance": true,
+  "frozen_encoder_hash_unchanged": true,
+  "encoder_parameters": 35709568,
+  "head_parameters": 40386,
+  "weight_sha256": "9a22a4a2e42d1fa147a4f4d0d09aa0ad6be1ef15c90f7a124fa846603cbf638e",
+  "technical_random_history_scalars": 768,
+  "peak_cuda_bytes": 210519040
+}

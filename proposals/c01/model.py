@@ -27,6 +27,7 @@ class FrozenTimeRCDHistory(nn.Module):
         original=RuntimeModel(config,activation_checkpointing=False)
         original.load_state_dict(saved['model_state_dict'],strict=True)
         self.encoder=original.ts_encoder.eval().requires_grad_(False)
+        self.encoder.num_features=1  # runtime input-count assertion only; all loaded bias weights remain
         self.feature_dim=self.encoder.d_proj
         self.microbatch=microbatch;self.checkpoint_sha256=expected_sha256
 
