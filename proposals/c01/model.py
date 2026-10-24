@@ -16,8 +16,15 @@ class FrozenTimeRCDHistory(nn.Module):
         assert sha256(checkpoint)==expected_sha256
         sys.path.insert(0,str(Path(original_code)))
         from training_runtime import RuntimeModel,make_config
-        original=RuntimeModel(make_config(1),activation_checkpointing=False)
         saved=torch.load(checkpoint,map_location='cpu',weights_only=False)
+        # A multi checkpoint owns same/different-channel bias parameters even
+        # when this interface supplies one channel per independent batch row.
+        # Preserve the saved architecture, rather than dropping those weights.
+        metadata=saved.get('config',{}).get('ts_config',{})
+        config=make_config(int(metadata.get('num_features',20)))
+        for key,value in metadata.items():
+            if hasattr(config.ts_config,key):setattr(config.ts_config,key,value)
+        original=RuntimeModel(config,activation_checkpointing=False)
         original.load_state_dict(saved['model_state_dict'],strict=True)
         self.encoder=original.ts_encoder.eval().requires_grad_(False)
         self.feature_dim=self.encoder.d_proj
