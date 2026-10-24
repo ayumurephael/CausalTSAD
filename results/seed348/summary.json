@@ -1,0 +1,356 @@
+{
+  "status": "provisional_single_optimization_seed",
+  "seed": 348,
+  "development_systems": 100,
+  "groups": {
+    "all": {
+      "systems": 100,
+      "valid_VUS_pairs": 100,
+      "methods": {
+        "none": {
+          "Affiliation-F": 0.7562419604447089,
+          "F1_T": 0.11675065034505679,
+          "Standard-F1": 0.05695670300293621,
+          "VUS-PR": 0.03838502537743199,
+          "AP": 0.033450436503850704,
+          "normal_FPR": 0.0017488353843203468,
+          "conditional_RCA_Top1": 0.3625
+        },
+        "parents": {
+          "Affiliation-F": 0.7477718343204408,
+          "F1_T": 0.11566738643625285,
+          "Standard-F1": 0.05711606330145398,
+          "VUS-PR": 0.03779316844490918,
+          "AP": 0.03330492703393778,
+          "normal_FPR": 0.001931602563858876,
+          "conditional_RCA_Top1": 0.3875
+        },
+        "full": {
+          "Affiliation-F": 0.7365650147697997,
+          "F1_T": 0.1138023758601048,
+          "Standard-F1": 0.05523229399919339,
+          "VUS-PR": 0.036639529246010036,
+          "AP": 0.031812657146964754,
+          "normal_FPR": 0.0017540161517365111,
+          "conditional_RCA_Top1": 0.375
+        },
+        "rewired": {
+          "Affiliation-F": 0.7529613484100851,
+          "F1_T": 0.11596951898914995,
+          "Standard-F1": 0.056582847504496554,
+          "VUS-PR": 0.03939960699633167,
+          "AP": 0.033059742356672146,
+          "normal_FPR": 0.0017983920354286364,
+          "conditional_RCA_Top1": 0.3625
+        }
+      },
+      "parents_minus_none": {
+        "VUS_PR_mean": -0.0005918569325228066,
+        "bootstrap95_system_CI": [
+          -0.001324104831663524,
+          0.00014950373845849812
+        ],
+        "positive": 40,
+        "negative": 60,
+        "tied": 0
+      }
+    },
+    "id_multi": {
+      "systems": 40,
+      "valid_VUS_pairs": 40,
+      "methods": {
+        "none": {
+          "Affiliation-F": 0.7622752247887343,
+          "F1_T": 0.13750365305531886,
+          "Standard-F1": 0.063038470842251,
+          "VUS-PR": 0.03850570333847602,
+          "AP": 0.03886510446641263,
+          "normal_FPR": 0.0,
+          "conditional_RCA_Top1": 0.6
+        },
+        "parents": {
+          "Affiliation-F": 0.7467701103266942,
+          "F1_T": 0.13788005560054445,
+          "Standard-F1": 0.06468234457156707,
+          "VUS-PR": 0.038838908255847994,
+          "AP": 0.03948898505938982,
+          "normal_FPR": 0.0,
+          "conditional_RCA_Top1": 0.625
+        },
+        "full": {
+          "Affiliation-F": 0.7372694564782036,
+          "F1_T": 0.1351998089980043,
+          "Standard-F1": 0.0633094067797455,
+          "VUS-PR": 0.03702204091118248,
+          "AP": 0.03715627559534005,
+          "normal_FPR": 0.0,
+          "conditional_RCA_Top1": 0.6
+        },
+        "rewired": {
+          "Affiliation-F": 0.7554951451659727,
+          "F1_T": 0.1357914520551276,
+          "Standard-F1": 0.06214074585016325,
+          "VUS-PR": 0.03774380324164324,
+          "AP": 0.03802706744088272,
+          "normal_FPR": 0.0,
+          "conditional_RCA_Top1": 0.6
+        }
+      },
+      "parents_minus_none": {
+        "VUS_PR_mean": 0.00033320491737197285,
+        "bootstrap95_system_CI": [
+          -0.0005453468384388129,
+          0.001594724136303943
+        ],
+        "positive": 16,
+        "negative": 24,
+        "tied": 0
+      }
+    },
+    "heldout_multi": {
+      "systems": 40,
+      "valid_VUS_pairs": 40,
+      "methods": {
+        "none": {
+          "Affiliation-F": 0.7536091677004685,
+          "F1_T": 0.10602951266191667,
+          "Standard-F1": 0.04554632002927269,
+          "VUS-PR": 0.024032364622797224,
+          "AP": 0.02429272252880474,
+          "normal_FPR": 0.0,
+          "conditional_RCA_Top1": 0.125
+        },
+        "parents": {
+          "Affiliation-F": 0.7507860181953836,
+          "F1_T": 0.10348958100512391,
+          "Standard-F1": 0.04484470476304756,
+          "VUS-PR": 0.023776350729520206,
+          "AP": 0.023895680407441465,
+          "normal_FPR": 0.0,
+          "conditional_RCA_Top1": 0.15
+        },
+        "full": {
+          "Affiliation-F": 0.7357626194327163,
+          "F1_T": 0.10389457167038926,
+          "Standard-F1": 0.04408725750293711,
+          "VUS-PR": 0.023107561894986688,
+          "AP": 0.02342606797733639,
+          "normal_FPR": 0.0,
+          "conditional_RCA_Top1": 0.15
+        },
+        "rewired": {
+          "Affiliation-F": 0.7490981082329654,
+          "F1_T": 0.10614454412134364,
+          "Standard-F1": 0.04617802759944066,
+          "VUS-PR": 0.024244300878754572,
+          "AP": 0.02457008931131302,
+          "normal_FPR": 0.0,
+          "conditional_RCA_Top1": 0.125
+        }
+      },
+      "parents_minus_none": {
+        "VUS_PR_mean": -0.0002560138932770199,
+        "bootstrap95_system_CI": [
+          -0.0006429206362616205,
+          0.00012133333600798107
+        ],
+        "positive": 16,
+        "negative": 24,
+        "tied": 0
+      }
+    },
+    "C1": {
+      "systems": 20,
+      "valid_VUS_pairs": 20,
+      "methods": {
+        "none": {
+          "Affiliation-F": 0.7494410172451382,
+          "F1_T": 0.09668692029081286,
+          "Standard-F1": 0.06761393327163365,
+          "VUS-PR": 0.06684899096461344,
+          "AP": 0.04093652852881878,
+          "normal_FPR": 0.008744176921601734,
+          "conditional_RCA_Top1": null
+        },
+        "parents": {
+          "Affiliation-F": 0.7437469145580483,
+          "F1_T": 0.09559765896992758,
+          "Standard-F1": 0.06652621783804064,
+          "VUS-PR": 0.0637353242538095,
+          "AP": 0.03975530423602632,
+          "normal_FPR": 0.00965801281929438,
+          "conditional_RCA_Top1": null
+        },
+        "full": {
+          "Affiliation-F": 0.7367609220271584,
+          "F1_T": 0.09082311796373688,
+          "Standard-F1": 0.06136814143060173,
+          "VUS-PR": 0.06293844061771185,
+          "AP": 0.037898598589470894,
+          "normal_FPR": 0.008770080758682556,
+          "conditional_RCA_Top1": null
+        },
+        "rewired": {
+          "Affiliation-F": 0.7556202352525484,
+          "F1_T": 0.09597560259280727,
+          "Standard-F1": 0.06627669062327494,
+          "VUS-PR": 0.07302182674086269,
+          "AP": 0.040104398278969264,
+          "normal_FPR": 0.008991960177143184,
+          "conditional_RCA_Top1": null
+        }
+      },
+      "parents_minus_none": {
+        "VUS_PR_mean": -0.0031136667108039385,
+        "bootstrap95_system_CI": [
+          -0.005935160248819185,
+          -0.0005294827869702239
+        ],
+        "positive": 8,
+        "negative": 12,
+        "tied": 0
+      }
+    }
+  },
+  "source_validation": {
+    "none": {
+      "initial": {
+        "normal_NLL": 155.2285051524453,
+        "AP": 0.03150896298285131,
+        "density_AP": 0.032502475870382797,
+        "threshold": 0.5165846556425094,
+        "density_threshold": 12.405019102096588,
+        "normal_FPR": 0.010001675194931774,
+        "RCA": {
+          "systems": 123,
+          "Top1": 0.6341463414634146,
+          "Top3": 0.7642276422764228,
+          "MRR": 0.7324580004458053,
+          "conditional_on_true_root_window": true
+        },
+        "frozen_forward_scalars": 3936256
+      },
+      "final": {
+        "normal_NLL": 1.7558806932431479,
+        "AP": 0.028557194579211343,
+        "density_AP": 0.03120909168213233,
+        "threshold": 0.4648761025071144,
+        "density_threshold": 9.123225288391119,
+        "normal_FPR": 0.010001675194931774,
+        "RCA": {
+          "systems": 123,
+          "Top1": 0.6178861788617886,
+          "Top3": 0.7479674796747967,
+          "MRR": 0.7093744669964183,
+          "conditional_on_true_root_window": true
+        },
+        "frozen_forward_scalars": 3936256
+      }
+    },
+    "parents": {
+      "initial": {
+        "normal_NLL": 156.23247764559616,
+        "AP": 0.03152137911536873,
+        "density_AP": 0.03249006488732497,
+        "threshold": 0.5165846556425094,
+        "density_threshold": 12.438540554046645,
+        "normal_FPR": 0.010001675194931774,
+        "RCA": {
+          "systems": 123,
+          "Top1": 0.6341463414634146,
+          "Top3": 0.7642276422764228,
+          "MRR": 0.7319159950257511,
+          "conditional_on_true_root_window": true
+        },
+        "frozen_forward_scalars": 3936256
+      },
+      "final": {
+        "normal_NLL": 1.7532488555491406,
+        "AP": 0.027627368972539892,
+        "density_AP": 0.03126742010042705,
+        "threshold": 0.45986351758241656,
+        "density_threshold": 9.187064609527594,
+        "normal_FPR": 0.010001675194931774,
+        "RCA": {
+          "systems": 123,
+          "Top1": 0.6178861788617886,
+          "Top3": 0.7479674796747967,
+          "MRR": 0.7080390138316968,
+          "conditional_on_true_root_window": true
+        },
+        "frozen_forward_scalars": 3936256
+      }
+    },
+    "full": {
+      "initial": {
+        "normal_NLL": 159.18156055506012,
+        "AP": 0.03156908960755115,
+        "density_AP": 0.03239272231761719,
+        "threshold": 0.5165838468074798,
+        "density_threshold": 12.637326002121064,
+        "normal_FPR": 0.009999771564327485,
+        "RCA": {
+          "systems": 123,
+          "Top1": 0.6341463414634146,
+          "Top3": 0.7642276422764228,
+          "MRR": 0.7311029868956698,
+          "conditional_on_true_root_window": true
+        },
+        "frozen_forward_scalars": 3936256
+      },
+      "final": {
+        "normal_NLL": 1.78384879650112,
+        "AP": 0.02687673897873424,
+        "density_AP": 0.031508631065420976,
+        "threshold": 0.4500273209810257,
+        "density_threshold": 8.854353723526001,
+        "normal_FPR": 0.010001675194931774,
+        "RCA": {
+          "systems": 123,
+          "Top1": 0.6178861788617886,
+          "Top3": 0.7235772357723578,
+          "MRR": 0.7044442120661634,
+          "conditional_on_true_root_window": true
+        },
+        "frozen_forward_scalars": 3936256
+      }
+    },
+    "rewired": {
+      "initial": {
+        "normal_NLL": 155.9131743493611,
+        "AP": 0.03152136528670169,
+        "density_AP": 0.032485918702229756,
+        "threshold": 0.5165846556425094,
+        "density_threshold": 12.44973463058473,
+        "normal_FPR": 0.010001675194931774,
+        "RCA": {
+          "systems": 123,
+          "Top1": 0.6341463414634146,
+          "Top3": 0.7642276422764228,
+          "MRR": 0.7308319841856427,
+          "conditional_on_true_root_window": true
+        },
+        "frozen_forward_scalars": 3936256
+      },
+      "final": {
+        "normal_NLL": 1.7595056115526562,
+        "AP": 0.028296261392027462,
+        "density_AP": 0.03125771480375871,
+        "threshold": 0.4638481545448303,
+        "density_threshold": 9.065052556991578,
+        "normal_FPR": 0.010001675194931774,
+        "RCA": {
+          "systems": 123,
+          "Top1": 0.6178861788617886,
+          "Top3": 0.7317073170731707,
+          "MRR": 0.7066059843498868,
+          "conditional_on_true_root_window": true
+        },
+        "frozen_forward_scalars": 3936256
+      }
+    }
+  },
+  "not_SOTA": true,
+  "not_a_rejection_of_C01_or_context_conditioning": true,
+  "validation_and_locked_arrays_read": false
+}
