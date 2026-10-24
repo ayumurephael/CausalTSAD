@@ -1,5 +1,50 @@
 {
   "schema_version": "causal-tsad-runs-1",
-  "entries": [],
-  "policy": "Every proposal keeps its own branch, immutable code revision and run artifacts, including failures."
+  "updated_at_utc": "2026-10-24T16:20:06.495865+00:00",
+  "entries": [
+    {
+      "id": "B1-shared-v1",
+      "branch": "baseline/shared-causal-v1",
+      "training_local_commit": "b9847b7d41311056d02694ad200c73757e1d030d",
+      "training_github_commit": "52d1db9a7095e601c6c40876cdea13008c548d83",
+      "status": "seed348_complete_seeds349_350_started",
+      "optimization_seeds": [
+        348,
+        349,
+        350
+      ],
+      "graph_modes": [
+        "none",
+        "parents",
+        "full",
+        "rewired"
+      ],
+      "original_optimized_scalars_per_run": 4976640,
+      "normal_twin_training_forward_scalars_per_run": 4976640,
+      "planned_original_optimized_scalars_total": 59719680,
+      "planned_additional_normal_twin_scalars_total": 59719680,
+      "evaluation": "fixed100development systems, original4metrics, AP, normal FPR and conditional RCA",
+      "locked_test_opened": false,
+      "hardware": "4 A100; H100 environment prepares independently",
+      "first_seed_VUS_parents_minus_none": {
+        "VUS_PR_mean": -0.0005918569325228066,
+        "bootstrap95_system_CI": [
+          -0.001324104831663524,
+          0.00014950373845849812
+        ],
+        "positive": 40,
+        "negative": 60,
+        "tied": 0
+      },
+      "interpretation": "No stable detection gain established from the first seed; do not reject C01 or claim SOTA"
+    },
+    {
+      "id": "C01-parent-innovation-v1",
+      "branch": "proposal/c01-parent-innovation-v1",
+      "status": "GPU_interfaces_passed_not_trained",
+      "validated_model_local_revision": "e1e4128ddcda84af9b605b9485f92408698a0617",
+      "weight_sha256": "9a22a4a2e42d1fa147a4f4d0d09aa0ad6be1ef15c90f7a124fa846603cbf638e",
+      "independent_from_B1_implementation": true
+    }
+  ]
 }
