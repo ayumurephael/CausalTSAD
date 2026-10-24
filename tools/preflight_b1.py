@@ -37,16 +37,21 @@ def main(a):
         checks.append(dict(channels=c,chunk_probability_max_error=error,finite_backward=True))
     assert not any(name in model.state_dict() for name in ['root','labels','mechanism'])
     selected=selected_rows(a.benchmark)
+    sys.path.insert(0,str(a.metric_code))
+    from evaluate_table1 import compute_metrics
+    label=np.zeros(128,int);label[40:50]=1
+    result=compute_metrics(label.astype(float)*.8+np.linspace(0,.1,128),label,8)
+    assert all(np.isfinite(result[k]) for k in ['Affiliation-F','F1_T','Standard-F1','VUS-PR'])
     report.update(status='passed',checks=checks,full_model_parameters=sum(p.numel() for p in model.parameters()),
         source_manifest_sha256=sha256(a.source/'manifest.json'),benchmark_selection_systems=len(selected),
         benchmark_arrays_opened=False,technical_forward_scalars=technical_forward,
         technical_backward_scalars=technical_backward,optimizer_steps=0,
         cuda_peak_bytes=torch.cuda.max_memory_allocated(),torch_version=torch.__version__,
         source_training_scalars=manifest['training_original_observed_scalars'],
-        source_validation_scalars=manifest['source_validation_original_observed_scalars'])
+        source_validation_scalars=manifest['source_validation_original_observed_scalars'],metric_environment_passed=True)
     atomic_json(a.output,report);print(json.dumps(report))
 
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--benchmark',type=Path,required=True)
-    p.add_argument('--output',type=Path,required=True);main(p.parse_args())
+    p.add_argument('--output',type=Path,required=True);p.add_argument('--metric-code',type=Path,required=True);main(p.parse_args())
