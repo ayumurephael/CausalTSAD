@@ -1,0 +1,5 @@
+{
+  "schema_version": "causal-tsad-runs-1",
+  "entries": [],
+  "policy": "Every proposal keeps its own branch, immutable code revision and run artifacts, including failures."
+}

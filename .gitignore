@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.venv/
+env/
+data/
+runs/
+checkpoints/
+*.pth
+*.pt
+*.pkl
+*.npz
+*.npy
+*.tar.gz
+*.partial
+.env
+*GPU*.md
+private/
