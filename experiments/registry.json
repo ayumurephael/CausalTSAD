@@ -1,13 +1,13 @@
 {
   "schema_version": "causal-tsad-runs-1",
-  "updated_at_utc": "2026-10-24T16:20:06.495865+00:00",
+  "updated_at_utc": "2026-10-24T16:33:04.401551+00:00",
   "entries": [
     {
       "id": "B1-shared-v1",
       "branch": "baseline/shared-causal-v1",
       "training_local_commit": "b9847b7d41311056d02694ad200c73757e1d030d",
       "training_github_commit": "52d1db9a7095e601c6c40876cdea13008c548d83",
-      "status": "seed348_complete_seeds349_350_started",
+      "status": "complete_12_runs_100_development_systems_each",
       "optimization_seeds": [
         348,
         349,
@@ -36,7 +36,25 @@
         "negative": 60,
         "tied": 0
       },
-      "interpretation": "No stable detection gain established from the first seed; do not reject C01 or claim SOTA"
+      "interpretation": "No stable detection gain established from the first seed; do not reject C01 or claim SOTA",
+      "completed_runs": 12,
+      "active_runs": 0,
+      "first_seed_only": false,
+      "paired_three_seed_VUS_parents_minus_none": {
+        "mean": -0.0005667491852172531,
+        "per_seed": [
+          -0.0005918569325228067,
+          0.0011210461046020682,
+          -0.002229436727731021
+        ],
+        "hierarchical_seed_system_bootstrap95": [
+          -0.002849979282194785,
+          0.001073368545104375
+        ],
+        "note": "Three optimization seeds remain a small sample; systems are paired and never tripled as independent units"
+      },
+      "conclusion": "No stable TSAD gain established for this short standalone baseline; C01 remains untrained and eligible for its separate experiment",
+      "results": "https://github.com/ayumurephael/CausalTSAD/tree/baseline/shared-causal-v1/results/all_seeds"
     },
     {
       "id": "C01-parent-innovation-v1",
