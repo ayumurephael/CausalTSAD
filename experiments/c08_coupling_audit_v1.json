@@ -1,0 +1,11 @@
+{
+ "arms":["dag_joint","local_joint","dag_det","prior_joint"],"seeds":[348,349,350],
+ "gradient_systems_per_C":16,"channels":[8,12,16,20],"gradient_data_split":"train only, SHA order, no label selection",
+ "readout_variants":["original","remove_uniform_to_root_KL","subtract_source_normal_mean_KL","subtract_time_shuffled_KL"],
+ "max_hours_per_job":2,"max_campaign_hours":4,"memory_gib_per_worker":6,
+ "optimizer_updates":0,"new_encoder_forwards":0,"checkpoint_selection":false,
+ "scope":"Source-train gradients, source-validation calibration/AP and fixed100development AP/FPR only. No new training, validation/locked arrays remain closed. No VUS rescan until mechanism evidence warrants it.",
+ "identity":"S=B+a+mean(r)+KL(U||softmax(r)); a confident root distribution adds a nonnegative term even without evidence that an anomaly exists",
+ "falsification":"If source task gradients are not conflicting or KL-removal is no better than constant/shuffled subtraction, do not attribute the detection loss to that mechanism. A failed frozen edit does not reject a separately trained decoupled architecture.",
+ "limits":"Gradient dot products describe local training geometry, not proof of target failure cause. Counterfactual readout arithmetic is an ablation, not an identified physical intervention or trained final solution."
+}
