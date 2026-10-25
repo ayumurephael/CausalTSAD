@@ -297,7 +297,7 @@
     {
       "id": "C03-learned-context-v2",
       "branch": "proposal/c03-learned-tail-context-v2",
-      "status": "actually_optimizing",
+      "status": "complete9_audited",
       "training_runs": 9,
       "density_gradient": 80538624,
       "original_fusion_gradient": 80538624,
@@ -418,7 +418,114 @@
       "parameters": {
         "tail": 9129,
         "fusion": 113
+      },
+      "source_pinball_learned_mean": 0.0896577087,
+      "source_pinball_control": 0.0983201556,
+      "target_M_AP": 0.4808656882,
+      "target_M_VUS": 0.4197256722,
+      "normal_FPR": 0.0037613483,
+      "top2_fraction_of_net_VUS_gain": 0.952824521
+    },
+    {
+      "id": "C03-causal-specificity-v3",
+      "branch": "proposal/c03-causal-specificity-v3",
+      "status": "actual_training",
+      "new_runs": 12,
+      "reused_runs": 6,
+      "launch": {
+        "2229": {
+          "pid": 4184446,
+          "port": 2229,
+          "root": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_causal_specificity_v3",
+          "gpus": [
+            0,
+            1,
+            2,
+            4,
+            5
+          ],
+          "plan": {
+            "gpus": [
+              0,
+              1,
+              2,
+              4,
+              5
+            ],
+            "seeds": [
+              348,
+              349
+            ],
+            "local_commit": "31685e31028a0294e03e7b3e6ec0c8e7186d7660",
+            "github_commit": "482625c228f55ec8983c6492d2e378b86f680758",
+            "cache_manifest_sha256": {
+              "degree_only": "9a777a1c4afe70e2da79b0ce24d95f58fe1b861223363de28571ad7323e2caf4",
+              "wrong_degree": "4f59590dfe40492eabb639b44cecdc9ed7565361af5c44a760d54c14c9e67e06"
+            },
+            "new_training_runs": 8,
+            "density_normal_gradient": 71589888,
+            "observed_fusion_gradient": 71589888,
+            "extra_normal_fusion_gradient": 71589888,
+            "original_teacher_SHA": "c6834b71ad72664c446c8b9b3e2a003216f0b0c835fda68c744fe2f2f284fa59",
+            "reused_true_graph_jobs": 6,
+            "true_graph_training_repeated": false,
+            "source_or_target_data_modified": false,
+            "target_arrays_in_gradient": false,
+            "other_processes_untouched": true,
+            "recovery_note": "Missing H100 log directory before launch only; no H100 optimizer existed, A100 jobs unchanged. All cache bytes reused."
+          },
+          "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_causal_specificity_v3/code_31685e31028a0294e03e7b3e6ec0c8e7186d7660",
+          "optimizer_started_at_dispatch": false
+        },
+        "2226": {
+          "pid": 28243,
+          "root": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_causal_specificity_v3",
+          "port": 2226,
+          "gpus": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "plan": {
+            "gpus": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "seeds": [
+              350
+            ],
+            "local_commit": "31685e31028a0294e03e7b3e6ec0c8e7186d7660",
+            "github_commit": "482625c228f55ec8983c6492d2e378b86f680758",
+            "cache_manifest_sha256": {
+              "degree_only": "9a777a1c4afe70e2da79b0ce24d95f58fe1b861223363de28571ad7323e2caf4",
+              "wrong_degree": "4f59590dfe40492eabb639b44cecdc9ed7565361af5c44a760d54c14c9e67e06"
+            },
+            "new_training_runs": 4,
+            "density_normal_gradient": 35794944,
+            "observed_fusion_gradient": 35794944,
+            "extra_normal_fusion_gradient": 35794944,
+            "original_teacher_SHA": "c6834b71ad72664c446c8b9b3e2a003216f0b0c835fda68c744fe2f2f284fa59",
+            "reused_true_graph_jobs": 6,
+            "true_graph_training_repeated": false,
+            "source_or_target_data_modified": false,
+            "target_arrays_in_gradient": false,
+            "other_processes_untouched": true
+          },
+          "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_causal_specificity_v3/code_31685e31028a0294e03e7b3e6ec0c8e7186d7660",
+          "optimizer_started_at_dispatch": false
+        }
       }
+    },
+    {
+      "id": "B2-joint-baseline-v1",
+      "branch": "baseline/joint-tsad-rca-v1",
+      "status": "raw_replay_passed",
+      "new_training": false,
+      "raw_input_API": true,
+      "free_running_event_metrics_measured": false
     }
   ]
 }
