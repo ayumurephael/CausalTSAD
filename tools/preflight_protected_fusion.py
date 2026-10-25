@@ -10,6 +10,8 @@ from proposals.protected_fusion import ProtectedFusion,causal_features,parameter
 from causal_tsad.io import atomic_json,sha256
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--checkpoint',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();torch.set_num_threads(1);torch.manual_seed(348);torch.backends.cuda.matmul.allow_tf32=False
+ import json
+ cfg=json.loads((Path(__file__).resolve().parents[1]/'experiments/protected_fusion_v2.json').read_text());assert all(k in cfg for k in ['data_seed','learning_rate','weight_decay','old_source_trust_weight'])
  saved=torch.load(a.checkpoint,map_location='cpu',weights_only=False);m=CausalContrast().cuda().eval().requires_grad_(False);ref=Reference().cuda().eval().requires_grad_(False);m.load_state_dict(saved['model'],strict=True);ref.load_state_dict(saved['model'],strict=True);before=parameter_sha(m)
  x=torch.randn(1041,20,device='cuda');g=torch.zeros(20,20,device='cuda');g[torch.arange(19),torch.arange(1,20)]=1
  with torch.inference_mode():

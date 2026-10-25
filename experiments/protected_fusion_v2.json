@@ -3,7 +3,7 @@
  "seeds":[348,349,350],"arms":["basecal","degree","true","wrong"],"source_passes":1,"updates_per_run":568,
  "ready_query_scalar_exposures_per_run":15561216,"full_source_input_exposures_per_run":22634496,
  "total_ready_query_scalar_exposures":186734592,"total_full_source_input_exposures":271613952,
- "learning_rate":0.001,"weight_decay":0.0001,"old_source_trust_weight":0.25,"residual_cap_in_source_base_IQR_scales":4,
+ "data_seed":348,"learning_rate":0.001,"weight_decay":0.0001,"old_source_trust_weight":0.25,"residual_cap_in_source_base_IQR_scales":4,
  "head_parameters":434,"old_source_train_groups":312,"new_source_train_groups":256,
  "old_new_total_group_loss_weight":"50:50 via per-group reweighting; cases remain dependent within groups",
  "frozen_teacher_source_query_predictions":216235008,"new_TimeRCD_source_forward_scalars":16515072,

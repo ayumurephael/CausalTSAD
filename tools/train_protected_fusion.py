@@ -40,7 +40,7 @@ def evaluate(model,cache,rows,arm):
   scope='Source only; old sparse ready AP and new50%positive paired AP remain separate; no original TimeRCD RCA')
 
 def run(a):
- cfg=json.loads(a.config.read_text());m=json.loads((a.cache/'manifest.json').read_text());assert m['status']=='complete';assert not a.output.exists();a.output.mkdir(parents=True)
+ cfg=json.loads(a.config.read_text());assert all(k in cfg for k in ['data_seed','learning_rate','weight_decay','old_source_trust_weight']);m=json.loads((a.cache/'manifest.json').read_text());assert m['status']=='complete';assert not a.output.exists();a.output.mkdir(parents=True)
  rows=m['rows'];train=[r for r in rows if r['split']=='train'];assert len(train)==568
  torch.set_num_threads(1);torch.manual_seed(a.seed);torch.cuda.manual_seed_all(a.seed);torch.backends.cuda.matmul.allow_tf32=False;torch.cuda.set_per_process_memory_fraction(.75*2**30/torch.cuda.get_device_properties(0).total_memory)
  arrays=[load_arrays(a.cache,r) for r in train];allf=np.concatenate([v['features'].reshape(-1,7) for v in arrays]);mean=allf.mean(0,dtype=np.float64);std=allf.std(0,dtype=np.float64)
