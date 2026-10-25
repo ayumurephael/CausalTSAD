@@ -1,0 +1,13 @@
+{
+  "common_base": "5510edec73d4309e64110e63c86ed7502d233409",
+  "copied_own_code": {
+    "path": "dependencies/c02_model.py",
+    "SHA256": "81e0ff739e93bcc8392b82e6c51ee6466bc6cd970fd421e85955007f9fe7257d"
+  },
+  "teacher_training_local_commit": "031098ab2c92f96404245098e950f4e00f30dfd3",
+  "teacher_training_github_commit": "611d264e8af79a348d13921abf089abfddbf2196",
+  "teacher_SHA256": "c6834b71ad72664c446c8b9b3e2a003216f0b0c835fda68c744fe2f2f284fa59",
+  "base_reference_manifest_SHA256": "c930c5facbec1e19e38bab03b3075d1d5fb23a4f17b4caad57cc1f3e2c217321",
+  "original_detector_recomputed": false,
+  "C08_dependency": false
+}
