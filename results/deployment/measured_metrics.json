@@ -1,0 +1,22 @@
+{
+  "base": {
+    "Affiliation-F": 0.8581107960647646,
+    "F1_T": 0.47578800223200235,
+    "Standard-F1": 0.47825571259170163,
+    "VUS-PR": 0.4155066461683347,
+    "AP": 0.4794005327584116,
+    "normal_FPR": 0.0033088233555728275
+  },
+  "joint": {
+    "Affiliation-F": 0.8570412862885939,
+    "F1_T": 0.4747897222062117,
+    "Standard-F1": 0.4763135302494575,
+    "VUS-PR": 0.41615004986685916,
+    "AP": 0.4801710527191234,
+    "normal_FPR": 0.0034964550603737146,
+    "conditional_Top1": 0.4041666666666667,
+    "end_to_end_event_matched_Top1": 0.2875,
+    "event_detection_recall": 0.5208333333333334
+  },
+  "scope": "80 development M systems,3 optimization seeds, conditional true-window RCA; not free-running alarm precision"
+}

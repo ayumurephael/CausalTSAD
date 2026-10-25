@@ -1,0 +1,88 @@
+{
+  "installed": {
+    "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/b2_joint_baseline_v1/code_aa57ea214398cb39b91b78815835ebaa6cf38a68",
+    "local_commit": "aa57ea214398cb39b91b78815835ebaa6cf38a68",
+    "files": 35
+  },
+  "status": "passed",
+  "gpu": 4,
+  "records": [
+    {
+      "source_key": "source/source_validation_c01.npz/0",
+      "channels": 1,
+      "length": 1024,
+      "errors": {
+        "features": 0.0,
+        "base_logit": 0.0,
+        "fused_logit": 0.0,
+        "root_probability": 0.0,
+        "anomaly_probability": 8.940696716308594e-08
+      },
+      "automatic_alarm_events": 1
+    },
+    {
+      "source_key": "source/source_validation_c08.npz/0",
+      "channels": 8,
+      "length": 1024,
+      "errors": {
+        "features": 0.0,
+        "base_logit": 0.0,
+        "fused_logit": 0.0,
+        "root_probability": 0.0,
+        "anomaly_probability": 8.498318493366241e-08
+      },
+      "automatic_alarm_events": 2
+    },
+    {
+      "source_key": "source/source_validation_c20.npz/0",
+      "channels": 20,
+      "length": 1024,
+      "errors": {
+        "features": 0.0,
+        "base_logit": 0.0,
+        "fused_logit": 0.0,
+        "root_probability": 0.0,
+        "anomaly_probability": 8.288770914077759e-08
+      },
+      "automatic_alarm_events": 1
+    }
+  ],
+  "frozen_parameter_SHA_before": {
+    "base": "6f3c2346925cb0a20e50b0b0b487ec78a8894acb0bd6c659856ec5cb4f3c8074",
+    "history": "b507e4d4dac488c4fb3bf8e92df45490b6f1d7685a35df97254d08219dd06c0e",
+    "teacher": "3cf1be656eb878bb5d126a01e0d565c5aa79bd5472d5efaa44165c979fbfb3ae",
+    "head": "0231b80342c69d4fcc8066bd4b5e4573577c869d9ecbe8bfe8b2b55771bf4985"
+  },
+  "frozen_parameter_SHA_after": {
+    "base": "6f3c2346925cb0a20e50b0b0b487ec78a8894acb0bd6c659856ec5cb4f3c8074",
+    "history": "b507e4d4dac488c4fb3bf8e92df45490b6f1d7685a35df97254d08219dd06c0e",
+    "teacher": "3cf1be656eb878bb5d126a01e0d565c5aa79bd5472d5efaa44165c979fbfb3ae",
+    "head": "0231b80342c69d4fcc8066bd4b5e4573577c869d9ecbe8bfe8b2b55771bf4985"
+  },
+  "optimizer_updates": 0,
+  "input_boundary": "Only actual observed x and normal adjacency passed; no labels/root/event windows/normal twin",
+  "source_unique_observed_scalars": 29696,
+  "extra_frozen_reference_head_query_scalars": 29696,
+  "history_encoder_accounting": {
+    "calls": 2,
+    "padded_history_scalar_slots": 114688,
+    "valid_history_scalars": 110208,
+    "encoded_channels": 1764,
+    "patch_tokens": 7056
+  },
+  "base_encoder_accounting": {
+    "calls": 3,
+    "padded_scalar_slots": 29696
+  },
+  "peak_cuda_bytes": 599326720,
+  "target_arrays_opened": false,
+  "provenance": {
+    "base_checkpoint_SHA256": "9a22a4a2e42d1fa147a4f4d0d09aa0ad6be1ef15c90f7a124fa846603cbf638e",
+    "teacher_checkpoint_SHA256": "47e98b418848ef8b80c8bb4216e1c729ccc74d60af1bf87c029096e57f62deac",
+    "head_checkpoint_SHA256": "8a78d865e7195035ad908b397ab25aab17f34dbcb8679d1ea329ecd6e35ddf02",
+    "optimizer_seed": 348,
+    "head_training": "C08b fixed3pass final, mean+PCGrad, no new training",
+    "threshold_scope": "source-validation normal M 99th percentile"
+  },
+  "scope": "Full raw replay for predeclared seed348,C1/C8/C20 source cases. Not new training or new target performance test; other seeds preserve existing measured checkpoints."
+}

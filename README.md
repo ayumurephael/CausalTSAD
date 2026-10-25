@@ -1,3 +1,9 @@
+# B2：联合TSAD与根因定位基线
+
+使用已完成的C08b mean+PCGrad权重，新增原始X/正常DAG统一推理入口，不重新训练。能力、指标和条件定位边界见[部署说明](docs/JOINT_BASELINE.md)。以下是保留的训练原型记录。
+
+---
+
 # 已完成结果与范围
 
 C08b全部9新训练+3复用基线已完成。mean读出与PCGrad四臂可分开归因；mean+PCGrad略高于原TimeRCD但差区间跨0、正常FPR上升，不称稳定TSAD改进。
