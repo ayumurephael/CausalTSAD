@@ -1,3 +1,5 @@
+新增12组+复用6组的全部结果已完成并审计。真父值、去父值、同入度错父值的目标检测几乎相同，尚未建立因果关系带来的额外收益。见[完整结果](results/causal_specificity_v3/父值上下文成组结果.md)；训练快照仍固定31685e3，新增文档不改变已运行代码。
+
 # C03v3：因果父值与上下文的成组对照
 
 本独立revision保留C03v2全部代码，新增degree_only/wrong_degree两图×no_context/learned_mean×3seed=12新训练；复用6个真图模型。完整信息/预算/判读见[方案](docs/C03_CAUSAL_SPECIFICITY_V3.md)。尚未声称因果收益。
