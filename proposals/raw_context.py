@@ -4,7 +4,7 @@ import numpy as np
 import torch
 from torch import nn
 
-ARMS=['true_none','true_mean','true_attention','degree_attention','wrong_attention']
+ARMS=['true_none','true_mean','true_attention','degree_attention','wrong_attention','degree_mean','wrong_mean']
 OWN_LAGS=(1,2,4,8,16,32,64)
 PARENT_LAGS=(0,1,2,4,8,16,32,64)
 CONTEXT_TIMES=tuple(range(64,256,4))
