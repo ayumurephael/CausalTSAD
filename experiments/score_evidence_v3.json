@@ -1,0 +1,14 @@
+{
+ "data_seed":348,"learning_rate":0.01,"weight_decay":0.0001,"old_source_trust_weight":0.25,
+ "base_checkpoint_SHA256":"9a22a4a2e42d1fa147a4f4d0d09aa0ad6be1ef15c90f7a124fa846603cbf638e",
+ "primary":"positive_pair","variants":["free_point","positive_point","free_pair","positive_pair"],
+ "graph_modes":["degree","true","wrong"],"seeds":[348,349,350],"extra_basecal_runs":3,
+ "total_runs":39,"updates_per_run":568,"query_scalars_per_run":15561216,
+ "total_query_scalar_exposures":606887424,"total_full_source_input_equivalent_exposures":882745344,
+ "head_parameters":8,"frozen_teacher_new_forwards":0,"TimeRCD_new_forwards":0,
+ "pairwise_comparisons_per_new_group":2816,"pair_loss_weight":1,
+ "endpoint":"one source pass/fixed final, no best selection, no target reads",
+ "stop":"1h per head, 4h stage; stop dispatch on own error; no extra epochs/lr grid",
+ "source_gate":"Primary positive_pair true-vs-degree/wrong paired AP CI95 lower>0, old ready AP decline<=.01, new normal FPR increase<=.01; derivative nonnegative by construction is not efficacy proof",
+ "target":"Only after source gate/audit; fixed540development/100subset, no validation/locked, no target calibration or gradients"
+}
