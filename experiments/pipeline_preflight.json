@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "source_only": true,
+  "optimizer_updates": 0,
+  "target_arrays_opened": false,
+  "query_block_blind": true,
+  "nonparent_history_invariance": true,
+  "invalid_invariance": true,
+  "head_channel_equivariance": true,
+  "CE_density_gradient_isolation": true,
+  "zero_correction_logit_error": 0,
+  "encoder_hash_unchanged": true,
+  "base_equivalence": [
+    {
+      "channels": 1,
+      "length": 1024,
+      "base_probability_max_error": 2.9802322387695312e-08
+    },
+    {
+      "channels": 8,
+      "length": 5017,
+      "base_probability_max_error": 5.960464477539063e-08
+    },
+    {
+      "channels": 20,
+      "length": 1024,
+      "base_probability_max_error": 1.4901161193847656e-08
+    }
+  ],
+  "trainable_parameters": 42449,
+  "feature_dim": 256,
+  "random_history_array_scalars": 2048,
+  "source_probe_unique_scalars": 61640,
+  "actual_history_forwards": {
+    "calls": 6,
+    "padded_history_scalar_slots": 20992,
+    "valid_history_scalars": 14432,
+    "encoded_channels": 287,
+    "patch_tokens": 1148
+  },
+  "actual_runtime_base_forwards": {
+    "calls": 6,
+    "padded_scalar_slots": 105216
+  },
+  "additional_original_reference_forward_scalar_slots": 101504,
+  "peak_cuda_bytes": 1207612416,
+  "scope": "technical G0; cannot prove detection or RCA improvement"
+}
