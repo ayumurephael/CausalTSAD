@@ -1,0 +1,47 @@
+{
+  "seeds": [
+    348,
+    349,
+    350
+  ],
+  "modes": [
+    "none",
+    "parents_current"
+  ],
+  "teachers": {
+    "none_s348": {
+      "file": "none_s348.pth",
+      "SHA256": "2b320dcedd89d8ea5c0a2ea9974ddebc9c5e23e7416207fafad279971ad754ad"
+    },
+    "parents_current_s348": {
+      "file": "parents_current_s348.pth",
+      "SHA256": "c6834b71ad72664c446c8b9b3e2a003216f0b0c835fda68c744fe2f2f284fa59"
+    },
+    "none_s349": {
+      "file": "none_s349.pth",
+      "SHA256": "da4327676c303c4235d8cae9709147dd1101970fbd02c2b464b98730dc7f9ff3"
+    },
+    "parents_current_s349": {
+      "file": "parents_current_s349.pth",
+      "SHA256": "bf600584a153700440ea5679fabf625b3dc4add0a05d81519ec7339f1b0224a2"
+    },
+    "none_s350": {
+      "file": "none_s350.pth",
+      "SHA256": "08cbd8abbc396c5ba3f94853afdddd8562222f6ae1a89371f67778a916e22c68"
+    },
+    "parents_current_s350": {
+      "file": "parents_current_s350.pth",
+      "SHA256": "1e6ff38dd1e17602e775fe6c1ab0444acc7412013f00f16f24986942288a1d8e"
+    }
+  },
+  "source_manifest_sha256": "bd24005add8469c106b89ee69a68bf1f6a20e7070d4dcf7f6a4e3b74dd4c2ac6",
+  "source_validation_systems": 123,
+  "frozen_query_scalar_budget": 28237824,
+  "optimizer_updates": 0,
+  "memory_gib_per_worker": 4,
+  "max_campaign_hours": 2,
+  "source_code_dependency_SHA256": "81e0ff739e93bcc8392b82e6c51ee6466bc6cd970fd421e85955007f9fe7257d",
+  "target_arrays_opened": false,
+  "new_labels_generated": false,
+  "scope": "C05 local mechanism probe only; measurement-only root-observation matched synthetic construction, no dual-state model or physical repair/do claim"
+}
