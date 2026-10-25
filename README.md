@@ -1,3 +1,11 @@
+# 已完成结果与范围
+
+C08 v1全部24组已完成。根因监督改善部分定位，原LSE联合读出降低检测AP且FPR上升；当前结果不支持稳定TSAD收益。后续耦合修复独立保存在c08-decoupled-readout-v2，未覆盖此训练快照。
+
+见[数值与全部正反系统](results/fixed_pilot/summary.json)及[完整报告](results/fixed_pilot/README.md)。以下为原实现说明，训练代码版本在不可变launch中固定；新的文档提交不改变已跑模型。
+
+---
+
 # C08: joint no-fault / root readout for known-DAG TSAD
 
 Independent branch `proposal/c08-joint-root-readout-v1`, from common main. Earlier proposals are preserved on their own branches. This is a candidate solution under a fixed controlled pilot, not a proven improvement.
