@@ -1,6 +1,6 @@
 {
   "schema_version": "causal-tsad-runs-1",
-  "updated_at_utc": "2026-10-25T05:52:51.100040+00:00",
+  "updated_at_utc": "2026-10-25T07:46:24.675483+00:00",
   "entries": [
     {
       "id": "B1-shared-v1",
@@ -25,7 +25,7 @@
       "planned_additional_normal_twin_scalars_total": 59719680,
       "evaluation": "fixed100development systems, original4metrics, AP, normal FPR and conditional RCA",
       "locked_test_opened": false,
-      "hardware": "4 A100; H100 environment prepares independently",
+      "hardware": "4 A100 for all12 B1 runs",
       "first_seed_VUS_parents_minus_none": {
         "VUS_PR_mean": -0.0005918569325228066,
         "bootstrap95_system_CI": [
@@ -53,13 +53,13 @@
         ],
         "note": "Three optimization seeds remain a small sample; systems are paired and never tripled as independent units"
       },
-      "conclusion": "No stable TSAD gain established for this short standalone baseline; C01 remains untrained and eligible for its separate experiment",
+      "conclusion": "No stable TSAD gain established for this short standalone baseline; does not reject other causal mechanisms.",
       "results": "https://github.com/ayumurephael/CausalTSAD/tree/baseline/shared-causal-v1/results/all_seeds"
     },
     {
       "id": "C01-parent-innovation-v1",
       "branch": "proposal/c01-parent-innovation-v1",
-      "status": "all12_training_complete_8of12_development_evaluations_complete",
+      "status": "complete12_training12_primary_evaluation12_common_logit_controls",
       "validated_model_local_revision": "e1e4128ddcda84af9b605b9485f92408698a0617",
       "weight_sha256": "9a22a4a2e42d1fa147a4f4d0d09aa0ad6be1ef15c90f7a124fa846603cbf638e",
       "independent_from_B1_implementation": true,
@@ -86,7 +86,7 @@
       "target_validation_or_locked_arrays_opened": false,
       "evaluation": "fixed100development; original4metrics/AP/normal FPR; conditional RCA only",
       "control_caveat": "raw branch has matched trainable head but lower native encoder FLOPs",
-      "results_not_yet_available": true,
+      "results_not_yet_available": false,
       "recovery_local_commit": "2662c880f2cc8c527c5d0857184f9bdb791fe486",
       "recovery_github_commit": "23c2a45ac2420ffe27d7617936e474a62090251a",
       "reused_training_runs": [
@@ -100,9 +100,42 @@
       "technical_interruption": "cuBLAS handle allocation at zero optimization steps; old artifacts preserved",
       "current_cache_complete": true,
       "completed_training_runs": 12,
-      "completed_development_evaluations": 8,
-      "pending_development_evaluations": 4,
-      "postrun_SHA_audit_pending": true
+      "completed_development_evaluations": 12,
+      "pending_development_evaluations": 0,
+      "postrun_SHA_audit_pending": false,
+      "common_logit_controls_complete": true,
+      "common_logit_VUS_delta": {
+        "mean": 0.0011967228806501647,
+        "per_seed": [
+          -0.0010859647148170008,
+          0.0023020732098822717,
+          0.002374060146885223
+        ],
+        "hierarchical_seed_system_bootstrap95": [
+          -0.00195216933192479,
+          0.006221314986258664
+        ],
+        "systems": 100,
+        "negative_systems": 29,
+        "positive_systems": 40
+      },
+      "common_logit_AP_delta": {
+        "mean": 6.098713627652491e-05,
+        "per_seed": [
+          -0.0016836349362076674,
+          0.0011363713156302042,
+          0.0007302250294070384
+        ],
+        "hierarchical_seed_system_bootstrap95": [
+          -0.0036426995331932588,
+          0.003653786196596
+        ],
+        "systems": 100,
+        "negative_systems": 33,
+        "positive_systems": 48
+      },
+      "conclusion": "No robust target detection gain or graph advantage established; probability-score gains partly disappear under same-logit controls and FPR increases",
+      "results": "https://github.com/ayumurephael/CausalTSAD/tree/proposal/c01-parent-innovation-v1/results/fixed_pilot"
     },
     {
       "id": "C03-mechanism-context-v1",
@@ -110,7 +143,7 @@
       "training_local_commit": "ac5682d116bf53a7f91a4db4e8d49b8f989d6e37",
       "training_github_commit": "3efe6ad9722ee5c68c6ced3db24a5953233516af",
       "shared_base_local_commit": "7b7d7f653582a11e2ca944a891ac2a5dd1794193",
-      "status": "G0_passed_source_context_cache_active_optimizer_not_started_at_snapshot",
+      "status": "complete9_source_runs_audited",
       "arms": [
         "zero",
         "mean",
@@ -131,7 +164,67 @@
       "benchmark_arrays_opened": false,
       "TimeRCD_integration": false,
       "posterior_or_learned_contamination_model_implemented": false,
-      "endpoint": "one fixed pass434updates; 2h per run/8h technical campaign; no target selection"
+      "endpoint": "one fixed pass434updates; 2h per run/8h technical campaign; no target selection",
+      "completed_runs": 9,
+      "conclusion": "Fixed cross-moment contexts do not improve multivariate source normal NLL; cross-system context swap does not hurt; stop this fixed prototype without rejecting broader context direction",
+      "multivariate_ready_NLL": {
+        "zero": {
+          "normal_NLL": 2.055640424170145,
+          "ready_NLL": 1.9606423142156626,
+          "swap_ready_NLL": 1.9606423142156626,
+          "initial_ready_NLL": 2.8623769942337907
+        },
+        "mean": {
+          "normal_NLL": 2.055887186107274,
+          "ready_NLL": 1.9613029094246346,
+          "swap_ready_NLL": 1.959844787269427,
+          "initial_ready_NLL": 2.862629323470883
+        },
+        "median": {
+          "normal_NLL": 2.0559251114604917,
+          "ready_NLL": 1.9613430451571456,
+          "swap_ready_NLL": 1.959853664969364,
+          "initial_ready_NLL": 2.8626371725464903
+        }
+      },
+      "results": "https://github.com/ayumurephael/CausalTSAD/tree/proposal/c03-mechanism-context-v1/results/fixed_pilot"
+    },
+    {
+      "id": "C02-parent-timing-v1",
+      "branch": "proposal/c02-parent-timing-v1",
+      "status": "complete15_source_runs_audited",
+      "training_local_commit": "031098ab2c92f96404245098e950f4e00f30dfd3",
+      "training_github_commit": "611d264e8af79a348d13921abf089abfddbf2196",
+      "seeds": [
+        348,
+        349,
+        350
+      ],
+      "arms": [
+        "none",
+        "parents_block",
+        "parents_past",
+        "parents_current",
+        "rewired_current"
+      ],
+      "normal_optimized_scalars": 74649600,
+      "anomalous_observed_training_scalars": 0,
+      "parameters": 17760,
+      "normal_scalars_per_run": 4976640,
+      "updates_per_run": 434,
+      "hardware": "seed348/349 shared A100,seed350 shared H100; matched arms within seed",
+      "current_parent_inputs_explicitly_authorized": true,
+      "own_query_distribution_error": 0,
+      "target_arrays_read": false,
+      "source_RCA_Top1": {
+        "none": 0.6341463414634146,
+        "parents_block": 0.6558265582655827,
+        "parents_past": 0.6558265582655827,
+        "parents_current": 0.6531165311653117,
+        "rewired_current": 0.6287262872628726
+      },
+      "conclusion": "True parents give modest source prediction/RCA signal; timing refresh is not a stable main cause and source AP gains remain uncertain; no target TSAD proof",
+      "results": "https://github.com/ayumurephael/CausalTSAD/tree/proposal/c02-parent-timing-v1/results/fixed_pilot"
     }
   ]
 }
