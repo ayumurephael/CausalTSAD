@@ -1,0 +1,1187 @@
+{
+  "status": "complete",
+  "groups": {
+    "all": {
+      "systems": 100,
+      "means": {
+        "base_logit": {
+          "Affiliation-F": 0.8578654971694704,
+          "F1_T": 0.47829350606596566,
+          "Standard-F1": 0.4767489351098655,
+          "VUS-PR": 0.43341923443199826,
+          "AP": 0.47710416583330023,
+          "normal_FPR": 0.003877360552909482
+        },
+        "pretrained_none": {
+          "Affiliation-F": 0.8558973554073621,
+          "F1_T": 0.4783225192886312,
+          "Standard-F1": 0.47376173107016484,
+          "VUS-PR": 0.4339790995088803,
+          "AP": 0.4764895638871259,
+          "normal_FPR": 0.004272320151939429
+        },
+        "pretrained_parents": {
+          "Affiliation-F": 0.8563011644152592,
+          "F1_T": 0.4794931447666022,
+          "Standard-F1": 0.4752056373285772,
+          "VUS-PR": 0.4346159573126485,
+          "AP": 0.4771651529695768,
+          "normal_FPR": 0.004240897252985394
+        },
+        "pretrained_rewired": {
+          "Affiliation-F": 0.8561244949470385,
+          "F1_T": 0.47891056074615335,
+          "Standard-F1": 0.47434680978447263,
+          "VUS-PR": 0.43472501082882314,
+          "AP": 0.4768833182504003,
+          "normal_FPR": 0.004270539810765645
+        },
+        "raw_parents": {
+          "Affiliation-F": 0.8567097652938885,
+          "F1_T": 0.47828987004739854,
+          "Standard-F1": 0.47490363501014904,
+          "VUS-PR": 0.4349651423407952,
+          "AP": 0.4769527916057214,
+          "normal_FPR": 0.00420501310126898
+        }
+      },
+      "differences": {
+        "parents_minus_base": {
+          "VUS-PR": {
+            "mean": 0.0011967228806501647,
+            "per_seed": [
+              -0.0010859647148170008,
+              0.0023020732098822717,
+              0.002374060146885223
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00195216933192479,
+              0.006221314986258664
+            ],
+            "systems": 100,
+            "negative_systems": 29,
+            "positive_systems": 40
+          },
+          "AP": {
+            "mean": 6.098713627652491e-05,
+            "per_seed": [
+              -0.0016836349362076674,
+              0.0011363713156302042,
+              0.0007302250294070384
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0036426995331932588,
+              0.003653786196596
+            ],
+            "systems": 100,
+            "negative_systems": 33,
+            "positive_systems": 48
+          },
+          "normal_FPR": {
+            "mean": 0.0003635367000759129,
+            "per_seed": [
+              0.0005526064790337207,
+              0.00025282962500061933,
+              0.00028517399619339893
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.00014525083997339524,
+              0.000758530894042847
+            ],
+            "systems": 100,
+            "negative_systems": 9,
+            "positive_systems": 33
+          }
+        },
+        "parents_minus_none": {
+          "VUS-PR": {
+            "mean": 0.0006368578037682046,
+            "per_seed": [
+              0.00016675620611966057,
+              5.8742001935712845e-06,
+              0.001737943004991382
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0002856385925735013,
+              0.0037213737925014014
+            ],
+            "systems": 100,
+            "negative_systems": 31,
+            "positive_systems": 33
+          },
+          "AP": {
+            "mean": 0.0006755890824510103,
+            "per_seed": [
+              0.0013638646903408407,
+              -6.31198850239294e-05,
+              0.0007260224420361194
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00019576832824144444,
+              0.0022528337420587427
+            ],
+            "systems": 100,
+            "negative_systems": 36,
+            "positive_systems": 45
+          },
+          "normal_FPR": {
+            "mean": -3.142289895403525e-05,
+            "per_seed": [
+              -0.00011723648156113923,
+              -2.1990351834341835e-06,
+              2.5166819882467655e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0002071200884685777,
+              2.9596151562674245e-05
+            ],
+            "systems": 100,
+            "negative_systems": 9,
+            "positive_systems": 10
+          }
+        },
+        "parents_minus_wrong": {
+          "VUS-PR": {
+            "mean": -0.00010905351617468287,
+            "per_seed": [
+              -0.0020652127097816834,
+              -4.031879169678454e-05,
+              0.0017783709529544194
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0028207330237590453,
+              0.002642925929689335
+            ],
+            "systems": 100,
+            "negative_systems": 31,
+            "positive_systems": 32
+          },
+          "AP": {
+            "mean": 0.0002818347191764544,
+            "per_seed": [
+              -0.0001490348298242915,
+              -2.04045677070986e-05,
+              0.0010149435550607531
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0005134020390814302,
+              0.001611945409107657
+            ],
+            "systems": 100,
+            "negative_systems": 36,
+            "positive_systems": 45
+          },
+          "normal_FPR": {
+            "mean": -2.964255778025008e-05,
+            "per_seed": [
+              -0.00010695046673831856,
+              1.3203729578959584e-06,
+              1.6702420439672363e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0002012134584427257,
+              2.4150606225219883e-05
+            ],
+            "systems": 100,
+            "negative_systems": 9,
+            "positive_systems": 10
+          }
+        },
+        "pretrained_minus_raw": {
+          "VUS-PR": {
+            "mean": -0.00034918502814671994,
+            "per_seed": [
+              -0.0009544074428925206,
+              7.555618356222286e-05,
+              -0.0001687038251098627
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0028009642663298817,
+              0.0010179073838880565
+            ],
+            "systems": 100,
+            "negative_systems": 32,
+            "positive_systems": 38
+          },
+          "AP": {
+            "mean": 0.00021236136385544905,
+            "per_seed": [
+              0.0005554632920251755,
+              0.0002185246393182145,
+              -0.00013690383977704279
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00046759066579551235,
+              0.0010159042892800144
+            ],
+            "systems": 100,
+            "negative_systems": 39,
+            "positive_systems": 43
+          },
+          "normal_FPR": {
+            "mean": 3.5884151716415124e-05,
+            "per_seed": [
+              6.385948145453391e-05,
+              1.853208966881122e-05,
+              2.5260884025900225e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -6.992985152898747e-06,
+              0.000118070280823798
+            ],
+            "systems": 100,
+            "negative_systems": 12,
+            "positive_systems": 19
+          }
+        }
+      }
+    },
+    "multi": {
+      "systems": 80,
+      "means": {
+        "base_logit": {
+          "Affiliation-F": 0.8581107960647646,
+          "F1_T": 0.47578800223200235,
+          "Standard-F1": 0.47825571259170163,
+          "VUS-PR": 0.4155066461683348,
+          "AP": 0.47940053275841155,
+          "normal_FPR": 0.0019245060445538295
+        },
+        "pretrained_none": {
+          "Affiliation-F": 0.8568356470189663,
+          "F1_T": 0.47575024969264634,
+          "Standard-F1": 0.4745225846720704,
+          "VUS-PR": 0.4161758730808408,
+          "AP": 0.4786820893373086,
+          "normal_FPR": 0.002458187040313645
+        },
+        "pretrained_parents": {
+          "Affiliation-F": 0.8571777529382885,
+          "F1_T": 0.4772355930177582,
+          "Standard-F1": 0.47640574387396317,
+          "VUS-PR": 0.41697565223084276,
+          "AP": 0.4795057180846895,
+          "normal_FPR": 0.002419917297813092
+        },
+        "pretrained_rewired": {
+          "Affiliation-F": 0.8571306993419271,
+          "F1_T": 0.4764769438092723,
+          "Standard-F1": 0.47533324535427146,
+          "VUS-PR": 0.41712867663268594,
+          "AP": 0.47918200206687406,
+          "normal_FPR": 0.002456915110961249
+        },
+        "raw_parents": {
+          "Affiliation-F": 0.8572361023560132,
+          "F1_T": 0.47598782831870873,
+          "Standard-F1": 0.4760010608469994,
+          "VUS-PR": 0.41737434690288766,
+          "AP": 0.4792706317688277,
+          "normal_FPR": 0.0023671979208526937
+        }
+      },
+      "differences": {
+        "parents_minus_base": {
+          "VUS-PR": {
+            "mean": 0.0014690060625079588,
+            "per_seed": [
+              -0.0013822517594737041,
+              0.00287716948843704,
+              0.00291210045856054
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0024993852939662023,
+              0.007117584488582188
+            ],
+            "systems": 80,
+            "negative_systems": 21,
+            "positive_systems": 33
+          },
+          "AP": {
+            "mean": 0.00010518532627798658,
+            "per_seed": [
+              -0.0018292080971943723,
+              0.0013530061745137714,
+              0.0007917579015145603
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0044597568296772016,
+              0.004407586474957601
+            ],
+            "systems": 80,
+            "negative_systems": 25,
+            "positive_systems": 39
+          },
+          "normal_FPR": {
+            "mean": 0.0004954112532592627,
+            "per_seed": [
+              0.0007241857969486694,
+              0.0003751976976880253,
+              0.00038685026514109316
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.00024033151707391812,
+              0.001000255386226198
+            ],
+            "systems": 80,
+            "negative_systems": 0,
+            "positive_systems": 30
+          }
+        },
+        "parents_minus_none": {
+          "VUS-PR": {
+            "mean": 0.0007997791500019482,
+            "per_seed": [
+              0.00026097571654269344,
+              -9.924068379694864e-06,
+              0.0021482858018428462
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.000354189582264958,
+              0.004463079809424174
+            ],
+            "systems": 80,
+            "negative_systems": 22,
+            "positive_systems": 29
+          },
+          "AP": {
+            "mean": 0.0008236287473808982,
+            "per_seed": [
+              0.0016500744630816497,
+              -7.18736593852739e-05,
+              0.0008926854384463193
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0002303188388804415,
+              0.0028410320533448093
+            ],
+            "systems": 80,
+            "negative_systems": 25,
+            "positive_systems": 39
+          },
+          "normal_FPR": {
+            "mean": -3.8269742500553e-05,
+            "per_seed": [
+              -0.00015573827684461298,
+              1.0822168088485317e-05,
+              3.0106881254468653e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00028306827175431375,
+              3.8029919565412956e-05
+            ],
+            "systems": 80,
+            "negative_systems": 7,
+            "positive_systems": 7
+          }
+        },
+        "parents_minus_wrong": {
+          "VUS-PR": {
+            "mean": -0.00015302440184320558,
+            "per_seed": [
+              -0.002632718809050122,
+              -6.377389754873869e-05,
+              0.0022374195010692447
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.003940124961430459,
+              0.003277236327299161
+            ],
+            "systems": 80,
+            "negative_systems": 22,
+            "positive_systems": 28
+          },
+          "AP": {
+            "mean": 0.00032371601781547234,
+            "per_seed": [
+              -0.00027228594122154833,
+              -2.0125548674878746e-05,
+              0.0012635595433428443
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0007891663756579722,
+              0.0019039237720123651
+            ],
+            "systems": 80,
+            "negative_systems": 27,
+            "positive_systems": 37
+          },
+          "normal_FPR": {
+            "mean": -3.699781314815689e-05,
+            "per_seed": [
+              -0.00014279814258350332,
+              1.1342141869596663e-05,
+              2.0462561269435972e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0002681146652253639,
+              3.005623908775281e-05
+            ],
+            "systems": 80,
+            "negative_systems": 8,
+            "positive_systems": 6
+          }
+        },
+        "pretrained_minus_raw": {
+          "VUS-PR": {
+            "mean": -0.00039869467204486827,
+            "per_seed": [
+              -0.0012471930990200883,
+              0.00017678917243343006,
+              -0.0001256800895479467
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.003811696803966776,
+              0.0012501426973492904
+            ],
+            "systems": 80,
+            "negative_systems": 23,
+            "positive_systems": 32
+          },
+          "AP": {
+            "mean": 0.00023508631586186,
+            "per_seed": [
+              0.0006406805116097424,
+              0.00025292302702044784,
+              -0.00018834459104461035
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0006511759246678623,
+              0.0012574148074128504
+            ],
+            "systems": 80,
+            "negative_systems": 30,
+            "positive_systems": 34
+          },
+          "normal_FPR": {
+            "mean": 5.2719376960398166e-05,
+            "per_seed": [
+              8.9823183581503e-05,
+              3.3287233991445735e-05,
+              3.504771330824577e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              2.853581484177433e-06,
+              0.00015779857576388872
+            ],
+            "systems": 80,
+            "negative_systems": 6,
+            "positive_systems": 15
+          }
+        }
+      }
+    },
+    "id_multi": {
+      "systems": 40,
+      "means": {
+        "base_logit": {
+          "Affiliation-F": 0.9344237172801609,
+          "F1_T": 0.6893101773079252,
+          "Standard-F1": 0.7425560778293956,
+          "VUS-PR": 0.6416575237314648,
+          "AP": 0.763997514786847,
+          "normal_FPR": 0.0023212791821674494
+        },
+        "pretrained_none": {
+          "Affiliation-F": 0.9320147800696165,
+          "F1_T": 0.6886880576358332,
+          "Standard-F1": 0.7361119746544522,
+          "VUS-PR": 0.6413160292833248,
+          "AP": 0.7604170022562676,
+          "normal_FPR": 0.003094152885903513
+        },
+        "pretrained_parents": {
+          "Affiliation-F": 0.933215578003458,
+          "F1_T": 0.6894749908921464,
+          "Standard-F1": 0.7375391395704801,
+          "VUS-PR": 0.6414478510851228,
+          "AP": 0.7612837146740535,
+          "normal_FPR": 0.0030218081361826684
+        },
+        "pretrained_rewired": {
+          "Affiliation-F": 0.9322207559919742,
+          "F1_T": 0.690036079204098,
+          "Standard-F1": 0.7362918343439887,
+          "VUS-PR": 0.6413441482116233,
+          "AP": 0.7603188640669011,
+          "normal_FPR": 0.0030920946611508126
+        },
+        "raw_parents": {
+          "Affiliation-F": 0.9329995410671106,
+          "F1_T": 0.6873416856775293,
+          "Standard-F1": 0.7373894811075872,
+          "VUS-PR": 0.6410054531058618,
+          "AP": 0.7608461631191631,
+          "normal_FPR": 0.0029178326556840288
+        }
+      },
+      "differences": {
+        "parents_minus_base": {
+          "VUS-PR": {
+            "mean": -0.00020967264634202764,
+            "per_seed": [
+              -0.002324510691626473,
+              0.00036398801209696073,
+              0.0013315047405034295
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.004447435024653785,
+              0.0030397211301646013
+            ],
+            "systems": 40,
+            "negative_systems": 11,
+            "positive_systems": 8
+          },
+          "AP": {
+            "mean": -0.0027138001127933412,
+            "per_seed": [
+              -0.006796778980577518,
+              -0.0005404730633005331,
+              -0.0008041482945019731
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.008711883382932831,
+              0.0005434803179265458
+            ],
+            "systems": 40,
+            "negative_systems": 15,
+            "positive_systems": 12
+          },
+          "normal_FPR": {
+            "mean": 0.0007005289540152186,
+            "per_seed": [
+              0.0011531822304770296,
+              0.0004651295168517835,
+              0.0004832751147168428
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.00022119501979256742,
+              0.0016954222745268963
+            ],
+            "systems": 40,
+            "negative_systems": 0,
+            "positive_systems": 12
+          }
+        },
+        "parents_minus_none": {
+          "VUS-PR": {
+            "mean": 0.00013182180179785555,
+            "per_seed": [
+              0.0004962634711373991,
+              -0.00012041842537939147,
+              1.962035963555892e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00035975636252834044,
+              0.0008639846831771018
+            ],
+            "systems": 40,
+            "negative_systems": 6,
+            "positive_systems": 11
+          },
+          "AP": {
+            "mean": 0.0008667124177859691,
+            "per_seed": [
+              0.0011075192555476607,
+              -4.202039434296166e-05,
+              0.0015346383921532082
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00036980137216761173,
+              0.003032089587322193
+            ],
+            "systems": 40,
+            "negative_systems": 10,
+            "positive_systems": 17
+          },
+          "normal_FPR": {
+            "mean": -7.234474972084489e-05,
+            "per_seed": [
+              -0.0002895621504681846,
+              2.1644336176970635e-05,
+              5.088356512867932e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0005444752550598283,
+              6.993585596581563e-05
+            ],
+            "systems": 40,
+            "negative_systems": 3,
+            "positive_systems": 5
+          }
+        },
+        "parents_minus_wrong": {
+          "VUS-PR": {
+            "mean": 0.0001037028734994023,
+            "per_seed": [
+              0.0004990027938677191,
+              -0.0001215884771734157,
+              -6.630569619609648e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0004127761990076765,
+              0.00084106221797961
+            ],
+            "systems": 40,
+            "negative_systems": 6,
+            "positive_systems": 11
+          },
+          "AP": {
+            "mean": 0.0009648506071525134,
+            "per_seed": [
+              0.0010518610516636058,
+              -7.491371546108075e-06,
+              0.0018501821413400427
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -7.83004254591986e-05,
+              0.0032198965367697353
+            ],
+            "systems": 40,
+            "negative_systems": 10,
+            "positive_systems": 17
+          },
+          "normal_FPR": {
+            "mean": -7.028652496814445e-05,
+            "per_seed": [
+              -0.00026728263090174814,
+              2.5629670147957538e-05,
+              3.0793385849357295e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0005193960311824245,
+              5.226001590874801e-05
+            ],
+            "systems": 40,
+            "negative_systems": 4,
+            "positive_systems": 4
+          }
+        },
+        "pretrained_minus_raw": {
+          "VUS-PR": {
+            "mean": 0.00044239797926101974,
+            "per_seed": [
+              0.0017710213876212487,
+              -0.00032888583905031556,
+              -0.00011494161078787405
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0005104718073953942,
+              0.0024412073832819664
+            ],
+            "systems": 40,
+            "negative_systems": 9,
+            "positive_systems": 11
+          },
+          "AP": {
+            "mean": 0.0004375515548904683,
+            "per_seed": [
+              0.00127783579351851,
+              9.955000740562639e-05,
+              -6.473113625273135e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.000357199129665124,
+              0.001847373249645834
+            ],
+            "systems": 40,
+            "negative_systems": 15,
+            "positive_systems": 12
+          },
+          "normal_FPR": {
+            "mean": 0.00010397548049863973,
+            "per_seed": [
+              0.00021336909974002005,
+              3.632096330743921e-05,
+              6.223637844845993e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              1.2652955530101781e-05,
+              0.0003350307399660338
+            ],
+            "systems": 40,
+            "negative_systems": 1,
+            "positive_systems": 9
+          }
+        }
+      }
+    },
+    "heldout_multi": {
+      "systems": 40,
+      "means": {
+        "base_logit": {
+          "Affiliation-F": 0.7817978748493682,
+          "F1_T": 0.2622658271560795,
+          "Standard-F1": 0.21395534735400767,
+          "VUS-PR": 0.1893557686052048,
+          "AP": 0.19480355072997618,
+          "normal_FPR": 0.0015277329069402095
+        },
+        "pretrained_none": {
+          "Affiliation-F": 0.7816565139683161,
+          "F1_T": 0.26281244174945945,
+          "Standard-F1": 0.2129331946896887,
+          "VUS-PR": 0.1910357168783567,
+          "AP": 0.19694717641834966,
+          "normal_FPR": 0.0018222211947237772
+        },
+        "pretrained_parents": {
+          "Affiliation-F": 0.781139927873119,
+          "F1_T": 0.26499619514337003,
+          "Standard-F1": 0.21527234817744623,
+          "VUS-PR": 0.19250345337656274,
+          "AP": 0.19772772149532553,
+          "normal_FPR": 0.001818026459443516
+        },
+        "pretrained_rewired": {
+          "Affiliation-F": 0.7820406426918801,
+          "F1_T": 0.26291780841444656,
+          "Standard-F1": 0.21437465636455436,
+          "VUS-PR": 0.19291320505374857,
+          "AP": 0.19804514006684706,
+          "normal_FPR": 0.0018217355607716853
+        },
+        "raw_parents": {
+          "Affiliation-F": 0.7814726636449156,
+          "F1_T": 0.26463397095988817,
+          "Standard-F1": 0.21461264058641177,
+          "VUS-PR": 0.19374324069991353,
+          "AP": 0.19769510041849223,
+          "normal_FPR": 0.0018165631860213593
+        }
+      },
+      "differences": {
+        "parents_minus_base": {
+          "VUS-PR": {
+            "mean": 0.0031476847713579463,
+            "per_seed": [
+              -0.00043999282732093534,
+              0.00539035096477712,
+              0.004492696176617652
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00283581419228586,
+              0.01397983302284725
+            ],
+            "systems": 40,
+            "negative_systems": 10,
+            "positive_systems": 25
+          },
+          "AP": {
+            "mean": 0.0029241707653493145,
+            "per_seed": [
+              0.003138362786188775,
+              0.003246485412328076,
+              0.002387664097531094
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.002801416835829637,
+              0.011332914675825631
+            ],
+            "systems": 40,
+            "negative_systems": 10,
+            "positive_systems": 27
+          },
+          "normal_FPR": {
+            "mean": 0.0002902935525033067,
+            "per_seed": [
+              0.0002951893634203093,
+              0.0002852658785242672,
+              0.00029042541556534356
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.00016592465939268847,
+              0.0004331137327440877
+            ],
+            "systems": 40,
+            "negative_systems": 0,
+            "positive_systems": 18
+          }
+        },
+        "parents_minus_none": {
+          "VUS-PR": {
+            "mean": 0.0014677364982060407,
+            "per_seed": [
+              2.568796194798768e-05,
+              0.00010057028862000177,
+              0.004276951244050134
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0006586853838540946,
+              0.009303314808185087
+            ],
+            "systems": 40,
+            "negative_systems": 16,
+            "positive_systems": 18
+          },
+          "AP": {
+            "mean": 0.0007805450769758276,
+            "per_seed": [
+              0.0021926296706156387,
+              -0.00010172692442758614,
+              0.0002507324847394299
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0006778555995127311,
+              0.00435063129541631
+            ],
+            "systems": 40,
+            "negative_systems": 15,
+            "positive_systems": 22
+          },
+          "normal_FPR": {
+            "mean": -4.19473528026111e-06,
+            "per_seed": [
+              -2.1914403221041314e-05,
+              0.0,
+              9.330197380257987e-06
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -2.9890125793176596e-05,
+              2.1430401771063887e-05
+            ],
+            "systems": 40,
+            "negative_systems": 4,
+            "positive_systems": 2
+          }
+        },
+        "parents_minus_wrong": {
+          "VUS-PR": {
+            "mean": -0.00040975167718581353,
+            "per_seed": [
+              -0.005764440411967964,
+              -5.959317924061677e-06,
+              0.004541144698334586
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00768194639232196,
+              0.006636392923579301
+            ],
+            "systems": 40,
+            "negative_systems": 16,
+            "positive_systems": 17
+          },
+          "AP": {
+            "mean": -0.0003174185715215688,
+            "per_seed": [
+              -0.0015964329341067024,
+              -3.2759725803649416e-05,
+              0.0006769369453456455
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.002048926325660355,
+              0.001824414361607556
+            ],
+            "systems": 40,
+            "negative_systems": 17,
+            "positive_systems": 20
+          },
+          "normal_FPR": {
+            "mean": -3.709101328169359e-06,
+            "per_seed": [
+              -1.8313654265258516e-05,
+              -2.9453864087642093e-06,
+              1.013173668951465e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -2.8736108391480735e-05,
+              2.02634733790293e-05
+            ],
+            "systems": 40,
+            "negative_systems": 4,
+            "positive_systems": 2
+          }
+        },
+        "pretrained_minus_raw": {
+          "VUS-PR": {
+            "mean": -0.001239787323350757,
+            "per_seed": [
+              -0.004265407585661427,
+              0.0006824641839171757,
+              -0.00013641856830801937
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.008695819913532365,
+              0.0011464775434282197
+            ],
+            "systems": 40,
+            "negative_systems": 14,
+            "positive_systems": 21
+          },
+          "AP": {
+            "mean": 3.2621076833251666e-05,
+            "per_seed": [
+              3.5252297009749416e-06,
+              0.0004062960466352693,
+              -0.0003119580458364893
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0015832716655108318,
+              0.0012701508765136928
+            ],
+            "systems": 40,
+            "negative_systems": 15,
+            "positive_systems": 22
+          },
+          "normal_FPR": {
+            "mean": 1.4632734221565996e-06,
+            "per_seed": [
+              -3.372273257701407e-05,
+              3.025350467545226e-05,
+              7.85904816803161e-06
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -4.2765943291934216e-05,
+              4.0491703963061505e-05
+            ],
+            "systems": 40,
+            "negative_systems": 5,
+            "positive_systems": 6
+          }
+        }
+      }
+    },
+    "C1": {
+      "systems": 20,
+      "means": {
+        "base_logit": {
+          "Affiliation-F": 0.8568843015882941,
+          "F1_T": 0.48831552140181883,
+          "Standard-F1": 0.47072182518252104,
+          "VUS-PR": 0.5050695874866524,
+          "AP": 0.4679186981328554,
+          "normal_FPR": 0.011688778586332091
+        },
+        "pretrained_none": {
+          "Affiliation-F": 0.8521441889609451,
+          "F1_T": 0.4886115976725705,
+          "Standard-F1": 0.47071831666254277,
+          "VUS-PR": 0.5051920052210381,
+          "AP": 0.4677194620863947,
+          "normal_FPR": 0.01152885259844257
+        },
+        "pretrained_parents": {
+          "Affiliation-F": 0.8527948103231416,
+          "F1_T": 0.48852335176197814,
+          "Standard-F1": 0.4704052111470333,
+          "VUS-PR": 0.5051771776398714,
+          "AP": 0.46780289250912616,
+          "normal_FPR": 0.011524817073674604
+        },
+        "pretrained_rewired": {
+          "Affiliation-F": 0.8520996773674839,
+          "F1_T": 0.4886450284936776,
+          "Standard-F1": 0.47040106750527677,
+          "VUS-PR": 0.5051103476133719,
+          "AP": 0.4676885829845058,
+          "normal_FPR": 0.011525038609983227
+        },
+        "raw_parents": {
+          "Affiliation-F": 0.8546044170453897,
+          "F1_T": 0.4874980369621577,
+          "Standard-F1": 0.4705139316627476,
+          "VUS-PR": 0.5053283240924256,
+          "AP": 0.4676814309532963,
+          "normal_FPR": 0.011556273822934122
+        }
+      },
+      "differences": {
+        "parents_minus_base": {
+          "VUS-PR": {
+            "mean": 0.00010759015321898755,
+            "per_seed": [
+              9.91834638098111e-05,
+              1.6880956631989702e-06,
+              0.00022189890018395258
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0009151740669994829,
+              0.0009569951772600264
+            ],
+            "systems": 20,
+            "negative_systems": 8,
+            "positive_systems": 7
+          },
+          "AP": {
+            "mean": -0.00011580562372932082,
+            "per_seed": [
+              -0.0011013422922608476,
+              0.0002698318800959358,
+              0.0004840935409769497
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.001985750329247203,
+              0.0009202093887496845
+            ],
+            "systems": 20,
+            "negative_systems": 8,
+            "positive_systems": 9
+          },
+          "normal_FPR": {
+            "mean": -0.00016396151265748597,
+            "per_seed": [
+              -0.00013371079262607498,
+              -0.0002366426657490046,
+              -0.00012153107959737822
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00034465264230291667,
+              -2.2377029738188074e-05
+            ],
+            "systems": 20,
+            "negative_systems": 9,
+            "positive_systems": 3
+          }
+        },
+        "parents_minus_none": {
+          "VUS-PR": {
+            "mean": -1.482758116676988e-05,
+            "per_seed": [
+              -0.00021012183557247085,
+              6.906727448663583e-05,
+              9.65718175855254e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0005890772633675581,
+              0.00040579774652632026
+            ],
+            "systems": 20,
+            "negative_systems": 9,
+            "positive_systems": 4
+          },
+          "AP": {
+            "mean": 8.343042273145877e-05,
+            "per_seed": [
+              0.0002190255993776071,
+              -2.8104787578551425e-05,
+              5.937045639532066e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00014187776856840805,
+              0.0005432510081660588
+            ],
+            "systems": 20,
+            "negative_systems": 11,
+            "positive_systems": 6
+          },
+          "normal_FPR": {
+            "mean": -4.035524767964287e-06,
+            "per_seed": [
+              3.6770699572755657e-05,
+              -5.428384827111219e-05,
+              5.406574394463664e-06
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -7.396427485154738e-05,
+              4.946821667078799e-05
+            ],
+            "systems": 20,
+            "negative_systems": 2,
+            "positive_systems": 3
+          }
+        },
+        "parents_minus_wrong": {
+          "VUS-PR": {
+            "mean": 6.683002649940782e-05,
+            "per_seed": [
+              0.00020481168729207167,
+              5.350163171103206e-05,
+              -5.782323950488025e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00016663671833628155,
+              0.0004749605371677632
+            ],
+            "systems": 20,
+            "negative_systems": 9,
+            "positive_systems": 4
+          },
+          "AP": {
+            "mean": 0.00011430952462038264,
+            "per_seed": [
+              0.0003439696157647359,
+              -2.1520643835978018e-05,
+              2.047960193239002e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -6.308053283786259e-05,
+              0.0006057484434166148
+            ],
+            "systems": 20,
+            "negative_systems": 9,
+            "positive_systems": 8
+          },
+          "normal_FPR": {
+            "mean": -2.215363086228117e-07,
+            "per_seed": [
+              3.64402366424205e-05,
+              -3.876670268890686e-05,
+              1.661857120617929e-06
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -6.53500347933183e-05,
+              4.814636494944631e-05
+            ],
+            "systems": 20,
+            "negative_systems": 1,
+            "positive_systems": 4
+          }
+        },
+        "pretrained_minus_raw": {
+          "VUS-PR": {
+            "mean": -0.00015114645255412656,
+            "per_seed": [
+              0.0002167351816177531,
+              -0.0003293757719226059,
+              -0.000340798767357527
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0008082101612677743,
+              0.0002608496203261055
+            ],
+            "systems": 20,
+            "negative_systems": 9,
+            "positive_systems": 6
+          },
+          "AP": {
+            "mean": 0.00012146155582980537,
+            "per_seed": [
+              0.00021459441368690797,
+              8.093108850928078e-05,
+              6.885916529322732e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -5.324458046099499e-05,
+              0.0004053357130306724
+            ],
+            "systems": 20,
+            "negative_systems": 9,
+            "positive_systems": 9
+          },
+          "normal_FPR": {
+            "mean": -3.145674925951705e-05,
+            "per_seed": [
+              -3.999532705334235e-05,
+              -4.048848762172685e-05,
+              -1.3886433103481952e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -8.884850059823791e-05,
+              2.1901278971418292e-05
+            ],
+            "systems": 20,
+            "negative_systems": 6,
+            "positive_systems": 4
+          }
+        }
+      }
+    }
+  },
+  "source_only_threshold_calibration": true,
+  "parameter_updates": 0,
+  "extra_encoder_forwards": 0,
+  "extra_frozen_head_query_scalars": 130021800,
+  "primary_probability_table_untouched": true,
+  "target_validation_and_locked_read": false,
+  "score_protocol": "common raw anomaly logits for all original/fused models; supplementary score-representation variant, not a new trained checkpoint"
+}
