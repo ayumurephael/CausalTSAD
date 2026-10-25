@@ -20,3 +20,5 @@
 主支持检验是root不可见且可见后代>0的physical AP相对independent配对系统bootstrap CI下界>0，且正常FPR增加≤.01；反/错图用于特异性、RCA另报。若AP不通过不扩大为rawTSAD检测方案，但保留定位/预测的局部证据。128是独立系统，3fit重复不是384独立系统。不给full组AP>=.85机械门槛。假设misspecification（恢复/多根/异质edge lag）未覆盖，后续需独立反例，不称工业SOTA或foundation模型。
 
 250M全部数组、原25亿与C04/TimeRCD权重均不读取；labels_detail三类仍null。oracle latent只算前瞻Brier审计，不作为模型输入或新增阈值标签；lag仅oracle_lag分支传入。
+
+技术revision r1：初版两节点均在G0停止、未启动评估worker。相同输入重复实验score误差0，root误差2.55e−15；缺失位置污染score误差0、root2.11e−15。原duplicate-index CUDA index_add的浮点累加顺序不能逐位复现，改为按meshgrid中连续root块归约。原source/log/诊断保留，不放宽逐位mask检查；新root=r1。完整CUDA逐操作数学确定性不宣称已经证明。

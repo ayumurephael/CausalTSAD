@@ -62,7 +62,11 @@ class BayesianPropagation:
   cs=lr.cumsum(1);kind=torch.as_tensor(kk,device=self.device);time=torch.arange(t,device=self.device);ll=torch.zeros((h,t),dtype=torch.float64,device=self.device)
   for j in range(c):
    a=torch.as_tensor(arrival[:,j],device=self.device);before=cs[kind,(a-1).clamp(0,t-1),j];before=torch.where(a>0,before,torch.zeros_like(before));part=cs[kind,:,j]-before[:,None];ll+=torch.where(time[None]>=a[:,None],part,torch.zeros_like(part))
-  logits=ll+prior[:,None];den=torch.logaddexp(torch.logsumexp(logits,0),torch.full((t,),np.log1p(-self.p['fault_prior']),dtype=torch.float64,device=self.device));q=(logits-den).exp();active=time[None]>=torch.as_tensor(oo,device=self.device)[:,None];activeq=q*active;score=activeq.sum(0);rootmass=torch.zeros((c,t),dtype=torch.float64,device=self.device);rootmass.index_add_(0,torch.as_tensor(rr,device=self.device),activeq);mode_mass=(activeq*torch.as_tensor(mm,device=self.device)[:,None]).sum(0)
+  logits=ll+prior[:,None];den=torch.logaddexp(torch.logsumexp(logits,0),torch.full((t,),np.log1p(-self.p['fault_prior']),dtype=torch.float64,device=self.device));q=(logits-den).exp();active=time[None]>=torch.as_tensor(oo,device=self.device)[:,None];activeq=q*active;score=activeq.sum(0)
+  # meshgrid lists root as its outermost axis. Sum those contiguous blocks;
+  # duplicate-index CUDA index_add used atomic accumulation and changed the
+  # last bits even for repeated identical inputs. Do not relax the G0 check.
+  assert np.array_equal(rr,np.repeat(np.arange(c),h//c));rootmass=activeq.reshape(c,h//c,t).sum(1);mode_mass=(activeq*torch.as_tensor(mm,device=self.device)[:,None]).sum(0)
   predicted=[]
   if forecast:
    for j in range(c):predicted.append((q*(time[None]+8>=torch.as_tensor(arrival[:,j],device=self.device)[:,None])).sum(0).cpu().numpy())
