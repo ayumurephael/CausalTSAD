@@ -1,0 +1,22 @@
+{
+  "common_base": "e41ebcb3ad1164cf87041e94360fb3c1b5353332",
+  "copied_files": [
+    {
+      "path": "dependencies/c01_model.py",
+      "SHA256": "2e595c89c874eafee60fc93fb58a358333695eb08fa7b28842455362875b4c93",
+      "origin": "our earlier C01 or shared input-isolation code, unchanged",
+      "external_code": false
+    },
+    {
+      "path": "causal_tsad/io.py",
+      "SHA256": "302a98b7633c17f2bc094d6907221edd12cb7bd2951a8a69bcd15b17ff275b1c",
+      "origin": "our earlier C01 or shared input-isolation code, unchanged",
+      "external_code": false
+    }
+  ],
+  "frozen_teacher_run": "C01 pretrained_none_s348",
+  "teacher_SHA256": "47e98b418848ef8b80c8bb4216e1c729ccc74d60af1bf87c029096e57f62deac",
+  "teacher_training_local_commit": "ff47fa8b2fa3fbd29463e4dc7054960e070337b9",
+  "teacher_training_github_commit": "c079c1601f801a6d0cabdd0c5f8d6e00fc1eff03",
+  "upstream_cache_SHA256": "8bc9aac78025ae07ef23c9e46806289ba6eb45bbfaeed9bdcbb758b9df146e7c"
+}

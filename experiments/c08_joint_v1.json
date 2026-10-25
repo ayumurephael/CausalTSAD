@@ -1,0 +1,22 @@
+{
+ "arms":["local_det","local_joint","dag_det","dag_joint","rewired_joint","base_cal","prior_joint","dag_random_root"],
+ "seeds":[348,349,350],"feature_dim":12,"width":32,"layers":2,
+ "batch_input_scalars":8192,"data_seed":57348,"learning_rate":0.0005,"weight_decay":0.00001,"gradient_clip":1.0,
+ "root_loss_weight":1.0,"root_loss_normalized_by_logC":true,
+ "original_multivariate_scalars_per_pass":3977216,"runs":24,"original_optimization_budget":286359552,
+ "extra_normal_training_query_scalars":286359552,"passes":3,"checkpoint_rule":"fixed final3passes; source-only pass1 learning curve, no target selection",
+ "memory_gib_per_worker":6,"max_train_hours_per_run":2,"max_campaign_hours":8,
+ "normal_FPR_calibration":0.01,
+ "source_manifest_sha256":"bd24005add8469c106b89ee69a68bf1f6a20e7070d4dcf7f6a4e3b74dd4c2ac6",
+ "upstream_cache_manifest_sha256":"8bc9aac78025ae07ef23c9e46806289ba6eb45bbfaeed9bdcbb758b9df146e7c",
+ "teacher_checkpoint_sha256":"47e98b418848ef8b80c8bb4216e1c729ccc74d60af1bf87c029096e57f62deac",
+ "base_checkpoint_sha256":"9a22a4a2e42d1fa147a4f4d0d09aa0ad6be1ef15c90f7a124fa846603cbf638e",
+ "teacher":"Frozen C01 pretrained_none seed348; same own-history innovation teacher in all arms; its original detector correction is discarded",
+ "input_boundary":"Observations-derived local innovations, valid, normal DAG, frozen original TimeRCD base logit. No true roots/event windows/lag/coefficients/noise or normal twin as inference inputs",
+ "C1":"Exact common-multi TimeRCD logit; no C1 optimizer; not a uni checkpoint comparison",
+ "target":"Fixed existing100development only; no target optimizer or validation/locked access",
+ "primary":"Source-system and development-system paired AP/VUS/FPR and conditional/end-to-end event-matched RCA, graph x root loss interaction",
+ "stop":"Fixed3passes or technical deadline; no extension based on CE or target scores; all arms evaluated, no auto expansion",
+ "support":"Root improvement must transfer to AP/VUS against same-logit base and calibration controls, replicated over3seeds; report bootstrap and every decline. Root-only gain is RCA-only evidence",
+ "compute_control":"Same parameterization and all dense C2 messages/Linear slots in every arm. Zero-value and empty-graph arms have lower active information/effective capacity; do not claim fully matched effective capacity. Additional root-loss computation separately counted"
+}

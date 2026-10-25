@@ -1,17 +1,11 @@
-# CausalTSAD
+# C08: joint no-fault / root readout for known-DAG TSAD
 
-Known-normal-DAG, zero-shot time-series anomaly detection and root cause analysis.
+Independent branch `proposal/c08-joint-root-readout-v1`, from common main. Earlier proposals are preserved on their own branches. This is a candidate solution under a fixed controlled pilot, not a proven improvement.
 
-## Branches
+Frozen self-trained TimeRCD + frozen own-history innovation teacher + a shared directed-graph posterior. Detection and RCA use the same node evidence.24runs:8controls x3optimization seeds, fixed3source passes each. Original and normal-twin optimized head queries are separately counted; no target gradients or locked-set access.
 
-`main` contains shared contracts, data preparation and research protocols. Baselines live on `baseline/<name>-vN`; proposals live on `proposal/cXX-<name>-vN`. Each starts from a recorded shared-base commit. Failed implementations, runs and results are retained. A new proposal never replaces another proposal's implementation. Combined proposals require an explicitly named integration branch and references to their component commits.
+[Exact mechanism, controls, supervision, budget and stopping rules](docs/C08_JOINT_ROOT.md). [Frozen configuration](experiments/c08_joint_v1.json). [Dependency hashes](experiments/dependencies.json).
 
-Only source code, configurations, compact aggregate results and provenance are published. Datasets, checkpoints, per-point arrays, credentials and private machine administration are excluded. Remote runs use immutable copies of a committed snapshot and record its local and GitHub commit hashes.
+Run the source-free GPU G0 first, then `tools/controller_c08.py` with the documented local paths and immutable committed snapshot. `tools/train_c08.py` accepts only the source-cache split; `tools/evaluate_c08.py` opens only the existing100development systems after inference. Credentials/private administration/data/weights are not distributed in Git. Source thresholds are fixed before target evaluation. Readout-only pilot, not full foundation pretraining or a claim of SOTA.
 
-## Information contract
-
-Main model inputs: observed values, legal-point mask, normal directed topology. True normal lags are a separately labelled enhanced comparison. Fault location/type, normal twins, coefficients, noise and equations are excluded from target inputs. Source normal twins and actual injection metadata may supervise training. Undefined effect/anomaly_channel/anomaly_time labels remain null. Target arrays never participate in gradient updates; no target checkpoint/hyperparameter selection.
-
-The 250M synthetic benchmark is split by underlying system: 50M development, 50M validation, 150M locked test. The locked test is not used during proposal development. Real-data transfer is a separate question because a real system may not provide a true DAG.
-
-See [branch policy](docs/BRANCH_POLICY.md) and [pilot registry](experiments/registry.json). No performance improvement or SOTA is claimed before matched evaluation.
+Baseline B1 is a baseline, C01 a candidate TimeRCD solution, C02/C03 restricted source mechanism probes. Their negative results do not complete or invalidate every broader Insight Card. This C08 implementation adds genuine source-root supervision and tests whether it helps detection, with base calibration, wrong graph, graph prior and wrong-root controls.
