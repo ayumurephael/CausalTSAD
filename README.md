@@ -1,3 +1,9 @@
+# C03v3：因果父值与上下文的成组对照
+
+本独立revision保留C03v2全部代码，新增degree_only/wrong_degree两图×no_context/learned_mean×3seed=12新训练；复用6个真图模型。完整信息/预算/判读见[方案](docs/C03_CAUSAL_SPECIFICITY_V3.md)。尚未声称因果收益。
+
+---
+
 # C03v2：学习因果条件机制上下文
 
 当前分支实现新的C03v2集成，不覆盖C09或旧C03。详细架构、信息边界、9组预算与停止条件见[实验说明](docs/C03_LEARNED_CONTEXT_V2.md)；实际阶段以部署记录为准，尚无新效果结论。
