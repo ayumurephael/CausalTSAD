@@ -1,4 +1,10 @@
-# C01 initial model revision
+# C01 implementation
+
+Current revision adds the complete bounded source/development cache, training,
+evaluation and finite GPU queue described in [C01_PILOT.md](C01_PILOT.md).
+Before a remote launch it remains untrained. The notes below describe the
+earlier interface-only milestone and preserved loader failures, not current
+pipeline coverage. Full-pipeline G0 results are separate from that old check.
 
 Branch `proposal/c01-parent-innovation-v1`, created from shared local main `74ee248c1e6b6d0924b2b53f7cbc50c4f70c8c8b` / remote main `7d360d53e7b828e5728030dcd2be629841bf0742`. It does not contain B1 model or training files. A later proposal cannot replace these files in place.
 

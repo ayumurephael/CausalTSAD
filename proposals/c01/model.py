@@ -4,6 +4,7 @@ This initial revision defines the model, not a completed training experiment.
 The B1 pilot is independent; no B1-specific implementation is inherited here.
 """
 from pathlib import Path
+import math
 import sys
 import torch
 from torch import nn
@@ -30,6 +31,8 @@ class FrozenTimeRCDHistory(nn.Module):
         self.encoder.num_features=1  # runtime input-count assertion only; all loaded bias weights remain
         self.feature_dim=self.encoder.d_proj
         self.microbatch=microbatch;self.checkpoint_sha256=expected_sha256
+        self.forward_accounting=dict(calls=0,padded_history_scalar_slots=0,valid_history_scalars=0,
+                                     encoded_channels=0,patch_tokens=0)
 
     def train(self,mode=True):
         # Parent .train() calls must not enable dropout in the frozen encoder.
@@ -53,6 +56,11 @@ class FrozenTimeRCDHistory(nn.Module):
         z=(x-center)/scale*valid
         output=x.new_zeros(len(x),self.feature_dim)
         indices=torch.where(valid.any(-1))[0]
+        self.forward_accounting['calls']+=1
+        self.forward_accounting['padded_history_scalar_slots']+=x.numel()
+        self.forward_accounting['valid_history_scalars']+=int(valid.sum())
+        self.forward_accounting['encoded_channels']+=len(indices)
+        self.forward_accounting['patch_tokens']+=len(indices)*((h+15)//16)
         for part in indices.split(self.microbatch):
             v=z[part,:,None];mask=valid[part]
             embeddings=self.encoder(v,mask)[:,:,0]
@@ -62,12 +70,13 @@ class FrozenTimeRCDHistory(nn.Module):
 
 
 class ParentInnovationHead(nn.Module):
-    def __init__(self,feature_dim=256,width=64,message_width=32):
+    def __init__(self,feature_dim=256,width=64,message_width=32,horizon=1):
         super().__init__()
+        self.horizon=horizon
         self.own=nn.Sequential(nn.Linear(feature_dim+1,width),nn.GELU())
         self.message=nn.Sequential(nn.Linear(2*feature_dim,message_width),nn.GELU(),
                                    nn.Linear(message_width,message_width),nn.GELU())
-        self.distribution=nn.Sequential(nn.Linear(width+message_width+1,width),nn.GELU(),nn.Linear(width,2))
+        self.distribution=nn.Sequential(nn.Linear(width+message_width+1,width),nn.GELU(),nn.Linear(width,2*horizon))
 
     def forward(self,past_features,past_valid_fraction,adjacency):
         """Return normalized conditional Gaussian parameters before seeing query."""
@@ -80,5 +89,36 @@ class ParentInnovationHead(nn.Module):
         degree=mask.sum(-2)
         pooled=(messages*mask).sum(-2)/degree.clamp_min(1)
         stats=self.distribution(torch.cat([own,pooled,torch.log1p(degree).expand(b,q,c,1)],-1))
-        mean,logvar=stats.unbind(-1)
+        if self.horizon==1:
+            mean,logvar=stats.unbind(-1)
+        else:
+            # B,Q,C,H,2 -> B,Q,H,C. All H predictions precede the query block.
+            mean,logvar=stats.reshape(b,q,c,self.horizon,2).unbind(-1)
+            mean=mean.transpose(-1,-2);logvar=logvar.transpose(-1,-2)
         return mean,logvar.clamp(-6,6)
+
+
+class CausalResidualDetector(nn.Module):
+    """Normal density and a source-trained correction to the frozen detector.
+
+    The original score can inspect the offline sequence. It never enters the
+    predictive density. CE has no gradient into the normal-density parameters.
+    """
+    def __init__(self,feature_dim=256,width=64,message_width=32,horizon=16):
+        super().__init__()
+        self.density=ParentInnovationHead(feature_dim,width,message_width,horizon)
+        self.correction=nn.Sequential(nn.Linear(5,16),nn.GELU(),nn.Linear(16,1))
+        nn.init.zeros_(self.correction[-1].weight);nn.init.zeros_(self.correction[-1].bias)
+
+    def forward(self,features,fraction,graph,query,base_logit):
+        mean,logvar=self.density(features,fraction,graph)
+        squared=(query-mean).square()*torch.exp(-logvar)
+        nll=.5*(logvar+squared+1.8378770664093453)
+        # Tail compression for detector features; the normal NLL is unchanged.
+        innovation=torch.log1p(squared).detach()
+        evidence=torch.stack([innovation.mean(-1),innovation.amax(-1),
+            innovation.std(-1,unbiased=False),base_logit.detach(),
+            torch.full_like(base_logit,math.log(query.shape[-1]))],-1)
+        residual=self.correction(evidence).squeeze(-1)
+        return dict(logit=base_logit.detach()+residual,nll=nll,innovation=innovation,
+                    density_score=innovation.amax(-1),residual=residual)
