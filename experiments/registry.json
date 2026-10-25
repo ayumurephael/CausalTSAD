@@ -229,7 +229,7 @@
     {
       "id": "C08-joint-v1",
       "branch": "proposal/c08-joint-root-readout-v1",
-      "status": "actually_optimizing",
+      "status": "complete24_audited",
       "training_local_commit": "5fc60f5faf7d2e6789a03a9c02ef3a1c5d8d54e4",
       "training_github_commit": "472b561193e10095c0b768c5731a4f9bd75ad085",
       "runs": 24,
@@ -253,7 +253,172 @@
       "port": 2229,
       "locked_test_opened": false,
       "teacher": "fixed C01 univariate seed348",
-      "parameters": 13250
+      "parameters": 13250,
+      "conclusion": "Source root learning works, target conditional localization improves selectively; detection AP decreases, mean/KL mechanism tested independently",
+      "results": "https://github.com/ayumurephael/CausalTSAD/tree/proposal/c08-joint-root-readout-v1/results/fixed_pilot"
+    },
+    {
+      "id": "C08-coupling-audit-v1",
+      "branch": "proposal/c08-coupling-audit-v1",
+      "status": "complete_audited",
+      "local_analysis": "results/c08_coupling_audit_v1/analysis.json",
+      "optimizer_updates": 0,
+      "jobs": 12
+    },
+    {
+      "id": "C08-decoupled-v2",
+      "branch": "proposal/c08-decoupled-readout-v2",
+      "status": "complete_audited",
+      "local_analysis": "results/c08b_v2/analysis.json",
+      "new_training_runs": 9,
+      "reused_training_runs": 3,
+      "original_fusion_scalars": 107384832,
+      "extra_normal_scalars": 107384832
+    },
+    {
+      "id": "C09-tail-v1",
+      "branch": "proposal/c09-conditional-tail-v1",
+      "status": "complete_audited",
+      "local_analysis": "results/c09_tail_v1/analysis.json",
+      "training_runs": 12,
+      "normal_density_gradient": 134231040,
+      "original_fusion_gradient": 134231040,
+      "extra_normal_fusion_gradient": 134231040
+    },
+    {
+      "id": "C05-isolation-v1",
+      "branch": "proposal/c05-measurement-isolation-v1",
+      "status": "complete_audited",
+      "local_analysis": "results/c05_isolation_v1/analysis.json",
+      "optimizer_updates": 0,
+      "jobs": 6,
+      "frozen_query_scalars": 28237824
+    },
+    {
+      "id": "C03-learned-context-v2",
+      "branch": "proposal/c03-learned-tail-context-v2",
+      "status": "actually_optimizing",
+      "training_runs": 9,
+      "density_gradient": 80538624,
+      "original_fusion_gradient": 80538624,
+      "extra_normal_fusion_gradient": 80538624,
+      "seeds": [
+        348,
+        349,
+        350
+      ],
+      "target_validation_opened": false,
+      "target_locked_opened": false,
+      "launch": {
+        "2226": {
+          "pid": 339533,
+          "root": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2",
+          "port": 2226,
+          "gpus": [
+            0,
+            2,
+            3
+          ],
+          "seeds": [
+            350
+          ],
+          "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2/code_e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+          "local_commit": "e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+          "github_commit": "0954b9278696b6a9dfa6052baaf35d96cc597d95",
+          "optimizer_started_at_dispatch": false,
+          "plan": {
+            "gpus": [
+              0,
+              2,
+              3
+            ],
+            "seeds": [
+              350
+            ],
+            "local_commit": "e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+            "github_commit": "0954b9278696b6a9dfa6052baaf35d96cc597d95",
+            "cache_manifest_sha256": "10d555e02aa83901b14a7b3c12c0768b80d027be6f69ef0124773b38db64e9b9",
+            "stage": "independent guarded-context TSAD solution",
+            "source_M_systems": 312,
+            "source_validation_M_systems": 123,
+            "density_normal_gradient": 26846208,
+            "observed_fusion_gradient": 26846208,
+            "extra_normal_fusion_gradient": 26846208,
+            "density_full_input_scalars": 35794944,
+            "fusion_full_input_scalars": 71589888,
+            "memory_gib_per_worker": 4,
+            "teacher_and_encoder_extra_forwards": 0,
+            "predeployment_G0": {
+              "random_features": 18432,
+              "random_residual": 1536
+            },
+            "fixed_endpoint": "3density+3fusion,936+936updates per run,3hstage/10hcampaign",
+            "target_arrays_in_gradient": false,
+            "controls": "Within each seed all3arms same GPU type,initialization,source arrays/order,ready mask,nominal capacity and denseLinear FLOPs; no_context active capacity differs",
+            "cache_reused_from": "C09 immutable cache; 535files exactSHA",
+            "other_processes_untouched": true
+          }
+        },
+        "2229": {
+          "pid": 3551997,
+          "root": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2",
+          "port": 2229,
+          "gpus": [
+            4,
+            2,
+            1,
+            0
+          ],
+          "seeds": [
+            348,
+            349
+          ],
+          "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2/code_e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+          "local_commit": "e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+          "github_commit": "0954b9278696b6a9dfa6052baaf35d96cc597d95",
+          "optimizer_started_at_dispatch": false,
+          "plan": {
+            "gpus": [
+              4,
+              2,
+              1,
+              0
+            ],
+            "seeds": [
+              348,
+              349
+            ],
+            "local_commit": "e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+            "github_commit": "0954b9278696b6a9dfa6052baaf35d96cc597d95",
+            "cache_manifest_sha256": "10d555e02aa83901b14a7b3c12c0768b80d027be6f69ef0124773b38db64e9b9",
+            "stage": "independent guarded-context TSAD solution",
+            "source_M_systems": 312,
+            "source_validation_M_systems": 123,
+            "density_normal_gradient": 53692416,
+            "observed_fusion_gradient": 53692416,
+            "extra_normal_fusion_gradient": 53692416,
+            "density_full_input_scalars": 71589888,
+            "fusion_full_input_scalars": 143179776,
+            "memory_gib_per_worker": 4,
+            "teacher_and_encoder_extra_forwards": 0,
+            "predeployment_G0": {
+              "random_features": 18432,
+              "random_residual": 1536
+            },
+            "fixed_endpoint": "3density+3fusion,936+936updates per run,3hstage/10hcampaign",
+            "target_arrays_in_gradient": false,
+            "controls": "Within each seed all3arms same GPU type,initialization,source arrays/order,ready mask,nominal capacity and denseLinear FLOPs; no_context active capacity differs",
+            "cache_reused_from": "C09 immutable cache; 535files exactSHA",
+            "other_processes_untouched": true
+          }
+        }
+      },
+      "snapshot_utc": "2026-10-25T10:59:59.419755+00:00",
+      "actual_active_jobs": 7,
+      "parameters": {
+        "tail": 9129,
+        "fusion": 113
+      }
     }
   ]
 }
