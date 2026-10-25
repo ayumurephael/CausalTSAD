@@ -1,0 +1,21 @@
+{
+ "scope":"All development only, plus named fixed100 subset; no validation/locked arrays",
+ "development_systems":540,"case_count":1080,"observed_scalars":50000000,
+ "channels":[1,8,12,16,20],"systems_per_channel":108,
+ "index_SHA256":"5a9f25989b8f0a21c2b8fe3fcd29e00026e323a0a0eacb6d05a2fc7a451194b2",
+ "source_manifest_SHA256":"bd24005add8469c106b89ee69a68bf1f6a20e7070d4dcf7f6a4e3b74dd4c2ac6",
+ "models":["official","selftrained"],"C1_native_checkpoint":"uni","M_native_checkpoint":"multi",
+ "C1_additional_comparator":"same group's multi, separately named common_multi",
+ "normalization":["native stored dtype before zscore","causal_compat FP32 before zscore"],
+ "scores":["original softmax probability","class1-minus-class0 raw logit"],
+ "metrics":["Affiliation-F","F1_T","Standard-F1","VUS-PR","AP","ROC_AUC"],
+ "FPR":["source normal-validation fixed99th-percentile","probability0.5/logit0 diagnostic"],
+ "RCA_evaluated":false,"optimizer_updates":0,"new_generation":false,
+ "checkpoint_selection":"Existing fixed official and selftrained checkpoints, no target selection",
+ "dtype":"TorchFP32,TF32disabled","attention":"Original full dense implementation, no mask/routing/architecture changes",
+ "window":5000,"tail":"upstream repeat-last with valid mask",
+ "memory_gib_per_worker":8,"minimum_free_mib":10240,
+ "GPU_deadline_hours":6,"campaign_deadline_hours":12,"CPU_metric_workers_per_node":8,
+ "compute":"Actual native/compat normal+observed input/padded encoder uses counted. Only exact normalized FP32 identity reused. Source calibration and random G0 separate.",
+ "baseline_seed_note":"Frozen deterministic inference has no optimizer seed; do not invent three pretrained replications"
+}
