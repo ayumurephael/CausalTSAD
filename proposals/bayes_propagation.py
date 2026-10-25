@@ -43,7 +43,7 @@ def fit_source(seed):
 class BayesianPropagation:
  def __init__(self,parameters,device='cuda'):self.p=parameters;self.device=device;self.hypothesis_time_cells=0
  @torch.inference_mode()
- def infer(self,values,graph,variant='dag_delay_mixture',oracle_lag=None,forecast=False):
+ def infer(self,values,graph,variant='dag_delay_mixture',oracle_lag=None,forecast=False,observed_mask=None):
   x=torch.as_tensor(values,dtype=torch.float64,device=self.device);t,c=x.shape;assert t==T and np.isfinite(graph).all();g=np.asarray(graph)
   if variant=='reverse':g=g.T
   elif variant=='wrong':
@@ -56,7 +56,10 @@ class BayesianPropagation:
   arrival=oo[:,None]+np.where(d[rr]<=c,d[rr]*dd[:,None],10**6)
   arrival[mm==0]=10**6;arrival[np.arange(h),rr]=oo
   prior=np.log(self.p['fault_prior']/c/len(modes)/len(lags)/2)+np.log(np.asarray(self.p['onset_prior'])[oo-T//4]);prior=torch.as_tensor(prior,dtype=torch.float64,device=self.device)
-  sf=torch.as_tensor(self.p['fault_sigmas'],dtype=torch.float64,device=self.device);sn=self.p['normal_sigma'];e=(x-self.p['mean']).square();lr=-torch.log(sf/sn)[:,None,None]+.5*e[None]*(1/sn**2-1/sf[:,None,None]**2);cs=lr.cumsum(1);kind=torch.as_tensor(kk,device=self.device);time=torch.arange(t,device=self.device);ll=torch.zeros((h,t),dtype=torch.float64,device=self.device)
+  sf=torch.as_tensor(self.p['fault_sigmas'],dtype=torch.float64,device=self.device);sn=self.p['normal_sigma'];e=(x-self.p['mean']).square();lr=-torch.log(sf/sn)[:,None,None]+.5*e[None]*(1/sn**2-1/sf[:,None,None]**2)
+  if observed_mask is not None:
+   mask=torch.as_tensor(observed_mask,dtype=torch.bool,device=self.device);assert mask.shape==x.shape;lr=torch.where(mask[None],lr,torch.zeros_like(lr))
+  cs=lr.cumsum(1);kind=torch.as_tensor(kk,device=self.device);time=torch.arange(t,device=self.device);ll=torch.zeros((h,t),dtype=torch.float64,device=self.device)
   for j in range(c):
    a=torch.as_tensor(arrival[:,j],device=self.device);before=cs[kind,(a-1).clamp(0,t-1),j];before=torch.where(a>0,before,torch.zeros_like(before));part=cs[kind,:,j]-before[:,None];ll+=torch.where(time[None]>=a[:,None],part,torch.zeros_like(part))
   logits=ll+prior[:,None];den=torch.logaddexp(torch.logsumexp(logits,0),torch.full((t,),np.log1p(-self.p['fault_prior']),dtype=torch.float64,device=self.device));q=(logits-den).exp();active=time[None]>=torch.as_tensor(oo,device=self.device)[:,None];activeq=q*active;score=activeq.sum(0);rootmass=torch.zeros((c,t),dtype=torch.float64,device=self.device);rootmass.index_add_(0,torch.as_tensor(rr,device=self.device),activeq);mode_mass=(activeq*torch.as_tensor(mm,device=self.device)[:,None]).sum(0)
@@ -66,3 +69,7 @@ class BayesianPropagation:
   self.hypothesis_time_cells+=h*t
   return dict(score=score.cpu().numpy(),root=(rootmass/score.clamp_min(1e-300)[None]).T.cpu().numpy(),physical_given_fault=(mode_mass/score.clamp_min(1e-300)).cpu().numpy(),forecast8=np.stack(predicted,1) if forecast else None,hypotheses=h,
    note='exact within finite persistent-single-fault likelihood model; no general exact-DBN or rawTSAD claim')
+
+def availability_mask(index,c):
+ # Separate RNG namespace; never reads graph, root, mode, labels or values.
+ rng=np.random.default_rng(seed_for('C06-missing-availability-v2',index));observed=rng.permutation(c)[:c//2];mask=np.zeros((T,c),bool);mask[:,observed]=True;return mask
