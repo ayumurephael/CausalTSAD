@@ -1,0 +1,228 @@
+{
+  "snapshot_utc": "2026-10-25T10:59:59.419755+00:00",
+  "launch": {
+    "2226": {
+      "pid": 339533,
+      "root": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2",
+      "port": 2226,
+      "gpus": [
+        0,
+        2,
+        3
+      ],
+      "seeds": [
+        350
+      ],
+      "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2/code_e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+      "local_commit": "e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+      "github_commit": "0954b9278696b6a9dfa6052baaf35d96cc597d95",
+      "optimizer_started_at_dispatch": false,
+      "plan": {
+        "gpus": [
+          0,
+          2,
+          3
+        ],
+        "seeds": [
+          350
+        ],
+        "local_commit": "e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+        "github_commit": "0954b9278696b6a9dfa6052baaf35d96cc597d95",
+        "cache_manifest_sha256": "10d555e02aa83901b14a7b3c12c0768b80d027be6f69ef0124773b38db64e9b9",
+        "stage": "independent guarded-context TSAD solution",
+        "source_M_systems": 312,
+        "source_validation_M_systems": 123,
+        "density_normal_gradient": 26846208,
+        "observed_fusion_gradient": 26846208,
+        "extra_normal_fusion_gradient": 26846208,
+        "density_full_input_scalars": 35794944,
+        "fusion_full_input_scalars": 71589888,
+        "memory_gib_per_worker": 4,
+        "teacher_and_encoder_extra_forwards": 0,
+        "predeployment_G0": {
+          "random_features": 18432,
+          "random_residual": 1536
+        },
+        "fixed_endpoint": "3density+3fusion,936+936updates per run,3hstage/10hcampaign",
+        "target_arrays_in_gradient": false,
+        "controls": "Within each seed all3arms same GPU type,initialization,source arrays/order,ready mask,nominal capacity and denseLinear FLOPs; no_context active capacity differs",
+        "cache_reused_from": "C09 immutable cache; 535files exactSHA",
+        "other_processes_untouched": true
+      }
+    },
+    "2229": {
+      "pid": 3551997,
+      "root": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2",
+      "port": 2229,
+      "gpus": [
+        4,
+        2,
+        1,
+        0
+      ],
+      "seeds": [
+        348,
+        349
+      ],
+      "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2/code_e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+      "local_commit": "e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+      "github_commit": "0954b9278696b6a9dfa6052baaf35d96cc597d95",
+      "optimizer_started_at_dispatch": false,
+      "plan": {
+        "gpus": [
+          4,
+          2,
+          1,
+          0
+        ],
+        "seeds": [
+          348,
+          349
+        ],
+        "local_commit": "e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+        "github_commit": "0954b9278696b6a9dfa6052baaf35d96cc597d95",
+        "cache_manifest_sha256": "10d555e02aa83901b14a7b3c12c0768b80d027be6f69ef0124773b38db64e9b9",
+        "stage": "independent guarded-context TSAD solution",
+        "source_M_systems": 312,
+        "source_validation_M_systems": 123,
+        "density_normal_gradient": 53692416,
+        "observed_fusion_gradient": 53692416,
+        "extra_normal_fusion_gradient": 53692416,
+        "density_full_input_scalars": 71589888,
+        "fusion_full_input_scalars": 143179776,
+        "memory_gib_per_worker": 4,
+        "teacher_and_encoder_extra_forwards": 0,
+        "predeployment_G0": {
+          "random_features": 18432,
+          "random_residual": 1536
+        },
+        "fixed_endpoint": "3density+3fusion,936+936updates per run,3hstage/10hcampaign",
+        "target_arrays_in_gradient": false,
+        "controls": "Within each seed all3arms same GPU type,initialization,source arrays/order,ready mask,nominal capacity and denseLinear FLOPs; no_context active capacity differs",
+        "cache_reused_from": "C09 immutable cache; 535files exactSHA",
+        "other_processes_untouched": true
+      }
+    }
+  },
+  "G0": "Both nodes passed, own-query/future/guard/unrelated/channel equivariance error0; active-history positive",
+  "preflight": {
+    "2226": {
+      "installed": {
+        "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2/code_e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+        "local_commit": "e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+        "files": 31
+      },
+      "status": "passed",
+      "G0": {
+        "status": "passed",
+        "checks": {
+          "no_context": {
+            "own_query_error": 0.0,
+            "future_error": 0.0,
+            "guard_error": 0.0,
+            "unrelated_channel_error": 0.0,
+            "permutation_error": 0.0,
+            "active_history_effect": 0.0
+          },
+          "learned_mean": {
+            "own_query_error": 0.0,
+            "future_error": 0.0,
+            "guard_error": 0.0,
+            "unrelated_channel_error": 0.0,
+            "permutation_error": 0.0,
+            "active_history_effect": 0.0007722377777099609
+          },
+          "learned_median": {
+            "own_query_error": 0.0,
+            "future_error": 0.0,
+            "guard_error": 0.0,
+            "unrelated_channel_error": 0.0,
+            "permutation_error": 0.0,
+            "active_history_effect": 0.0013256072998046875
+          }
+        },
+        "tail_parameters": 9129,
+        "fusion_parameters": 113,
+        "target_arrays_opened": false,
+        "source_arrays_opened": false,
+        "optimizer_updates": 0,
+        "random_predictive_feature_scalars": 18432,
+        "random_history_residual_scalars": 1536,
+        "current_or_future_residual_not_used_for_own_distribution": true,
+        "C1_identity": true,
+        "warmup256_identity": true,
+        "scope": "C09 upstream raw-input parent/query/future invariance inherited with exact cache SHA; this test covers new learned context operator"
+      },
+      "gpus": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2/code_e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+      "cache": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c09_conditional_tail_v1/cache",
+      "cache_manifest_sha256": "10d555e02aa83901b14a7b3c12c0768b80d027be6f69ef0124773b38db64e9b9",
+      "cache_files_SHA_verified": 535
+    },
+    "2229": {
+      "installed": {
+        "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2/code_e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+        "local_commit": "e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+        "files": 31
+      },
+      "status": "passed",
+      "G0": {
+        "status": "passed",
+        "checks": {
+          "no_context": {
+            "own_query_error": 0.0,
+            "future_error": 0.0,
+            "guard_error": 0.0,
+            "unrelated_channel_error": 0.0,
+            "permutation_error": 0.0,
+            "active_history_effect": 0.0
+          },
+          "learned_mean": {
+            "own_query_error": 0.0,
+            "future_error": 0.0,
+            "guard_error": 0.0,
+            "unrelated_channel_error": 0.0,
+            "permutation_error": 0.0,
+            "active_history_effect": 0.0007722377777099609
+          },
+          "learned_median": {
+            "own_query_error": 0.0,
+            "future_error": 0.0,
+            "guard_error": 0.0,
+            "unrelated_channel_error": 0.0,
+            "permutation_error": 0.0,
+            "active_history_effect": 0.0013256072998046875
+          }
+        },
+        "tail_parameters": 9129,
+        "fusion_parameters": 113,
+        "target_arrays_opened": false,
+        "source_arrays_opened": false,
+        "optimizer_updates": 0,
+        "random_predictive_feature_scalars": 18432,
+        "random_history_residual_scalars": 1536,
+        "current_or_future_residual_not_used_for_own_distribution": true,
+        "C1_identity": true,
+        "warmup256_identity": true,
+        "scope": "C09 upstream raw-input parent/query/future invariance inherited with exact cache SHA; this test covers new learned context operator"
+      },
+      "gpus": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2/code_e9e11ce7bbb9dc4b34c9dc75ea3060b4fb524179",
+      "cache": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_learned_tail_context_v2/reused_c09_cache_v1",
+      "cache_manifest_sha256": "10d555e02aa83901b14a7b3c12c0768b80d027be6f69ef0124773b38db64e9b9",
+      "cache_files_SHA_verified": 535
+    }
+  },
+  "privacy": "No raw arrays/checkpoints/credentials uploaded",
+  "performance": "Not yet measured; current losses do not prove context or TSAD benefit"
+}
