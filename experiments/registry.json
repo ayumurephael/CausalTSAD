@@ -1,6 +1,6 @@
 {
   "schema_version": "causal-tsad-runs-1",
-  "updated_at_utc": "2026-10-25T09:26:26.881097+00:00",
+  "updated_at_utc": "2026-10-25T14:08:08.268479+00:00",
   "entries": [
     {
       "id": "B1-shared-v1",
@@ -429,7 +429,7 @@
     {
       "id": "C03-causal-specificity-v3",
       "branch": "proposal/c03-causal-specificity-v3",
-      "status": "actual_training",
+      "status": "complete_12_new_plus_6_reused_all_audited",
       "new_runs": 12,
       "reused_runs": 6,
       "launch": {
@@ -517,7 +517,10 @@
           "code": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c03_causal_specificity_v3/code_31685e31028a0294e03e7b3e6ec0c8e7186d7660",
           "optimizer_started_at_dispatch": false
         }
-      }
+      },
+      "causal_parent_value_benefit_established": false,
+      "source_cross_graph_residual_pinball_comparable": false,
+      "results": "https://github.com/ayumurephael/CausalTSAD/tree/proposal/c03-causal-specificity-v3/results/causal_specificity_v3"
     },
     {
       "id": "B2-joint-baseline-v1",
@@ -526,6 +529,30 @@
       "new_training": false,
       "raw_input_API": true,
       "free_running_event_metrics_measured": false
+    },
+    {
+      "id": "TimeRCD-frozen-development-v1",
+      "status": "CPU_metrics_running",
+      "branch": "baseline/timercd-synthetic-development-v1",
+      "inference_local_commit": "75a1945fe83a48dad57141b734ae71d65f4f84e5",
+      "inference_github_commit": "f2a4d1a2eb95f0aa25d5a68eb1fd36fbb66d3233",
+      "systems": 540,
+      "cases": 1080,
+      "unique_observed_scalars": 50000000,
+      "subset100_separate": true,
+      "metric_records": 538,
+      "RCA_evaluated": false,
+      "optimizer_updates": 0,
+      "GPU_inference_complete": true,
+      "source_calibration_complete": true,
+      "source_calibration_SHA256": "0a02857c43dd9583233af7fcad0730eee57fdfd3950dde7a9f55312fa8490109",
+      "target_validation_or_locked_opened_in_this_run": false,
+      "locked_test_ever_opened": false,
+      "historical_validation_note": "Earlier cancelled pre-causal baseline included development/validation; deleted as authorized. Current run reads development only.",
+      "raw_probability_primary": true,
+      "raw_logit_and_causal_compat_separate": true,
+      "native_uni_for_C1": true,
+      "common_multi_C1_separate": true
     }
   ]
 }
