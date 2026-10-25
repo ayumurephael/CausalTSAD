@@ -1,6 +1,6 @@
 {
   "schema_version": "causal-tsad-runs-1",
-  "updated_at_utc": "2026-10-25T07:46:24.675483+00:00",
+  "updated_at_utc": "2026-10-25T09:26:26.881097+00:00",
   "entries": [
     {
       "id": "B1-shared-v1",
@@ -225,6 +225,35 @@
       },
       "conclusion": "True parents give modest source prediction/RCA signal; timing refresh is not a stable main cause and source AP gains remain uncertain; no target TSAD proof",
       "results": "https://github.com/ayumurephael/CausalTSAD/tree/proposal/c02-parent-timing-v1/results/fixed_pilot"
+    },
+    {
+      "id": "C08-joint-v1",
+      "branch": "proposal/c08-joint-root-readout-v1",
+      "status": "actually_optimizing",
+      "training_local_commit": "5fc60f5faf7d2e6789a03a9c02ef3a1c5d8d54e4",
+      "training_github_commit": "472b561193e10095c0b768c5731a4f9bd75ad085",
+      "runs": 24,
+      "seeds": [
+        348,
+        349,
+        350
+      ],
+      "passes": 3,
+      "original_optimization_budget": 286359552,
+      "extra_normal_training_scalars": 286359552,
+      "root": "/home2/xuhaijie/TimeRCD_reproduction/causal_tsad/c08_joint_root_v1",
+      "controller_PID": 2875892,
+      "gpus": [
+        1,
+        2,
+        0,
+        5,
+        4
+      ],
+      "port": 2229,
+      "locked_test_opened": false,
+      "teacher": "fixed C01 univariate seed348",
+      "parameters": 13250
     }
   ]
 }
