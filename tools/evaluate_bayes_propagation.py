@@ -16,12 +16,12 @@ def run(a):
   for variant in VARIANTS:
    scores=[];roots=[];mode=[];normal=[];forecast=[]
    for k,x in enumerate(r['cases']):
-    out=m.infer(x,r['graph'],variant,oracle_lag=r['lag'] if variant=='oracle_lag' else None,forecast=(variant in ['independent','dag_delay_mixture'] and k in [4,6]));s=out['score'];assert np.isfinite(s).all();scores.append(s);actual+=x.size
+    out=m.infer(x,r['graph'],variant,oracle_lag=r['lag'] if variant=='oracle_lag' else None,forecast=(variant in ['independent','dag_delay_mixture']));s=out['score'];assert np.isfinite(s).all();scores.append(s);actual+=x.size
     if k<4:normal.extend(s.tolist())
     else:
      root=out['root'][r['onset']:].mean(0);rank=np.argsort(-root,kind='stable');rr=int(np.flatnonzero(rank==r['root'])[0])+1;roots.append(dict(mode=r['modes'][k],Top1=int(rr==1),Top3=int(rr<=3),MRR=1/rr));mode.append(float(out['physical_given_fault'][r['onset']:].mean()))
     if out['forecast8'] is not None:
-     truth=r['oracle_activation_only'][0 if k==4 else 2][8:];prediction=out['forecast8'][:-8];forecast.append(dict(mode=r['modes'][k],Brier_oracle_latent_future8=float(np.mean((prediction-truth)**2)),scope='oracle latent simulation audit only, never model input or new threshold labels'))
+     truth=(np.zeros_like(x,dtype=bool) if k<4 else r['oracle_activation_only'][k-4])[8:];prediction=out['forecast8'][:-8];forecast.append(dict(mode=r['modes'][k],Brier_oracle_latent_future8=float(np.mean((prediction-truth)**2)),scope='all8cases incl4normal, oracle latent simulation audit only, never model input or new threshold labels'))
    score=np.stack(scores);labels=r['labels'];methods[variant]=dict(group_AP=float(average_precision_score(labels.ravel(),score.ravel())),group_ROC_AUC=float(roc_auc_score(labels.ravel(),score.ravel())),normal_FPR_posterior_0_5=float(np.mean(np.asarray(normal)>.5)),RCA=roots,mean_physical_given_fault_by_case=mode,forecast=forecast,
     measurement_AP=float(average_precision_score(labels[:6].ravel(),score[:6].ravel())),physical_AP=float(average_precision_score(labels[[0,1,2,3,6,7]].ravel(),score[[0,1,2,3,6,7]].ravel())))
    path=a.output/'scores'/(str(i)+'_'+variant+'.npz');path.parent.mkdir(exist_ok=True);np.savez_compressed(path,score=score);methods[variant]['scores_SHA256']=sha256(path)
