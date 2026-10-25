@@ -1,6 +1,6 @@
 {
   "schema_version": "causal-tsad-runs-1",
-  "updated_at_utc": "2026-10-25T05:38:08.369529+00:00",
+  "updated_at_utc": "2026-10-25T05:52:51.100040+00:00",
   "entries": [
     {
       "id": "B1-shared-v1",
@@ -59,7 +59,7 @@
     {
       "id": "C01-parent-innovation-v1",
       "branch": "proposal/c01-parent-innovation-v1",
-      "status": "recovery_running_cache_complete_four_trained_runs_reused",
+      "status": "all12_training_complete_8of12_development_evaluations_complete",
       "validated_model_local_revision": "e1e4128ddcda84af9b605b9485f92408698a0617",
       "weight_sha256": "9a22a4a2e42d1fa147a4f4d0d09aa0ad6be1ef15c90f7a124fa846603cbf638e",
       "independent_from_B1_implementation": true,
@@ -98,7 +98,40 @@
       "missing_training_runs": 8,
       "budget_increased": false,
       "technical_interruption": "cuBLAS handle allocation at zero optimization steps; old artifacts preserved",
-      "current_cache_complete": true
+      "current_cache_complete": true,
+      "completed_training_runs": 12,
+      "completed_development_evaluations": 8,
+      "pending_development_evaluations": 4,
+      "postrun_SHA_audit_pending": true
+    },
+    {
+      "id": "C03-mechanism-context-v1",
+      "branch": "proposal/c03-mechanism-context-v1",
+      "training_local_commit": "ac5682d116bf53a7f91a4db4e8d49b8f989d6e37",
+      "training_github_commit": "3efe6ad9722ee5c68c6ced3db24a5953233516af",
+      "shared_base_local_commit": "7b7d7f653582a11e2ca944a891ac2a5dd1794193",
+      "status": "G0_passed_source_context_cache_active_optimizer_not_started_at_snapshot",
+      "arms": [
+        "zero",
+        "mean",
+        "median"
+      ],
+      "optimization_seeds": [
+        348,
+        349,
+        350
+      ],
+      "planned_runs": 9,
+      "optimized_normal_scalars_per_run": 4976640,
+      "planned_normal_optimized_scalars": 44789760,
+      "anomalous_observed_training_scalars": 0,
+      "parameters": 18016,
+      "hardware": "4 shared A100 devices, memory checked before each job,4GiB cap per worker",
+      "source_only": true,
+      "benchmark_arrays_opened": false,
+      "TimeRCD_integration": false,
+      "posterior_or_learned_contamination_model_implemented": false,
+      "endpoint": "one fixed pass434updates; 2h per run/8h technical campaign; no target selection"
     }
   ]
 }
