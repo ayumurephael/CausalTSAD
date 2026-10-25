@@ -4,7 +4,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from causal_tsad.io import atomic_json,sha256
 
-def queue(root,tasks,gpus,deadline,stage):
+def queue(root,tasks,gpus,deadline,stage,minimum_free_MiB=None):
  active={};done=[];failed=[]
  while tasks or active:
   assert time.time()<deadline,'Fixed source-stage deadline'
@@ -16,7 +16,7 @@ def queue(root,tasks,gpus,deadline,stage):
    atomic_json(root/(stage+'_controller_progress.json'),dict(status='needs_attention',stage=stage,failed=failed,completed=done,pending=[t['name'] for t in tasks],active=[dict(gpu=g,name=z['task']['name'],pid=z['p'].pid) for g,z in active.items()]));raise RuntimeError('Stop new own dispatch after failure')
   raw=subprocess.check_output(['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits']).decode();free={int(v.split(',')[0]):float(v.split(',')[1]) for v in raw.strip().splitlines()}
   for gpu in gpus:
-   if gpu in active or not tasks or free[gpu]<(1536 if stage=='fusion' else 2048):continue
+   if gpu in active or not tasks or free[gpu]<(minimum_free_MiB if minimum_free_MiB is not None else 1536 if stage=='fusion' else 2048):continue
    task=tasks.pop(0);env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=str(gpu);log=(root/'logs'/(stage+'_'+task['name']+'.log')).open('x');p=subprocess.Popen(task['cmd'],stdout=log,stderr=subprocess.STDOUT,stdin=subprocess.DEVNULL,env=env,start_new_session=True);active[gpu]=dict(p=p,task=task,log=log)
   atomic_json(root/(stage+'_controller_progress.json'),dict(status='running',stage=stage,pid=os.getpid(),completed=done,pending=[t['name'] for t in tasks],active=[dict(gpu=g,name=z['task']['name'],pid=z['p'].pid) for g,z in active.items()],failed=[]))
   if tasks or active:time.sleep(5)
