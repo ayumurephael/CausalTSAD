@@ -1,0 +1,11 @@
+{
+  "initializations_dense_forward_FLOPs_parameters_cache_identical": true,
+  "baseline_training_not_repeated": true,
+  "new_runs": 9,
+  "reused_runs": 3,
+  "seeds": [
+    348,
+    349,
+    350
+  ]
+}
