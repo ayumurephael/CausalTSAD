@@ -1,0 +1,3782 @@
+{
+  "status": "complete",
+  "source_validation_systems": 513,
+  "source_multivariate_systems": 123,
+  "seeds": [
+    348,
+    349,
+    350
+  ],
+  "groups": {
+    "all": {
+      "systems": 513,
+      "methods": {
+        "none": {
+          "normal_NLL": 10.349738414137297,
+          "ready_NLL": 1.3009148340398728,
+          "observed_AP": 0.28127355038363816,
+          "RCA_Top1": 0.6341463414634146,
+          "RCA_Top3": 0.7046070460704607,
+          "RCA_MRR": 0.7116338494387277
+        },
+        "parents_block": {
+          "normal_NLL": 9.971441118263284,
+          "ready_NLL": 1.3040540130050093,
+          "observed_AP": 0.2804587936089379,
+          "RCA_Top1": 0.6558265582655827,
+          "RCA_Top3": 0.7127371273712737,
+          "RCA_MRR": 0.7223223930541003
+        },
+        "parents_past": {
+          "normal_NLL": 10.03782782355557,
+          "ready_NLL": 1.3006098153840573,
+          "observed_AP": 0.28131597372422956,
+          "RCA_Top1": 0.6558265582655827,
+          "RCA_Top3": 0.7073170731707317,
+          "RCA_MRR": 0.7219401533425923
+        },
+        "parents_current": {
+          "normal_NLL": 10.028976390662326,
+          "ready_NLL": 1.3001615082078974,
+          "observed_AP": 0.2807283707860742,
+          "RCA_Top1": 0.6531165311653117,
+          "RCA_Top3": 0.7100271002710027,
+          "RCA_MRR": 0.7204539400677612
+        },
+        "rewired_current": {
+          "normal_NLL": 10.329178734364797,
+          "ready_NLL": 1.3026146731878583,
+          "observed_AP": 0.28159454072753265,
+          "RCA_Top1": 0.6287262872628726,
+          "RCA_Top3": 0.7154471544715447,
+          "RCA_MRR": 0.7104536573032507
+        }
+      },
+      "differences": {
+        "fresh_past_minus_block": {
+          "normal_NLL": {
+            "mean": 0.06638670529228592,
+            "per_seed": [
+              0.04147104863767271,
+              0.10268434272174946,
+              0.05500472451743559
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.005573950160858768,
+              0.25672594179399916
+            ],
+            "systems": 513,
+            "negative_systems": 359,
+            "positive_systems": 154
+          },
+          "ready_NLL": {
+            "mean": -0.0034441976209520285,
+            "per_seed": [
+              -0.0029201009120160375,
+              -0.006382989836947495,
+              -0.0010295021138925534
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.007244798541069031,
+              -0.0003063193219214633
+            ],
+            "systems": 513,
+            "negative_systems": 357,
+            "positive_systems": 156
+          },
+          "observed_AP": {
+            "mean": 0.0008571801152916851,
+            "per_seed": [
+              0.0007257657317131454,
+              0.001208513978679387,
+              0.0006372606354825228
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0003025904264232258,
+              0.002345526667901723
+            ],
+            "systems": 513,
+            "negative_systems": 226,
+            "positive_systems": 227
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 123,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": -0.005420054200542005,
+            "per_seed": [
+              -0.008130081300813009,
+              -0.008130081300813009,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.018970189701897018,
+              0.0
+            ],
+            "systems": 123,
+            "negative_systems": 2,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.0003822397115080044,
+            "per_seed": [
+              -0.0006157122010780547,
+              -0.0022551296941540847,
+              0.0017241227607081265
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.003803309194569358,
+              0.0023921045643606597
+            ],
+            "systems": 123,
+            "negative_systems": 8,
+            "positive_systems": 6
+          }
+        },
+        "current_minus_past": {
+          "normal_NLL": {
+            "mean": -0.008851432893243682,
+            "per_seed": [
+              0.0014818914917245013,
+              -0.031168879588909782,
+              0.0031326894174542345
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.05840413082509632,
+              0.007178669543410365
+            ],
+            "systems": 513,
+            "negative_systems": 355,
+            "positive_systems": 158
+          },
+          "ready_NLL": {
+            "mean": -0.00044830717615991386,
+            "per_seed": [
+              -0.0006455667534766839,
+              0.00011328310064869782,
+              -0.0008126378756517555
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0009996573333619398,
+              0.00027853788358968436
+            ],
+            "systems": 513,
+            "negative_systems": 358,
+            "positive_systems": 155
+          },
+          "observed_AP": {
+            "mean": -0.0005876029381554154,
+            "per_seed": [
+              -0.0006876620534662765,
+              -0.0005073339286371105,
+              -0.0005678128323628596
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0019356354680980827,
+              0.0005136888990964509
+            ],
+            "systems": 513,
+            "negative_systems": 216,
+            "positive_systems": 235
+          },
+          "RCA_Top1": {
+            "mean": -0.0027100271002710027,
+            "per_seed": [
+              -0.008130081300813009,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.016260162601626018,
+              0.0
+            ],
+            "systems": 123,
+            "negative_systems": 1,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0027100271002710027,
+            "per_seed": [
+              0.0,
+              0.008130081300813009,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.016260162601626018
+            ],
+            "systems": 123,
+            "negative_systems": 0,
+            "positive_systems": 1
+          },
+          "RCA_MRR": {
+            "mean": -0.0014862132748311612,
+            "per_seed": [
+              -0.004016647309330237,
+              0.0007259001161440185,
+              -0.0011678926313072658
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.007678678969329375,
+              0.0010786875725900106
+            ],
+            "systems": 123,
+            "negative_systems": 6,
+            "positive_systems": 5
+          }
+        },
+        "current_minus_block": {
+          "normal_NLL": {
+            "mean": 0.05753527239904224,
+            "per_seed": [
+              0.04295294012939721,
+              0.07151546313283969,
+              0.058137413934889824
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.005743980547140913,
+              0.2088179512466216
+            ],
+            "systems": 513,
+            "negative_systems": 366,
+            "positive_systems": 147
+          },
+          "ready_NLL": {
+            "mean": -0.0038925047971119426,
+            "per_seed": [
+              -0.0035656676654927215,
+              -0.006269706736298797,
+              -0.001842139989544309
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.007136534668548762,
+              -0.0008977455750853377
+            ],
+            "systems": 513,
+            "negative_systems": 366,
+            "positive_systems": 147
+          },
+          "observed_AP": {
+            "mean": 0.0002695771771362697,
+            "per_seed": [
+              3.8103678246868964e-05,
+              0.000701180050042277,
+              6.944780311966322e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.001114393073835542,
+              0.0020582573508159748
+            ],
+            "systems": 513,
+            "negative_systems": 215,
+            "positive_systems": 241
+          },
+          "RCA_Top1": {
+            "mean": -0.0027100271002710027,
+            "per_seed": [
+              -0.008130081300813009,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.016260162601626018,
+              0.0
+            ],
+            "systems": 123,
+            "negative_systems": 1,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": -0.0027100271002710027,
+            "per_seed": [
+              -0.008130081300813009,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.016260162601626018,
+              0.0
+            ],
+            "systems": 123,
+            "negative_systems": 1,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.0018684529863391653,
+            "per_seed": [
+              -0.004632359510408289,
+              -0.0015292295780100662,
+              0.0005562301294008609
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00816280179847253,
+              0.0017794304836987727
+            ],
+            "systems": 123,
+            "negative_systems": 9,
+            "positive_systems": 6
+          }
+        },
+        "current_minus_none": {
+          "normal_NLL": {
+            "mean": -0.3207620234749703,
+            "per_seed": [
+              -0.25405487516934877,
+              -0.3683468469402246,
+              -0.3398843483153375
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -1.06704334865982,
+              0.0037866894971479966
+            ],
+            "systems": 513,
+            "negative_systems": 235,
+            "positive_systems": 278
+          },
+          "ready_NLL": {
+            "mean": -0.000753325831975311,
+            "per_seed": [
+              -0.0010939991032635724,
+              -0.001881375066485786,
+              0.0007153966738234254
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.012491718476820951,
+              0.009380736774713511
+            ],
+            "systems": 513,
+            "negative_systems": 228,
+            "positive_systems": 285
+          },
+          "observed_AP": {
+            "mean": -0.0005451795975639572,
+            "per_seed": [
+              -0.0018468728375157636,
+              -0.0006048815517887799,
+              0.0008162155966126725
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.004495081807043945,
+              0.0030250908124550037
+            ],
+            "systems": 513,
+            "negative_systems": 235,
+            "positive_systems": 228
+          },
+          "RCA_Top1": {
+            "mean": 0.018970189701897018,
+            "per_seed": [
+              0.016260162601626018,
+              0.016260162601626018,
+              0.024390243902439025
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.04065040650406504
+            ],
+            "systems": 123,
+            "negative_systems": 0,
+            "positive_systems": 5
+          },
+          "RCA_Top3": {
+            "mean": 0.005420054200542005,
+            "per_seed": [
+              0.008130081300813009,
+              0.008130081300813009,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.02981029810298103,
+              0.037940379403794036
+            ],
+            "systems": 123,
+            "negative_systems": 2,
+            "positive_systems": 4
+          },
+          "RCA_MRR": {
+            "mean": 0.008820090629033718,
+            "per_seed": [
+              0.009685120660730417,
+              0.006517172980587614,
+              0.010257978245783124
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0017250397712796094,
+              0.02151732329323793
+            ],
+            "systems": 123,
+            "negative_systems": 19,
+            "positive_systems": 19
+          }
+        },
+        "current_minus_wrong": {
+          "normal_NLL": {
+            "mean": -0.3002023437024712,
+            "per_seed": [
+              -0.27131917822895457,
+              -0.3500888244218064,
+              -0.2791990284566526
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.967743006627462,
+              0.00046635179975885966
+            ],
+            "systems": 513,
+            "negative_systems": 226,
+            "positive_systems": 287
+          },
+          "ready_NLL": {
+            "mean": -0.0024531649799607188,
+            "per_seed": [
+              -0.0022921681868867333,
+              -0.004190806873128196,
+              -0.0008765198798672266
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.011256179874829459,
+              0.005194908374699001
+            ],
+            "systems": 513,
+            "negative_systems": 220,
+            "positive_systems": 293
+          },
+          "observed_AP": {
+            "mean": -0.0008661699414584863,
+            "per_seed": [
+              -0.001064327128076465,
+              -0.0015399228827190988,
+              5.74018642010495e-06
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.004163971271159276,
+              0.0023315698354168936
+            ],
+            "systems": 513,
+            "negative_systems": 255,
+            "positive_systems": 207
+          },
+          "RCA_Top1": {
+            "mean": 0.024390243902439025,
+            "per_seed": [
+              0.016260162601626018,
+              0.024390243902439025,
+              0.032520325203252036
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.005420054200542005,
+              0.051490514905149054
+            ],
+            "systems": 123,
+            "negative_systems": 0,
+            "positive_systems": 7
+          },
+          "RCA_Top3": {
+            "mean": -0.005420054200542005,
+            "per_seed": [
+              0.0,
+              0.0,
+              -0.016260162601626018
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.04065040650406504,
+              0.02710027100271003
+            ],
+            "systems": 123,
+            "negative_systems": 3,
+            "positive_systems": 3
+          },
+          "RCA_MRR": {
+            "mean": 0.010000282764510407,
+            "per_seed": [
+              0.00720899470899471,
+              0.01024697975917488,
+              0.01254487382536163
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.001580886367471732,
+              0.024545300754650314
+            ],
+            "systems": 123,
+            "negative_systems": 18,
+            "positive_systems": 16
+          }
+        }
+      },
+      "frozen_timing_intervention": {
+        "none_block_minus_current_at_same_weights": {
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "systems": 513,
+          "negative_systems": 0,
+          "positive_systems": 0
+        },
+        "parents_current_block_minus_current_at_same_weights": {
+          "mean": 0.00011515690956586672,
+          "per_seed": [
+            -6.889704375239144e-05,
+            8.376021134225946e-07,
+            0.000413530170336569
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.00038186701921149457,
+            0.0005004382911946108
+          ],
+          "systems": 513,
+          "negative_systems": 51,
+          "positive_systems": 72
+        },
+        "parents_past_block_minus_current_at_same_weights": {
+          "mean": 9.014662246257938e-05,
+          "per_seed": [
+            -3.484826803672151e-05,
+            -5.68416848284924e-06,
+            0.0003109723039073089
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.0003445835276963728,
+            0.000438147777469999
+          ],
+          "systems": 513,
+          "negative_systems": 54,
+          "positive_systems": 69
+        },
+        "parents_block_block_minus_current_at_same_weights": {
+          "mean": -0.0005510597743331186,
+          "per_seed": [
+            -0.0003425201244986313,
+            -0.0010543711933708563,
+            -0.00025628800512986807
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.001264307454780296,
+            -9.526269845640301e-05
+          ],
+          "systems": 513,
+          "negative_systems": 82,
+          "positive_systems": 41
+        }
+      }
+    },
+    "multi": {
+      "systems": 123,
+      "methods": {
+        "none": {
+          "normal_NLL": 1.4040298163083187,
+          "ready_NLL": 1.311898961299803,
+          "observed_AP": 0.2316848136369846,
+          "RCA_Top1": 0.6341463414634146,
+          "RCA_Top3": 0.7046070460704607,
+          "RCA_MRR": 0.7116338494387277
+        },
+        "parents_block": {
+          "normal_NLL": 1.3868612414453088,
+          "ready_NLL": 1.3014980927715456,
+          "observed_AP": 0.2343716703386527,
+          "RCA_Top1": 0.6558265582655827,
+          "RCA_Top3": 0.7127371273712737,
+          "RCA_MRR": 0.7223223930541003
+        },
+        "parents_past": {
+          "normal_NLL": 1.388779460253108,
+          "ready_NLL": 1.30171017692018,
+          "observed_AP": 0.23744989786044773,
+          "RCA_Top1": 0.6558265582655827,
+          "RCA_Top3": 0.7073170731707317,
+          "RCA_MRR": 0.7219401533425923
+        },
+        "parents_current": {
+          "normal_NLL": 1.387410632155452,
+          "ready_NLL": 1.3007541920757553,
+          "observed_AP": 0.2345632100403604,
+          "RCA_Top1": 0.6531165311653117,
+          "RCA_Top3": 0.7100271002710027,
+          "RCA_MRR": 0.7204539400677612
+        },
+        "rewired_current": {
+          "normal_NLL": 1.404561259074586,
+          "ready_NLL": 1.3109407300548501,
+          "observed_AP": 0.23369809919174853,
+          "RCA_Top1": 0.6287262872628726,
+          "RCA_Top3": 0.7154471544715447,
+          "RCA_MRR": 0.7104536573032507
+        }
+      },
+      "differences": {
+        "fresh_past_minus_block": {
+          "normal_NLL": {
+            "mean": 0.0019182188077993833,
+            "per_seed": [
+              0.0024647194195569046,
+              0.0017003339480578415,
+              0.0015896030557834037
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0011117192424409757,
+              0.006457006991878757
+            ],
+            "systems": 123,
+            "negative_systems": 75,
+            "positive_systems": 48
+          },
+          "ready_NLL": {
+            "mean": 0.00021208414863441695,
+            "per_seed": [
+              -0.00012396748473004598,
+              0.001109314158679993,
+              -0.00034909422804669637
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.001430287323185422,
+              0.002339301619749405
+            ],
+            "systems": 123,
+            "negative_systems": 73,
+            "positive_systems": 50
+          },
+          "observed_AP": {
+            "mean": 0.0030782275217949937,
+            "per_seed": [
+              0.0031899909537404488,
+              0.003436077443879192,
+              0.002608614167765342
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0013393423866885172,
+              0.008593976869277733
+            ],
+            "systems": 123,
+            "negative_systems": 52,
+            "positive_systems": 54
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 123,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": -0.005420054200542005,
+            "per_seed": [
+              -0.008130081300813009,
+              -0.008130081300813009,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.018970189701897018,
+              0.0
+            ],
+            "systems": 123,
+            "negative_systems": 2,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.0003822397115080044,
+            "per_seed": [
+              -0.0006157122010780547,
+              -0.0022551296941540847,
+              0.0017241227607081265
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.003803309194569358,
+              0.0023921045643606597
+            ],
+            "systems": 123,
+            "negative_systems": 8,
+            "positive_systems": 6
+          }
+        },
+        "current_minus_past": {
+          "normal_NLL": {
+            "mean": -0.0013688280976561673,
+            "per_seed": [
+              -0.0012486402581377727,
+              -0.0013988841839922153,
+              -0.001458959850838514
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.002962029598108152,
+              3.307898677784563e-05
+            ],
+            "systems": 123,
+            "negative_systems": 101,
+            "positive_systems": 22
+          },
+          "ready_NLL": {
+            "mean": -0.0009559848444248602,
+            "per_seed": [
+              -0.0002189351291191287,
+              -0.00187266406004991,
+              -0.0007763553441055422
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0024316687046027764,
+              0.0002671753810996283
+            ],
+            "systems": 123,
+            "negative_systems": 100,
+            "positive_systems": 23
+          },
+          "observed_AP": {
+            "mean": -0.002886687820087312,
+            "per_seed": [
+              -0.001896447911227277,
+              -0.004343167610559962,
+              -0.002420447938474698
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.008537431331284255,
+              0.0010561135201428145
+            ],
+            "systems": 123,
+            "negative_systems": 56,
+            "positive_systems": 50
+          },
+          "RCA_Top1": {
+            "mean": -0.0027100271002710027,
+            "per_seed": [
+              -0.008130081300813009,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.016260162601626018,
+              0.0
+            ],
+            "systems": 123,
+            "negative_systems": 1,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0027100271002710027,
+            "per_seed": [
+              0.0,
+              0.008130081300813009,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.016260162601626018
+            ],
+            "systems": 123,
+            "negative_systems": 0,
+            "positive_systems": 1
+          },
+          "RCA_MRR": {
+            "mean": -0.0014862132748311612,
+            "per_seed": [
+              -0.004016647309330237,
+              0.0007259001161440185,
+              -0.0011678926313072658
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.007678678969329375,
+              0.0010786875725900106
+            ],
+            "systems": 123,
+            "negative_systems": 6,
+            "positive_systems": 5
+          }
+        },
+        "current_minus_block": {
+          "normal_NLL": {
+            "mean": 0.0005493907101432159,
+            "per_seed": [
+              0.0012160791614191319,
+              0.00030144976406562616,
+              0.00013064320494488973
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.002109612423553053,
+              0.004010350069379418
+            ],
+            "systems": 123,
+            "negative_systems": 85,
+            "positive_systems": 38
+          },
+          "ready_NLL": {
+            "mean": -0.0007439006957904433,
+            "per_seed": [
+              -0.0003429026138491747,
+              -0.0007633499013699167,
+              -0.0011254495721522385
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0024721333893333993,
+              0.0011755788794701016
+            ],
+            "systems": 123,
+            "negative_systems": 84,
+            "positive_systems": 39
+          },
+          "observed_AP": {
+            "mean": 0.0001915397017076814,
+            "per_seed": [
+              0.0012935430425131717,
+              -0.0009070901666807695,
+              0.0001881662292906437
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.006306771699818272,
+              0.006052423503767874
+            ],
+            "systems": 123,
+            "negative_systems": 52,
+            "positive_systems": 55
+          },
+          "RCA_Top1": {
+            "mean": -0.0027100271002710027,
+            "per_seed": [
+              -0.008130081300813009,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.016260162601626018,
+              0.0
+            ],
+            "systems": 123,
+            "negative_systems": 1,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": -0.0027100271002710027,
+            "per_seed": [
+              -0.008130081300813009,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.016260162601626018,
+              0.0
+            ],
+            "systems": 123,
+            "negative_systems": 1,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.0018684529863391653,
+            "per_seed": [
+              -0.004632359510408289,
+              -0.0015292295780100662,
+              0.0005562301294008609
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00816280179847253,
+              0.0017794304836987727
+            ],
+            "systems": 123,
+            "negative_systems": 9,
+            "positive_systems": 6
+          }
+        },
+        "current_minus_none": {
+          "normal_NLL": {
+            "mean": -0.016619184152866767,
+            "per_seed": [
+              -0.015131750242496893,
+              -0.01781617432105832,
+              -0.016909627895045087
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.030750341503439235,
+              -0.0008037751000425113
+            ],
+            "systems": 123,
+            "negative_systems": 91,
+            "positive_systems": 32
+          },
+          "ready_NLL": {
+            "mean": -0.011144769224047984,
+            "per_seed": [
+              -0.00899015887966001,
+              -0.013780989782596991,
+              -0.01066315900988695
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.024590299736839648,
+              0.005196687191482481
+            ],
+            "systems": 123,
+            "negative_systems": 88,
+            "positive_systems": 35
+          },
+          "observed_AP": {
+            "mean": 0.0028783964033758055,
+            "per_seed": [
+              -0.0014969817578325323,
+              0.0009347324961742868,
+              0.009197438471785665
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.01259277677063815,
+              0.017400363335849014
+            ],
+            "systems": 123,
+            "negative_systems": 45,
+            "positive_systems": 64
+          },
+          "RCA_Top1": {
+            "mean": 0.018970189701897018,
+            "per_seed": [
+              0.016260162601626018,
+              0.016260162601626018,
+              0.024390243902439025
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.04065040650406504
+            ],
+            "systems": 123,
+            "negative_systems": 0,
+            "positive_systems": 5
+          },
+          "RCA_Top3": {
+            "mean": 0.005420054200542005,
+            "per_seed": [
+              0.008130081300813009,
+              0.008130081300813009,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.02981029810298103,
+              0.037940379403794036
+            ],
+            "systems": 123,
+            "negative_systems": 2,
+            "positive_systems": 4
+          },
+          "RCA_MRR": {
+            "mean": 0.008820090629033718,
+            "per_seed": [
+              0.009685120660730417,
+              0.006517172980587614,
+              0.010257978245783124
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0017250397712796094,
+              0.02151732329323793
+            ],
+            "systems": 123,
+            "negative_systems": 19,
+            "positive_systems": 19
+          }
+        },
+        "current_minus_wrong": {
+          "normal_NLL": {
+            "mean": -0.017150626919133875,
+            "per_seed": [
+              -0.016985037462498114,
+              -0.01880834160781488,
+              -0.015658501687088634
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.03509210108256921,
+              0.0005328406728703076
+            ],
+            "systems": 123,
+            "negative_systems": 81,
+            "positive_systems": 42
+          },
+          "ready_NLL": {
+            "mean": -0.010186537979094962,
+            "per_seed": [
+              -0.009917209788066586,
+              -0.01271754503250122,
+              -0.007924859116717083
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.02659819393461636,
+              0.006847977246533886
+            ],
+            "systems": 123,
+            "negative_systems": 81,
+            "positive_systems": 42
+          },
+          "observed_AP": {
+            "mean": 0.0008651108486118692,
+            "per_seed": [
+              0.0007445899449260157,
+              -0.0032098247482118284,
+              0.005060567349121418
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.012247274142016113,
+              0.013415189367999677
+            ],
+            "systems": 123,
+            "negative_systems": 52,
+            "positive_systems": 57
+          },
+          "RCA_Top1": {
+            "mean": 0.024390243902439025,
+            "per_seed": [
+              0.016260162601626018,
+              0.024390243902439025,
+              0.032520325203252036
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.005420054200542005,
+              0.051490514905149054
+            ],
+            "systems": 123,
+            "negative_systems": 0,
+            "positive_systems": 7
+          },
+          "RCA_Top3": {
+            "mean": -0.005420054200542005,
+            "per_seed": [
+              0.0,
+              0.0,
+              -0.016260162601626018
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.04065040650406504,
+              0.02710027100271003
+            ],
+            "systems": 123,
+            "negative_systems": 3,
+            "positive_systems": 3
+          },
+          "RCA_MRR": {
+            "mean": 0.010000282764510407,
+            "per_seed": [
+              0.00720899470899471,
+              0.01024697975917488,
+              0.01254487382536163
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.001580886367471732,
+              0.024545300754650314
+            ],
+            "systems": 123,
+            "negative_systems": 18,
+            "positive_systems": 16
+          }
+        }
+      },
+      "frozen_timing_intervention": {
+        "none_block_minus_current_at_same_weights": {
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "systems": 123,
+          "negative_systems": 0,
+          "positive_systems": 0
+        },
+        "parents_current_block_minus_current_at_same_weights": {
+          "mean": 0.0004802885740430051,
+          "per_seed": [
+            -0.0002873510849185106,
+            3.4934136925674066e-06,
+            0.0017247233933549587
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.0015480960974202246,
+            0.0020280097437098735
+          ],
+          "systems": 123,
+          "negative_systems": 51,
+          "positive_systems": 72
+        },
+        "parents_past_block_minus_current_at_same_weights": {
+          "mean": 0.00037597737661222133,
+          "per_seed": [
+            -0.0001453427764458385,
+            -2.370714172115171e-05,
+            0.0012969820480036541
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.001452219417586236,
+            0.0017859280997821623
+          ],
+          "systems": 123,
+          "negative_systems": 54,
+          "positive_systems": 69
+        },
+        "parents_block_block_minus_current_at_same_weights": {
+          "mean": -0.0022983224734381288,
+          "per_seed": [
+            -0.001428559543640633,
+            -0.0043974993674735716,
+            -0.0010689085092001815
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.005330033883008208,
+            -0.00037509570034538844
+          ],
+          "systems": 123,
+          "negative_systems": 82,
+          "positive_systems": 41
+        }
+      }
+    },
+    "C1": {
+      "systems": 390,
+      "methods": {
+        "none": {
+          "normal_NLL": 13.171077279606436,
+          "ready_NLL": 1.297450609288664,
+          "observed_AP": 0.2969130750498904,
+          "RCA_Top1": null,
+          "RCA_Top3": null,
+          "RCA_MRR": null
+        },
+        "parents_block": {
+          "normal_NLL": 12.678885540952031,
+          "ready_NLL": 1.3048601109247941,
+          "observed_AP": 0.29499396325572014,
+          "RCA_Top1": null,
+          "RCA_Top3": null,
+          "RCA_MRR": null
+        },
+        "parents_past": {
+          "normal_NLL": 12.765604615058654,
+          "ready_NLL": 1.3002627782842033,
+          "observed_AP": 0.2951506591889608,
+          "RCA_Top1": null,
+          "RCA_Top3": null,
+          "RCA_MRR": null
+        },
+        "parents_current": {
+          "normal_NLL": 12.754393283729879,
+          "ready_NLL": 1.2999745848341884,
+          "observed_AP": 0.2952881522520301,
+          "RCA_Top1": null,
+          "RCA_Top3": null,
+          "RCA_MRR": null
+        },
+        "rewired_current": {
+          "normal_NLL": 13.143865784264019,
+          "ready_NLL": 1.2999887629451914,
+          "observed_AP": 0.29670034151958763,
+          "RCA_Top1": null,
+          "RCA_Top3": null,
+          "RCA_MRR": null
+        }
+      },
+      "differences": {
+        "fresh_past_minus_block": {
+          "normal_NLL": {
+            "mean": 0.08671907410662398,
+            "per_seed": [
+              0.05377304477569384,
+              0.13453314548883682,
+              0.07185103205534128
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.007640841000864648,
+              0.33574751689011206
+            ],
+            "systems": 390,
+            "negative_systems": 284,
+            "positive_systems": 106
+          },
+          "ready_NLL": {
+            "mean": -0.00459733264059083,
+            "per_seed": [
+              -0.0038019583775446967,
+              -0.008745947250953087,
+              -0.0012440922932747084
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.009738273430838544,
+              -0.00036882365361238503
+            ],
+            "systems": 390,
+            "negative_systems": 284,
+            "positive_systems": 106
+          },
+          "observed_AP": {
+            "mean": 0.00015669593324064157,
+            "per_seed": [
+              -5.141299215700418e-05,
+              0.0005059747319625259,
+              1.552605991640292e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0003242689586605403,
+              0.000889999534102693
+            ],
+            "systems": 390,
+            "negative_systems": 174,
+            "positive_systems": 173
+          }
+        },
+        "current_minus_past": {
+          "normal_NLL": {
+            "mean": -0.011211331328775128,
+            "per_seed": [
+              0.0023430591974502955,
+              -0.04055787813969147,
+              0.004580824955915793
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.07638583942228912,
+              0.00995528934857783
+            ],
+            "systems": 390,
+            "negative_systems": 254,
+            "positive_systems": 136
+          },
+          "ready_NLL": {
+            "mean": -0.00028819345001481535,
+            "per_seed": [
+              -0.0007801198042356051,
+              0.0007396202820997972,
+              -0.0008240808279086382
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0011009444767593319,
+              0.0007438299263644417
+            ],
+            "systems": 390,
+            "negative_systems": 258,
+            "positive_systems": 132
+          },
+          "observed_AP": {
+            "mean": 0.00013749306306925973,
+            "per_seed": [
+              -0.00030642959063396084,
+              0.0007024290018154812,
+              1.6479778026258754e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00045466102957316805,
+              0.001139328907922335
+            ],
+            "systems": 390,
+            "negative_systems": 160,
+            "positive_systems": 185
+          }
+        },
+        "current_minus_block": {
+          "normal_NLL": {
+            "mean": 0.07550774277784886,
+            "per_seed": [
+              0.05611610397314414,
+              0.09397526734914535,
+              0.07643185701125707
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.007480510110274339,
+              0.26206314095192484
+            ],
+            "systems": 390,
+            "negative_systems": 281,
+            "positive_systems": 109
+          },
+          "ready_NLL": {
+            "mean": -0.0048855260906056465,
+            "per_seed": [
+              -0.004582078181780302,
+              -0.00800632696885329,
+              -0.0020681731211833463
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.009208921003036009,
+              -0.0008179813801732906
+            ],
+            "systems": 390,
+            "negative_systems": 282,
+            "positive_systems": 108
+          },
+          "observed_AP": {
+            "mean": 0.0002941889963099013,
+            "per_seed": [
+              -0.000357842582790965,
+              0.0012084037337780074,
+              3.2005837942661665e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0004635986292747925,
+              0.001598246758970512
+            ],
+            "systems": 390,
+            "negative_systems": 163,
+            "positive_systems": 186
+          }
+        },
+        "current_minus_none": {
+          "normal_NLL": {
+            "mean": -0.4166839958765568,
+            "per_seed": [
+              -0.32940755303089436,
+              -0.4788988283047309,
+              -0.4417456062940451
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -1.3927108235568062,
+              0.009667245954529849
+            ],
+            "systems": 390,
+            "negative_systems": 144,
+            "positive_systems": 246
+          },
+          "ready_NLL": {
+            "mean": 0.002523975545524532,
+            "per_seed": [
+              0.0013963282108306885,
+              0.0018715803439800557,
+              0.004304018081762851
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.013433104964912446,
+              0.014836827840051069
+            ],
+            "systems": 390,
+            "negative_systems": 140,
+            "positive_systems": 250
+          },
+          "observed_AP": {
+            "mean": -0.0016249227978603438,
+            "per_seed": [
+              -0.0019572231011081675,
+              -0.0010904521361463622,
+              -0.0018270931563265018
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.003568622657450906,
+              -7.640001995951542e-05
+            ],
+            "systems": 390,
+            "negative_systems": 190,
+            "positive_systems": 164
+          }
+        },
+        "current_minus_wrong": {
+          "normal_NLL": {
+            "mean": -0.3894725005341391,
+            "per_seed": [
+              -0.3515322533937601,
+              -0.4545695920785268,
+              -0.36231565613013045
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -1.2640510814375856,
+              0.0047225840033119386
+            ],
+            "systems": 390,
+            "negative_systems": 145,
+            "positive_systems": 245
+          },
+          "ready_NLL": {
+            "mean": -1.4178111002995418e-05,
+            "per_seed": [
+              0.00011265262579306578,
+              -0.001501604838249011,
+              0.001346417879446959
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.011279995733091974,
+              0.008375365138053889
+            ],
+            "systems": 390,
+            "negative_systems": 139,
+            "positive_systems": 251
+          },
+          "observed_AP": {
+            "mean": -0.001412189267557598,
+            "per_seed": [
+              -0.0016348317434080161,
+              -0.0010132615251406225,
+              -0.0015884745341241558
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0031921452931680814,
+              -9.808225622598096e-05
+            ],
+            "systems": 390,
+            "negative_systems": 203,
+            "positive_systems": 150
+          }
+        }
+      },
+      "frozen_timing_intervention": {
+        "none_block_minus_current_at_same_weights": {
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "systems": 390,
+          "negative_systems": 0,
+          "positive_systems": 0
+        },
+        "parents_current_block_minus_current_at_same_weights": {
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "systems": 390,
+          "negative_systems": 0,
+          "positive_systems": 0
+        },
+        "parents_past_block_minus_current_at_same_weights": {
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "systems": 390,
+          "negative_systems": 0,
+          "positive_systems": 0
+        },
+        "parents_block_block_minus_current_at_same_weights": {
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "systems": 390,
+          "negative_systems": 0,
+          "positive_systems": 0
+        }
+      }
+    },
+    "C8": {
+      "systems": 48,
+      "methods": {
+        "none": {
+          "normal_NLL": 1.3765860634545486,
+          "ready_NLL": 1.373156290087435,
+          "observed_AP": 0.20031636306419548,
+          "RCA_Top1": 0.5763888888888888,
+          "RCA_Top3": 0.6527777777777778,
+          "RCA_MRR": 0.6773726851851852
+        },
+        "parents_block": {
+          "normal_NLL": 1.3732285023563437,
+          "ready_NLL": 1.371754842913813,
+          "observed_AP": 0.19514485772997242,
+          "RCA_Top1": 0.6180555555555556,
+          "RCA_Top3": 0.6805555555555556,
+          "RCA_MRR": 0.7012070105820105
+        },
+        "parents_past": {
+          "normal_NLL": 1.3742613643407822,
+          "ready_NLL": 1.3729608232776325,
+          "observed_AP": 0.19668853017725438,
+          "RCA_Top1": 0.6180555555555556,
+          "RCA_Top3": 0.6736111111111112,
+          "RCA_MRR": 0.701603835978836
+        },
+        "parents_current": {
+          "normal_NLL": 1.3736524710224733,
+          "ready_NLL": 1.3723254170682695,
+          "observed_AP": 0.1967621661524898,
+          "RCA_Top1": 0.6111111111111112,
+          "RCA_Top3": 0.6736111111111112,
+          "RCA_MRR": 0.6987516534391535
+        },
+        "rewired_current": {
+          "normal_NLL": 1.384226060161988,
+          "ready_NLL": 1.382007733401325,
+          "observed_AP": 0.19884112914779056,
+          "RCA_Top1": 0.5833333333333334,
+          "RCA_Top3": 0.6805555555555556,
+          "RCA_MRR": 0.6862516534391534
+        }
+      },
+      "differences": {
+        "fresh_past_minus_block": {
+          "normal_NLL": {
+            "mean": 0.0010328619844383663,
+            "per_seed": [
+              -0.0005189764002958933,
+              0.0035407555600007377,
+              7.680679361025493e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0026145027950406075,
+              0.006074164538747732
+            ],
+            "systems": 48,
+            "negative_systems": 29,
+            "positive_systems": 19
+          },
+          "ready_NLL": {
+            "mean": 0.0012059803638193342,
+            "per_seed": [
+              -0.00043057774504025775,
+              0.0038621375958124795,
+              0.00018638124068578085
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.002703585661947727,
+              0.006592071087410052
+            ],
+            "systems": 48,
+            "negative_systems": 28,
+            "positive_systems": 20
+          },
+          "observed_AP": {
+            "mean": 0.0015436724472819745,
+            "per_seed": [
+              -0.0014321529304687402,
+              0.008794852543814666,
+              -0.002731682271500001
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0057876251187015445,
+              0.018323469576092
+            ],
+            "systems": 48,
+            "negative_systems": 18,
+            "positive_systems": 26
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 48,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": -0.006944444444444444,
+            "per_seed": [
+              -0.020833333333333332,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.041666666666666664,
+              0.0
+            ],
+            "systems": 48,
+            "negative_systems": 1,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": 0.00039682539682539677,
+            "per_seed": [
+              -0.0017361111111111108,
+              -0.0012152777777777787,
+              0.004141865079365079
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0034722222222222216,
+              0.006548032407407403
+            ],
+            "systems": 48,
+            "negative_systems": 4,
+            "positive_systems": 2
+          }
+        },
+        "current_minus_past": {
+          "normal_NLL": {
+            "mean": -0.0006088933183087243,
+            "per_seed": [
+              0.0014080169300238292,
+              -0.0017029096682866414,
+              -0.0015317872166633606
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0036328182866175967,
+              0.002518143266853355
+            ],
+            "systems": 48,
+            "negative_systems": 35,
+            "positive_systems": 13
+          },
+          "ready_NLL": {
+            "mean": -0.0006354062093628778,
+            "per_seed": [
+              0.0015087674061457317,
+              -0.0018160901963710785,
+              -0.0015988958378632863
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0038642023690044877,
+              0.0027192395387424318
+            ],
+            "systems": 48,
+            "negative_systems": 35,
+            "positive_systems": 13
+          },
+          "observed_AP": {
+            "mean": 7.36359752354e-05,
+            "per_seed": [
+              0.001656254826138367,
+              -0.00369524666672893,
+              0.002259899766296763
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0038760501356495487,
+              0.004491655074699039
+            ],
+            "systems": 48,
+            "negative_systems": 20,
+            "positive_systems": 23
+          },
+          "RCA_Top1": {
+            "mean": -0.006944444444444444,
+            "per_seed": [
+              -0.020833333333333332,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.034722222222222224,
+              0.0
+            ],
+            "systems": 48,
+            "negative_systems": 1,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 48,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.0028521825396825395,
+            "per_seed": [
+              -0.00992063492063492,
+              0.000496031746031746,
+              0.0008680555555555554
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.015799644510582005,
+              0.001488095238095238
+            ],
+            "systems": 48,
+            "negative_systems": 1,
+            "positive_systems": 3
+          }
+        },
+        "current_minus_block": {
+          "normal_NLL": {
+            "mean": 0.00042396866612964205,
+            "per_seed": [
+              0.0008890405297279358,
+              0.001837845891714096,
+              -0.0014549804230531056
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0032149723730981353,
+              0.005063712151928072
+            ],
+            "systems": 48,
+            "negative_systems": 32,
+            "positive_systems": 16
+          },
+          "ready_NLL": {
+            "mean": 0.0005705741544564565,
+            "per_seed": [
+              0.0010781896611054738,
+              0.002046047399441401,
+              -0.0014125145971775055
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0032664072492884265,
+              0.005550904882450895
+            ],
+            "systems": 48,
+            "negative_systems": 31,
+            "positive_systems": 17
+          },
+          "observed_AP": {
+            "mean": 0.0016173084225173746,
+            "per_seed": [
+              0.00022410189566962686,
+              0.005099605877085734,
+              -0.0004717825052032377
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.005693143437549906,
+              0.015859272420676678
+            ],
+            "systems": 48,
+            "negative_systems": 21,
+            "positive_systems": 23
+          },
+          "RCA_Top1": {
+            "mean": -0.006944444444444444,
+            "per_seed": [
+              -0.020833333333333332,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.034722222222222224,
+              0.0
+            ],
+            "systems": 48,
+            "negative_systems": 1,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": -0.006944444444444444,
+            "per_seed": [
+              -0.020833333333333332,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.041666666666666664,
+              0.0
+            ],
+            "systems": 48,
+            "negative_systems": 1,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.002455357142857143,
+            "per_seed": [
+              -0.01165674603174603,
+              -0.0007192460317460327,
+              0.005009920634920635
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.017138103505291002,
+              0.006879133597883587
+            ],
+            "systems": 48,
+            "negative_systems": 4,
+            "positive_systems": 4
+          }
+        },
+        "current_minus_none": {
+          "normal_NLL": {
+            "mean": -0.0029335924320750767,
+            "per_seed": [
+              -0.0011895112693309784,
+              -0.003808721899986267,
+              -0.0038025441269079843
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.03393314052373171,
+              0.036854053909579874
+            ],
+            "systems": 48,
+            "negative_systems": 34,
+            "positive_systems": 14
+          },
+          "ready_NLL": {
+            "mean": -0.0008308730191654629,
+            "per_seed": [
+              0.0010462626814842224,
+              -0.0019063390791416168,
+              -0.0016325426598389943
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.03394165896914071,
+              0.04125486453995105
+            ],
+            "systems": 48,
+            "negative_systems": 33,
+            "positive_systems": 15
+          },
+          "observed_AP": {
+            "mean": -0.0035541969117057048,
+            "per_seed": [
+              -0.006640165303176484,
+              -0.006219902391668765,
+              0.0021974769597281315
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.017422824341473492,
+              0.005250105561784506
+            ],
+            "systems": 48,
+            "negative_systems": 17,
+            "positive_systems": 27
+          },
+          "RCA_Top1": {
+            "mean": 0.034722222222222224,
+            "per_seed": [
+              0.041666666666666664,
+              0.041666666666666664,
+              0.020833333333333332
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.08333333333333333
+            ],
+            "systems": 48,
+            "negative_systems": 0,
+            "positive_systems": 3
+          },
+          "RCA_Top3": {
+            "mean": 0.020833333333333332,
+            "per_seed": [
+              0.020833333333333332,
+              0.020833333333333332,
+              0.020833333333333332
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.041666666666666664,
+              0.09027777777777778
+            ],
+            "systems": 48,
+            "negative_systems": 1,
+            "positive_systems": 3
+          },
+          "RCA_MRR": {
+            "mean": 0.02137896825396825,
+            "per_seed": [
+              0.02703373015873016,
+              0.02197420634920635,
+              0.01512896825396825
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0006944444444444462,
+              0.04886202050264545
+            ],
+            "systems": 48,
+            "negative_systems": 5,
+            "positive_systems": 13
+          }
+        },
+        "current_minus_wrong": {
+          "normal_NLL": {
+            "mean": -0.010573589139514498,
+            "per_seed": [
+              -0.011018107334772745,
+              -0.010134535531202951,
+              -0.0105681245525678
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.04894086668888728,
+              0.03112969647886023
+            ],
+            "systems": 48,
+            "negative_systems": 30,
+            "positive_systems": 18
+          },
+          "ready_NLL": {
+            "mean": -0.009682316333055496,
+            "per_seed": [
+              -0.009871264298756918,
+              -0.009316525111595789,
+              -0.009859159588813782
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.050519657217793994,
+              0.03431726111513044
+            ],
+            "systems": 48,
+            "negative_systems": 30,
+            "positive_systems": 18
+          },
+          "observed_AP": {
+            "mean": -0.0020789629953007573,
+            "per_seed": [
+              -0.006702068482129936,
+              0.0011415136192603384,
+              -0.0006763341230326755
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.01547379684815589,
+              0.005462044460350616
+            ],
+            "systems": 48,
+            "negative_systems": 20,
+            "positive_systems": 24
+          },
+          "RCA_Top1": {
+            "mean": 0.027777777777777776,
+            "per_seed": [
+              0.020833333333333332,
+              0.041666666666666664,
+              0.020833333333333332
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0763888888888889
+            ],
+            "systems": 48,
+            "negative_systems": 0,
+            "positive_systems": 3
+          },
+          "RCA_Top3": {
+            "mean": -0.006944444444444444,
+            "per_seed": [
+              0.0,
+              0.0,
+              -0.020833333333333332
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0763888888888889,
+              0.0625
+            ],
+            "systems": 48,
+            "negative_systems": 2,
+            "positive_systems": 2
+          },
+          "RCA_MRR": {
+            "mean": 0.0125,
+            "per_seed": [
+              0.01056547619047619,
+              0.02048611111111111,
+              0.006448412698412701
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.005771536044973544,
+              0.037293526785714286
+            ],
+            "systems": 48,
+            "negative_systems": 6,
+            "positive_systems": 9
+          }
+        }
+      },
+      "frozen_timing_intervention": {
+        "none_block_minus_current_at_same_weights": {
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "systems": 48,
+          "negative_systems": 0,
+          "positive_systems": 0
+        },
+        "parents_current_block_minus_current_at_same_weights": {
+          "mean": 0.0005507556100686392,
+          "per_seed": [
+            -0.001365508884191513,
+            -0.00047790631651878357,
+            0.003495682030916214
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.004645578749477863,
+            0.004291200037631717
+          ],
+          "systems": 48,
+          "negative_systems": 18,
+          "positive_systems": 30
+        },
+        "parents_past_block_minus_current_at_same_weights": {
+          "mean": 0.00036415126588609483,
+          "per_seed": [
+            -0.0011493675410747528,
+            -0.0005248337984085083,
+            0.0027666551371415458
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.004391534326391087,
+            0.0037906130154927564
+          ],
+          "systems": 48,
+          "negative_systems": 20,
+          "positive_systems": 28
+        },
+        "parents_block_block_minus_current_at_same_weights": {
+          "mean": -0.0032203619678815207,
+          "per_seed": [
+            -0.002497270703315735,
+            -0.006560798734426498,
+            -0.0006030164659023285
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.009673842280689213,
+            0.000620950168619551
+          ],
+          "systems": 48,
+          "negative_systems": 25,
+          "positive_systems": 23
+        }
+      }
+    },
+    "C12": {
+      "systems": 32,
+      "methods": {
+        "none": {
+          "normal_NLL": 1.3506797477602959,
+          "ready_NLL": 1.2824921483794849,
+          "observed_AP": 0.28259352529722825,
+          "RCA_Top1": 0.6979166666666666,
+          "RCA_Top3": 0.7916666666666666,
+          "RCA_MRR": 0.7646847943722944
+        },
+        "parents_block": {
+          "normal_NLL": 1.3277620499332745,
+          "ready_NLL": 1.2659118411441643,
+          "observed_AP": 0.27060535495564725,
+          "RCA_Top1": 0.71875,
+          "RCA_Top3": 0.78125,
+          "RCA_MRR": 0.7751792478354979
+        },
+        "parents_past": {
+          "normal_NLL": 1.3269855044782162,
+          "ready_NLL": 1.264990147203207,
+          "observed_AP": 0.28106838708716125,
+          "RCA_Top1": 0.71875,
+          "RCA_Top3": 0.7708333333333334,
+          "RCA_MRR": 0.7727610930735932
+        },
+        "parents_current": {
+          "normal_NLL": 1.326013778646787,
+          "ready_NLL": 1.2640105336904526,
+          "observed_AP": 0.2717036732532719,
+          "RCA_Top1": 0.71875,
+          "RCA_Top3": 0.78125,
+          "RCA_MRR": 0.7718930375180375
+        },
+        "rewired_current": {
+          "normal_NLL": 1.3477504961192608,
+          "ready_NLL": 1.2766834286351998,
+          "observed_AP": 0.2838070238830532,
+          "RCA_Top1": 0.6666666666666666,
+          "RCA_Top3": 0.7916666666666666,
+          "RCA_MRR": 0.7486088564213564
+        }
+      },
+      "differences": {
+        "fresh_past_minus_block": {
+          "normal_NLL": {
+            "mean": -0.0007765454550584158,
+            "per_seed": [
+              0.0012663453817367554,
+              -0.0023257769644260406,
+              -0.001270204782485962
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0034589958687623345,
+              0.002279881201684474
+            ],
+            "systems": 32,
+            "negative_systems": 23,
+            "positive_systems": 9
+          },
+          "ready_NLL": {
+            "mean": -0.0009216939409573873,
+            "per_seed": [
+              0.00037081167101860046,
+              -0.0019920580089092255,
+              -0.0011438354849815369
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0030925163688759008,
+              0.0010768629610538438
+            ],
+            "systems": 32,
+            "negative_systems": 22,
+            "positive_systems": 10
+          },
+          "observed_AP": {
+            "mean": 0.010463032131514028,
+            "per_seed": [
+              0.014669345588058371,
+              0.005573419868933437,
+              0.011146330937550283
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0004530283951181611,
+              0.027154660995660766
+            ],
+            "systems": 32,
+            "negative_systems": 16,
+            "positive_systems": 10
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 32,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": -0.010416666666666666,
+            "per_seed": [
+              0.0,
+              -0.03125,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0625,
+              0.0
+            ],
+            "systems": 32,
+            "negative_systems": 1,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.002418154761904762,
+            "per_seed": [
+              0.0,
+              -0.007254464285714286,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.015066964285714286,
+              0.0007440476190476187
+            ],
+            "systems": 32,
+            "negative_systems": 1,
+            "positive_systems": 1
+          }
+        },
+        "current_minus_past": {
+          "normal_NLL": {
+            "mean": -0.0009717258314291636,
+            "per_seed": [
+              -0.0014914609491825104,
+              -0.0013205856084823608,
+              -0.00010313093662261963
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.001863995287567377,
+              -9.129165361325006e-05
+            ],
+            "systems": 32,
+            "negative_systems": 28,
+            "positive_systems": 4
+          },
+          "ready_NLL": {
+            "mean": -0.0009796135127544403,
+            "per_seed": [
+              -0.00160159170627594,
+              -0.0012897290289402008,
+              -4.7519803047180176e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.001906501781195402,
+              -5.0531141459941953e-05
+            ],
+            "systems": 32,
+            "negative_systems": 27,
+            "positive_systems": 5
+          },
+          "observed_AP": {
+            "mean": -0.00936471383388934,
+            "per_seed": [
+              -0.007433278704357224,
+              -0.009124118810655007,
+              -0.011536743986655792
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.02926798352179589,
+              0.004229831054157776
+            ],
+            "systems": 32,
+            "negative_systems": 15,
+            "positive_systems": 12
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 32,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.010416666666666666,
+            "per_seed": [
+              0.0,
+              0.03125,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0625
+            ],
+            "systems": 32,
+            "negative_systems": 0,
+            "positive_systems": 1
+          },
+          "RCA_MRR": {
+            "mean": -0.0008680555555555559,
+            "per_seed": [
+              0.0,
+              0.002604166666666666,
+              -0.005208333333333334
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.009548611111111112,
+              0.005208333333333331
+            ],
+            "systems": 32,
+            "negative_systems": 1,
+            "positive_systems": 1
+          }
+        },
+        "current_minus_block": {
+          "normal_NLL": {
+            "mean": -0.0017482712864875793,
+            "per_seed": [
+              -0.000225115567445755,
+              -0.0036463625729084015,
+              -0.0013733357191085815
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.004524531525870164,
+              0.0012612570387621697
+            ],
+            "systems": 32,
+            "negative_systems": 23,
+            "positive_systems": 9
+          },
+          "ready_NLL": {
+            "mean": -0.0019013074537118275,
+            "per_seed": [
+              -0.0012307800352573395,
+              -0.0032817870378494263,
+              -0.001191355288028717
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0040575993247330185,
+              2.0188745111226815e-05
+            ],
+            "systems": 32,
+            "negative_systems": 21,
+            "positive_systems": 11
+          },
+          "observed_AP": {
+            "mean": 0.001098318297624689,
+            "per_seed": [
+              0.007236066883701146,
+              -0.0035506989417215685,
+              -0.00039041304910550877
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.019286072768084788,
+              0.01658398588991211
+            ],
+            "systems": 32,
+            "negative_systems": 15,
+            "positive_systems": 12
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 32,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 32,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.003286210317460318,
+            "per_seed": [
+              0.0,
+              -0.00465029761904762,
+              -0.005208333333333334
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.011780753968253968,
+              0.000558035714285714
+            ],
+            "systems": 32,
+            "negative_systems": 2,
+            "positive_systems": 1
+          }
+        },
+        "current_minus_none": {
+          "normal_NLL": {
+            "mean": -0.02466596911350886,
+            "per_seed": [
+              -0.024370774626731873,
+              -0.026684463024139404,
+              -0.022942669689655304
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.04091285783797503,
+              -0.010783785053839295
+            ],
+            "systems": 32,
+            "negative_systems": 23,
+            "positive_systems": 9
+          },
+          "ready_NLL": {
+            "mean": -0.018481614689032238,
+            "per_seed": [
+              -0.016615577042102814,
+              -0.021579552441835403,
+              -0.017249714583158493
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.028543312568217516,
+              -0.0083250228005151
+            ],
+            "systems": 32,
+            "negative_systems": 23,
+            "positive_systems": 9
+          },
+          "observed_AP": {
+            "mean": -0.01088985204395637,
+            "per_seed": [
+              -0.015202812448159247,
+              -0.02268010605368992,
+              0.005213362369980044
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.05788525596554855,
+              0.016450904161306505
+            ],
+            "systems": 32,
+            "negative_systems": 15,
+            "positive_systems": 12
+          },
+          "RCA_Top1": {
+            "mean": 0.020833333333333332,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0625
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.08333333333333333
+            ],
+            "systems": 32,
+            "negative_systems": 0,
+            "positive_systems": 2
+          },
+          "RCA_Top3": {
+            "mean": -0.010416666666666666,
+            "per_seed": [
+              0.0,
+              0.0,
+              -0.03125
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.09375,
+              0.0625
+            ],
+            "systems": 32,
+            "negative_systems": 1,
+            "positive_systems": 1
+          },
+          "RCA_MRR": {
+            "mean": 0.0072082431457431454,
+            "per_seed": [
+              0.0023065476190476195,
+              -0.0015388257575757575,
+              0.020857007575757577
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.01126572646103896,
+              0.04129782760642131
+            ],
+            "systems": 32,
+            "negative_systems": 5,
+            "positive_systems": 2
+          }
+        },
+        "current_minus_wrong": {
+          "normal_NLL": {
+            "mean": -0.02173671747247378,
+            "per_seed": [
+              -0.022425562143325806,
+              -0.02799253538250923,
+              -0.014792054891586304
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.04559097023059924,
+              -0.004607615061104302
+            ],
+            "systems": 32,
+            "negative_systems": 23,
+            "positive_systems": 9
+          },
+          "ready_NLL": {
+            "mean": -0.01267289494474729,
+            "per_seed": [
+              -0.012208569794893265,
+              -0.015897400677204132,
+              -0.00991271436214447
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.02338672565917174,
+              -0.002024451239655422
+            ],
+            "systems": 32,
+            "negative_systems": 23,
+            "positive_systems": 9
+          },
+          "observed_AP": {
+            "mean": -0.012103350629781321,
+            "per_seed": [
+              -0.004153399902816198,
+              -0.029504848572144877,
+              -0.0026518034143828964
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.054068989879292116,
+              0.011821190857234307
+            ],
+            "systems": 32,
+            "negative_systems": 17,
+            "positive_systems": 11
+          },
+          "RCA_Top1": {
+            "mean": 0.052083333333333336,
+            "per_seed": [
+              0.03125,
+              0.03125,
+              0.09375
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.13541666666666666
+            ],
+            "systems": 32,
+            "negative_systems": 0,
+            "positive_systems": 4
+          },
+          "RCA_Top3": {
+            "mean": -0.010416666666666666,
+            "per_seed": [
+              0.0,
+              0.0,
+              -0.03125
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.09375,
+              0.0625
+            ],
+            "systems": 32,
+            "negative_systems": 1,
+            "positive_systems": 1
+          },
+          "RCA_MRR": {
+            "mean": 0.023284181096681095,
+            "per_seed": [
+              0.0171875,
+              0.012016369047619047,
+              0.04064867424242424
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.007710108901515151,
+              0.07057331123737373
+            ],
+            "systems": 32,
+            "negative_systems": 5,
+            "positive_systems": 4
+          }
+        }
+      },
+      "frozen_timing_intervention": {
+        "none_block_minus_current_at_same_weights": {
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "systems": 32,
+          "negative_systems": 0,
+          "positive_systems": 0
+        },
+        "parents_current_block_minus_current_at_same_weights": {
+          "mean": 0.0008603880802790324,
+          "per_seed": [
+            0.0007204115390777588,
+            0.0008340030908584595,
+            0.001026749610900879
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.00032333523655931153,
+            0.002414139391233521
+          ],
+          "systems": 32,
+          "negative_systems": 15,
+          "positive_systems": 17
+        },
+        "parents_past_block_minus_current_at_same_weights": {
+          "mean": 0.0008758716285228729,
+          "per_seed": [
+            0.0007874220609664917,
+            0.0009715259075164795,
+            0.0008686669170856476
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.0003319847397506237,
+            0.0023967204615473743
+          ],
+          "systems": 32,
+          "negative_systems": 16,
+          "positive_systems": 16
+        },
+        "parents_block_block_minus_current_at_same_weights": {
+          "mean": -0.0016228606303532918,
+          "per_seed": [
+            -0.0005321837961673737,
+            -0.003051493316888809,
+            -0.0012849047780036926
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.004405736364424228,
+            0.00016863076016306812
+          ],
+          "systems": 32,
+          "negative_systems": 25,
+          "positive_systems": 7
+        }
+      }
+    },
+    "C16": {
+      "systems": 24,
+      "methods": {
+        "none": {
+          "normal_NLL": 1.618973766764005,
+          "ready_NLL": 1.2504739612340927,
+          "observed_AP": 0.123975461332222,
+          "RCA_Top1": 0.5416666666666666,
+          "RCA_Top3": 0.5833333333333334,
+          "RCA_MRR": 0.6144319800569801
+        },
+        "parents_block": {
+          "normal_NLL": 1.5857930762900248,
+          "ready_NLL": 1.239381526907285,
+          "observed_AP": 0.15061063818661016,
+          "RCA_Top1": 0.5416666666666666,
+          "RCA_Top3": 0.5833333333333334,
+          "RCA_MRR": 0.6109173619590287
+        },
+        "parents_past": {
+          "normal_NLL": 1.5942563745710585,
+          "ready_NLL": 1.2388248129023447,
+          "observed_AP": 0.1518360415375433,
+          "RCA_Top1": 0.5416666666666666,
+          "RCA_Top3": 0.5833333333333334,
+          "RCA_MRR": 0.6108878968253968
+        },
+        "parents_current": {
+          "normal_NLL": 1.5904900398519304,
+          "ready_NLL": 1.2373000664843454,
+          "observed_AP": 0.15050195733055927,
+          "RCA_Top1": 0.5416666666666666,
+          "RCA_Top3": 0.5833333333333334,
+          "RCA_MRR": 0.6105737433862433
+        },
+        "rewired_current": {
+          "normal_NLL": 1.6163530151049297,
+          "ready_NLL": 1.2417941855059729,
+          "observed_AP": 0.1259862328794995,
+          "RCA_Top1": 0.5416666666666666,
+          "RCA_Top3": 0.5833333333333334,
+          "RCA_MRR": 0.6127876560168226
+        }
+      },
+      "differences": {
+        "fresh_past_minus_block": {
+          "normal_NLL": {
+            "mean": 0.008463298281033834,
+            "per_seed": [
+              0.01176902155081431,
+              0.004309177398681641,
+              0.00931169589360555
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0018106383581956227,
+              0.03291193648344938
+            ],
+            "systems": 24,
+            "negative_systems": 12,
+            "positive_systems": 12
+          },
+          "ready_NLL": {
+            "mean": -0.0005567140049404568,
+            "per_seed": [
+              -0.0006085137526194254,
+              8.11616579691569e-05,
+              -0.0011427899201711018
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0023663426438967385,
+              0.0014759211904472721
+            ],
+            "systems": 24,
+            "negative_systems": 12,
+            "positive_systems": 12
+          },
+          "observed_AP": {
+            "mean": 0.0012254033509331397,
+            "per_seed": [
+              0.00038934363444169547,
+              7.931601529870384e-05,
+              0.0032075504030590197
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0012023837672550145,
+              0.004220690379310749
+            ],
+            "systems": 24,
+            "negative_systems": 10,
+            "positive_systems": 13
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 24,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 24,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -2.9465133631800578e-05,
+            "per_seed": [
+              0.00031669719169719117,
+              -0.000578703703703704,
+              0.00017361111111111106
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0010416666666666673,
+              0.0009920634920634916
+            ],
+            "systems": 24,
+            "negative_systems": 3,
+            "positive_systems": 1
+          }
+        },
+        "current_minus_past": {
+          "normal_NLL": {
+            "mean": -0.003766334719128079,
+            "per_seed": [
+              -0.00667076309521993,
+              -0.0003249545892079671,
+              -0.00430328647295634
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.013207148553596603,
+              -0.0004753831773996385
+            ],
+            "systems": 24,
+            "negative_systems": 21,
+            "positive_systems": 3
+          },
+          "ready_NLL": {
+            "mean": -0.0015247464179992676,
+            "per_seed": [
+              -0.0013649811347325642,
+              -0.0024762004613876343,
+              -0.0007330576578776041
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0026110892494519552,
+              -0.0006734074817763439
+            ],
+            "systems": 24,
+            "negative_systems": 21,
+            "positive_systems": 3
+          },
+          "observed_AP": {
+            "mean": -0.0013340842069840446,
+            "per_seed": [
+              -0.0005393016344055938,
+              -0.003024007963240179,
+              -0.0004389430233063608
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.004369292922367888,
+              0.0004131658985040045
+            ],
+            "systems": 24,
+            "negative_systems": 13,
+            "positive_systems": 10
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 24,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 24,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.000314153439153439,
+            "per_seed": [
+              -0.0007440476190476187,
+              0.000578703703703704,
+              -0.0007771164021164022
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0015542328042328036,
+              0.0007716049382716053
+            ],
+            "systems": 24,
+            "negative_systems": 3,
+            "positive_systems": 1
+          }
+        },
+        "current_minus_block": {
+          "normal_NLL": {
+            "mean": 0.004696963561905755,
+            "per_seed": [
+              0.00509825845559438,
+              0.003984222809473674,
+              0.005008409420649211
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0033726678954230415,
+              0.019168487315376598
+            ],
+            "systems": 24,
+            "negative_systems": 16,
+            "positive_systems": 8
+          },
+          "ready_NLL": {
+            "mean": -0.0020814604229397243,
+            "per_seed": [
+              -0.0019734948873519897,
+              -0.0023950388034184775,
+              -0.001875847578048706
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0038566705667310293,
+              -0.00041083805263042537
+            ],
+            "systems": 24,
+            "negative_systems": 19,
+            "positive_systems": 5
+          },
+          "observed_AP": {
+            "mean": -0.00010868085605090491,
+            "per_seed": [
+              -0.00014995799996389827,
+              -0.002944691947941475,
+              0.002768607379752659
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0032656640830761204,
+              0.0031347344598534562
+            ],
+            "systems": 24,
+            "negative_systems": 9,
+            "positive_systems": 14
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 24,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 24,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.00034361857278523956,
+            "per_seed": [
+              -0.00042735042735042757,
+              0.0,
+              -0.0006035052910052912
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.001157407407407408,
+              9.920634920634923e-05
+            ],
+            "systems": 24,
+            "negative_systems": 3,
+            "positive_systems": 0
+          }
+        },
+        "current_minus_none": {
+          "normal_NLL": {
+            "mean": -0.028483726912074618,
+            "per_seed": [
+              -0.02635405957698822,
+              -0.026404375831286114,
+              -0.032692745327949524
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.05862470666567485,
+              -0.008600970523224942
+            ],
+            "systems": 24,
+            "negative_systems": 17,
+            "positive_systems": 7
+          },
+          "ready_NLL": {
+            "mean": -0.013173894749747382,
+            "per_seed": [
+              -0.010202104846636454,
+              -0.016481568415959675,
+              -0.012838010986646017
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.02335549381872018,
+              -0.003160537655154867
+            ],
+            "systems": 24,
+            "negative_systems": 16,
+            "positive_systems": 8
+          },
+          "observed_AP": {
+            "mean": 0.026526495998337257,
+            "per_seed": [
+              0.027206537982457382,
+              0.024387997739507786,
+              0.027984952273046603
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0005785220085357469,
+              0.07201940609414446
+            ],
+            "systems": 24,
+            "negative_systems": 8,
+            "positive_systems": 16
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 24,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 24,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.0038582366707366703,
+            "per_seed": [
+              -0.00446174196174196,
+              -0.0037011599511599506,
+              -0.003411808099308099
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.009681930241826073,
+              0.0015708307895807903
+            ],
+            "systems": 24,
+            "negative_systems": 8,
+            "positive_systems": 2
+          }
+        },
+        "current_minus_wrong": {
+          "normal_NLL": {
+            "mean": -0.0258629752529992,
+            "per_seed": [
+              -0.02335919936498006,
+              -0.022460560003916424,
+              -0.03176916639010111
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.07418767607046498,
+              0.0008954308927059151
+            ],
+            "systems": 24,
+            "negative_systems": 15,
+            "positive_systems": 9
+          },
+          "ready_NLL": {
+            "mean": -0.0044941190216276385,
+            "per_seed": [
+              -0.0035856664180755615,
+              -0.00945789118607839,
+              -0.0004387994607289632
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.016103469870156713,
+              0.005276861165960629
+            ],
+            "systems": 24,
+            "negative_systems": 15,
+            "positive_systems": 9
+          },
+          "observed_AP": {
+            "mean": 0.02451572445105976,
+            "per_seed": [
+              0.026345490640545408,
+              0.02123788599128903,
+              0.025963796721344842
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.00047348415478980183,
+              0.06815878330725378
+            ],
+            "systems": 24,
+            "negative_systems": 10,
+            "positive_systems": 14
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 24,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 24,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.0022139126305792964,
+            "per_seed": [
+              -0.004056649369149367,
+              -0.0007745726495726497,
+              -0.0018105158730158724
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00765824790564374,
+              0.0028218005952380955
+            ],
+            "systems": 24,
+            "negative_systems": 6,
+            "positive_systems": 2
+          }
+        }
+      },
+      "frozen_timing_intervention": {
+        "none_block_minus_current_at_same_weights": {
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "systems": 24,
+          "negative_systems": 0,
+          "positive_systems": 0
+        },
+        "parents_current_block_minus_current_at_same_weights": {
+          "mean": 0.0005856934520933363,
+          "per_seed": [
+            0.0006625950336456299,
+            0.0004987667004267374,
+            0.0005957186222076416
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.0003208858685361014,
+            0.0015858833160665295
+          ],
+          "systems": 24,
+          "negative_systems": 10,
+          "positive_systems": 14
+        },
+        "parents_past_block_minus_current_at_same_weights": {
+          "mean": 0.00036682519647810195,
+          "per_seed": [
+            0.0006905198097229004,
+            0.00017635027567545572,
+            0.0002336055040359497
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.00041578950153456796,
+            0.0013355719960398132
+          ],
+          "systems": 24,
+          "negative_systems": 10,
+          "positive_systems": 14
+        },
+        "parents_block_block_minus_current_at_same_weights": {
+          "mean": -0.001890929208861457,
+          "per_seed": [
+            -0.0013139545917510986,
+            -0.0029158790906270346,
+            -0.0014429539442062378
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.0034809031834204993,
+            -0.0008465413832002227
+          ],
+          "systems": 24,
+          "negative_systems": 20,
+          "positive_systems": 4
+        }
+      }
+    },
+    "C20": {
+      "systems": 19,
+      "methods": {
+        "none": {
+          "normal_NLL": 1.2917060015494364,
+          "ready_NLL": 1.2842603419956409,
+          "observed_AP": 0.3612443562517414,
+          "RCA_Top1": 0.7894736842105263,
+          "RCA_Top3": 0.8421052631578947,
+          "RCA_MRR": 0.8316207184628237
+        },
+        "parents_block": {
+          "normal_NLL": 1.2695550082022684,
+          "ready_NLL": 1.2624051257183677,
+          "observed_AP": 0.3782492423976974,
+          "RCA_Top1": 0.7894736842105263,
+          "RCA_Top3": 0.8421052631578947,
+          "RCA_MRR": 0.8273665905244852
+        },
+        "parents_past": {
+          "normal_NLL": 1.2699809994613915,
+          "ready_NLL": 1.2629869486156262,
+          "observed_AP": 0.37510708445456087,
+          "RCA_Top1": 0.7894736842105263,
+          "RCA_Top3": 0.8421052631578947,
+          "RCA_MRR": 0.8279994858942228
+        },
+        "parents_current": {
+          "normal_NLL": 1.2690519617314924,
+          "ready_NLL": 1.2619793122274834,
+          "observed_AP": 0.37369085997929974,
+          "RCA_Top1": 0.7894736842105263,
+          "RCA_Top3": 0.8421052631578947,
+          "RCA_MRR": 0.8274425379688538
+        },
+        "rewired_current": {
+          "normal_NLL": 1.284089249477052,
+          "ready_NLL": 1.2764425486849065,
+          "observed_AP": 0.3734209288487068,
+          "RCA_Top1": 0.7894736842105263,
+          "RCA_Top3": 0.8421052631578947,
+          "RCA_MRR": 0.8307017543859649
+        }
+      },
+      "differences": {
+        "fresh_past_minus_block": {
+          "normal_NLL": {
+            "mean": 0.00042599125912314966,
+            "per_seed": [
+              0.0002679887570832905,
+              0.0005362849486501593,
+              0.0004737000716359992
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0013305055467705978,
+              0.002324497124605011
+            ],
+            "systems": 19,
+            "negative_systems": 11,
+            "positive_systems": 8
+          },
+          "ready_NLL": {
+            "mean": 0.0005818228972585578,
+            "per_seed": [
+              0.0004293730384425113,
+              0.0006768954427618729,
+              0.0006392002105712891
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0012677549270161412,
+              0.0026585198285286873
+            ],
+            "systems": 19,
+            "negative_systems": 11,
+            "positive_systems": 8
+          },
+          "observed_AP": {
+            "mean": -0.003142157943136572,
+            "per_seed": [
+              -0.0009290041090470429,
+              -0.009461495614684333,
+              0.0009640258943216605
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.012117361395643155,
+              0.001492273254767624
+            ],
+            "systems": 19,
+            "negative_systems": 8,
+            "positive_systems": 5
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": 0.0006328953697374751,
+            "per_seed": [
+              0.0,
+              0.0014202172096908939,
+              0.0004784688995215313
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0001670843776106933,
+              0.0028404344193817877
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 2
+          }
+        },
+        "current_minus_past": {
+          "normal_NLL": {
+            "mean": -0.0009290377298990885,
+            "per_seed": [
+              -0.0007022368280511154,
+              -0.0021192337337293124,
+              3.435737208316201e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0021212269339645116,
+              0.00021964311599731304
+            ],
+            "systems": 19,
+            "negative_systems": 17,
+            "positive_systems": 2
+          },
+          "ready_NLL": {
+            "mean": -0.0010076363881429036,
+            "per_seed": [
+              -0.0008073355022229647,
+              -0.002235011050575658,
+              1.9437388369911596e-05
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0022475009424644606,
+              0.00019170218392422278
+            ],
+            "systems": 19,
+            "negative_systems": 17,
+            "positive_systems": 2
+          },
+          "observed_AP": {
+            "mean": -0.0014162244752611906,
+            "per_seed": [
+              -0.0032607982616016454,
+              0.00040580089278094254,
+              -0.0013936760569628682
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.005573208071303328,
+              0.0008067386360211165
+            ],
+            "systems": 19,
+            "negative_systems": 8,
+            "positive_systems": 5
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.000556947925368978,
+            "per_seed": [
+              0.0,
+              -0.001670843776106934,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.003341687552213868,
+              0.0
+            ],
+            "systems": 19,
+            "negative_systems": 1,
+            "positive_systems": 0
+          }
+        },
+        "current_minus_block": {
+          "normal_NLL": {
+            "mean": -0.0005030464707759389,
+            "per_seed": [
+              -0.00043424807096782486,
+              -0.001582948785079153,
+              0.0005080574437191611
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.00261053254729823,
+              0.0016257520307574322
+            ],
+            "systems": 19,
+            "negative_systems": 14,
+            "positive_systems": 5
+          },
+          "ready_NLL": {
+            "mean": -0.00042581349088434585,
+            "per_seed": [
+              -0.00037796246378045336,
+              -0.0015581156078137849,
+              0.0006586375989412007
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.002644742737736618,
+              0.0018625899365073756
+            ],
+            "systems": 19,
+            "negative_systems": 13,
+            "positive_systems": 6
+          },
+          "observed_AP": {
+            "mean": -0.004558382418397762,
+            "per_seed": [
+              -0.004189802370648688,
+              -0.00905569472190339,
+              -0.00042965016264120786
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.013719614297162811,
+              0.00046908863769983477
+            ],
+            "systems": 19,
+            "negative_systems": 7,
+            "positive_systems": 6
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": 7.59474443684971e-05,
+            "per_seed": [
+              0.0,
+              -0.00025062656641603993,
+              0.0004784688995215313
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.0003341687552213866,
+              0.0007063112326270226
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 1
+          }
+        },
+        "current_minus_none": {
+          "normal_NLL": {
+            "mean": -0.022654039817943908,
+            "per_seed": [
+              -0.02061823794716283,
+              -0.027419102819342362,
+              -0.019924778687326533
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.03764239764004423,
+              -0.010350115205112264
+            ],
+            "systems": 19,
+            "negative_systems": 17,
+            "positive_systems": 2
+          },
+          "ready_NLL": {
+            "mean": -0.022281029768157424,
+            "per_seed": [
+              -0.01997164048646626,
+              -0.027234428807308798,
+              -0.019637020010697216
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.038026555170092666,
+              -0.009404625286135775
+            ],
+            "systems": 19,
+            "negative_systems": 16,
+            "positive_systems": 3
+          },
+          "observed_AP": {
+            "mean": 0.012446503727558303,
+            "per_seed": [
+              -0.0016772492052006093,
+              0.029156782094706752,
+              0.00985997829316876
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.006255438898414945,
+              0.05273689131910578
+            ],
+            "systems": 19,
+            "negative_systems": 5,
+            "positive_systems": 9
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.0041781804939699674,
+            "per_seed": [
+              -0.0038461538461538464,
+              -0.006056808688387636,
+              -0.002631578947368421
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.017836257309941518,
+              0.003965040807146071
+            ],
+            "systems": 19,
+            "negative_systems": 1,
+            "positive_systems": 2
+          }
+        },
+        "current_minus_wrong": {
+          "normal_NLL": {
+            "mean": -0.015037287745559425,
+            "per_seed": [
+              -0.01484482539327521,
+              -0.020639670522589432,
+              -0.00962736732081363
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.027379403302544042,
+              -0.00480496067749828
+            ],
+            "systems": 19,
+            "negative_systems": 13,
+            "positive_systems": 6
+          },
+          "ready_NLL": {
+            "mean": -0.01446323645742316,
+            "per_seed": [
+              -0.01417188895376105,
+              -0.02007150650024414,
+              -0.009146313918264289
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.027484164164777385,
+              -0.003818772079651827
+            ],
+            "systems": 19,
+            "negative_systems": 13,
+            "positive_systems": 6
+          },
+          "observed_AP": {
+            "mean": 0.00026993113059285473,
+            "per_seed": [
+              -0.004531533058675502,
+              -0.0007976424861501014,
+              0.00613896893660417
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.011871601488985212,
+              0.01777886816270367
+            ],
+            "systems": 19,
+            "negative_systems": 5,
+            "positive_systems": 8
+          },
+          "RCA_Top1": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_Top3": {
+            "mean": 0.0,
+            "per_seed": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              0.0,
+              0.0
+            ],
+            "systems": 19,
+            "negative_systems": 0,
+            "positive_systems": 0
+          },
+          "RCA_MRR": {
+            "mean": -0.003259216417111155,
+            "per_seed": [
+              -0.0038461538461538464,
+              -0.004678362573099416,
+              -0.001253132832080201
+            ],
+            "hierarchical_seed_system_bootstrap95": [
+              -0.013090418353576251,
+              0.002339181286549708
+            ],
+            "systems": 19,
+            "negative_systems": 1,
+            "positive_systems": 1
+          }
+        }
+      },
+      "frozen_timing_intervention": {
+        "none_block_minus_current_at_same_weights": {
+          "mean": 0.0,
+          "per_seed": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            0.0,
+            0.0
+          ],
+          "systems": 19,
+          "negative_systems": 0,
+          "positive_systems": 0
+        },
+        "parents_current_block_minus_current_at_same_weights": {
+          "mean": -0.000471044005009166,
+          "per_seed": [
+            -0.0004608003716719778,
+            -0.0008047003495065789,
+            -0.0001476312938489412
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.0018701607720893725,
+            0.0005891176169378687
+          ],
+          "systems": 19,
+          "negative_systems": 8,
+          "positive_systems": 11
+        },
+        "parents_past_block_minus_current_at_same_weights": {
+          "mean": -0.000424512645654511,
+          "per_seed": [
+            -0.00023565794292249178,
+            -0.0006865890402542917,
+            -0.0003512909537867496
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.0016416073368306747,
+            0.0005561533727143933
+          ],
+          "systems": 19,
+          "negative_systems": 8,
+          "positive_systems": 11
+        },
+        "parents_block_block_minus_current_at_same_weights": {
+          "mean": -0.0016211815047682378,
+          "per_seed": [
+            -0.0003831072857505397,
+            -0.0030707999279624538,
+            -0.0014096373005917197
+          ],
+          "hierarchical_seed_system_bootstrap95": [
+            -0.0051813445593181405,
+            -2.7592767748918078e-06
+          ],
+          "systems": 19,
+          "negative_systems": 12,
+          "positive_systems": 7
+        }
+      }
+    }
+  },
+  "normal_optimized_scalars": 74649600,
+  "anomalous_observed_training_scalars": 0,
+  "source_extra_frozen_query_scalars": 295219200,
+  "target_arrays_opened": false,
+  "same_time_parent_inputs_explicitly_authorized": true,
+  "interpretation": "NLL lower-better; AP/RCA higher-better. Availability does not by itself prove causal predictive value; timing interventions also shift inputs. Source evidence is not target TSAD improvement.",
+  "artifact_audit_passed": true,
+  "structural_parent_availability": {
+    "block": 0.22393433179723501,
+    "past": 0.8824884792626728,
+    "current": 1.0
+  }
+}
