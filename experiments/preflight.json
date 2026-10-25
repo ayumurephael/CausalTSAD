@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "no_source_or_target_arrays": true,
+  "optimizer_updates": 0,
+  "query_and_future_blind": true,
+  "nonparent_invariance_end_to_end": true,
+  "channel_equivariance": true,
+  "finite_backward": true,
+  "C1_constant_empty_graph_finite": true,
+  "parameters": 18016,
+  "technical_random_scalars": 2048,
+  "context_construction_calls": 4,
+  "additional_constant_scalars": 1024,
+  "query_sets_checked": 17,
+  "normal_predictor_does_not_accept_query": true,
+  "peak_cuda_bytes": 19924992
+}
