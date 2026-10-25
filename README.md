@@ -1,3 +1,11 @@
+# 已完成结果与范围
+
+C05六个冻结模型×123源M系统全部完成，0optimizer、未读目标数组。65有子系统的child分数均值差CI跨0，超源阈值额外症状只1系统/1seed；没有普遍测量污染failure证据，也没有实现双层潜状态solution。
+
+见[数值与全部正反系统](results/fixed_pilot/summary.json)及[完整报告](results/fixed_pilot/README.md)。以下为原实现说明，训练代码版本在不可变launch中固定；新的文档提交不改变已跑模型。
+
+---
+
 # C05 measurement-isolation source mechanism probe
 
 Separate branch from common main5510ede. C08b training runs on H100; this source-only no-training diagnostic uses released A100 resources. It is **not the complete C05 two-layer latent-state solution** and not a new performance claim.
