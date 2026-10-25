@@ -1,6 +1,6 @@
 {
   "schema_version": "causal-tsad-runs-1",
-  "updated_at_utc": "2026-10-24T16:33:04.401551+00:00",
+  "updated_at_utc": "2026-10-25T03:51:19.797178+00:00",
   "entries": [
     {
       "id": "B1-shared-v1",
@@ -59,10 +59,34 @@
     {
       "id": "C01-parent-innovation-v1",
       "branch": "proposal/c01-parent-innovation-v1",
-      "status": "GPU_interfaces_passed_not_trained",
+      "status": "full_pipeline_G0_passed_cache_running_optimizer_not_started_at_snapshot",
       "validated_model_local_revision": "e1e4128ddcda84af9b605b9485f92408698a0617",
       "weight_sha256": "9a22a4a2e42d1fa147a4f4d0d09aa0ad6be1ef15c90f7a124fa846603cbf638e",
-      "independent_from_B1_implementation": true
+      "independent_from_B1_implementation": true,
+      "training_local_commit": "ff47fa8b2fa3fbd29463e4dc7054960e070337b9",
+      "training_github_commit": "c079c1601f801a6d0cabdd0c5f8d6e00fc1eff03",
+      "optimization_seeds": [
+        348,
+        349,
+        350
+      ],
+      "arms": [
+        "pretrained_none",
+        "pretrained_parents",
+        "pretrained_rewired",
+        "raw_parents"
+      ],
+      "planned_runs": 12,
+      "planned_original_optimized_scalars": 59719680,
+      "planned_additional_normal_query_scalars": 59719680,
+      "trainable_parameters": 42449,
+      "hardware": "five H100, shared processes allowed; 8GiB cap/worker",
+      "G0_passed": true,
+      "base_probability_max_error": 5.960464477539063e-08,
+      "target_validation_or_locked_arrays_opened": false,
+      "evaluation": "fixed100development; original4metrics/AP/normal FPR; conditional RCA only",
+      "control_caveat": "raw branch has matched trainable head but lower native encoder FLOPs",
+      "results_not_yet_available": true
     }
   ]
 }
