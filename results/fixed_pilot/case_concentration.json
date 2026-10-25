@@ -1,0 +1,35 @@
+{
+  "status": "posthoc_sensitivity",
+  "main_all80_systems_unchanged": true,
+  "total_VUS_delta_sum": 0.3375220832452051,
+  "top2_positive_contribution_sum": 0.32159931729686675,
+  "fraction_of_net_gain": 0.952824521005428,
+  "remaining78_mean_delta": 0.0002041380249786969,
+  "top2": [
+    {
+      "system_id": "timercd-synthetic-benchmark-v1/mechanism_holdout/development/c16/sys00009",
+      "track": "mechanism_holdout",
+      "channels": 16,
+      "event_types": [
+        "measurement"
+      ],
+      "family": "nonlinear_ar2_dag",
+      "AP_delta": 0.08194444444444453,
+      "VUS_delta": 0.2000000000000001,
+      "FPR_delta": 0.0
+    },
+    {
+      "system_id": "timercd-synthetic-benchmark-v1/mechanism_holdout/development/c20/sys00053",
+      "track": "mechanism_holdout",
+      "channels": 20,
+      "event_types": [
+        "measurement"
+      ],
+      "family": "nonlinear_ar2_dag",
+      "AP_delta": 0.11583820981153216,
+      "VUS_delta": 0.12159931729686667,
+      "FPR_delta": 0.0
+    }
+  ],
+  "interpretation": "Exploratory concentration audit, not a new exclusion rule or basis for target tuning"
+}

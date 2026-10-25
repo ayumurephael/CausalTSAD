@@ -1,3 +1,9 @@
+# C03v2已完成
+
+九组全部完成，源历史机制信号成立，目标收益区间跨0且集中两例、误报增。见[完整数值](results/fixed_pilot/summary.json)与[解释](results/fixed_pilot/interpretation.md)。下一轮因果信息对照独立在c03-causal-specificity-v3，旧模型不改。
+
+---
+
 # C03v2：学习因果条件机制上下文
 
 当前分支实现新的C03v2集成，不覆盖C09或旧C03。详细架构、信息边界、9组预算与停止条件见[实验说明](docs/C03_LEARNED_CONTEXT_V2.md)；实际阶段以部署记录为准，尚无新效果结论。
