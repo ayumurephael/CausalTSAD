@@ -12,7 +12,11 @@ class CausalContrast(nn.Module):
   self.root=nn.Sequential(nn.Linear(32,32),nn.GELU(),nn.Linear(32,1))
 
  def forward(self,values,graph,mode):
-  inputs,y,times,scale=prepare(values);arm='degree_mean' if mode=='degree' else 'true_mean'
+  inputs,y,times,scale=prepare(values)
+  return self.forward_prepared(inputs,y,times,graph,mode)
+
+ def forward_prepared(self,inputs,y,times,graph,mode):
+  arm='degree_mean' if mode=='degree' else 'true_mean'
   mu,lv=self.predictor.predict(inputs,graph,arm);nll,sq,innovation=losses(mu,lv,y)
   node=torch.cat([signed_log((y-mu)*torch.exp(-lv/2))[...,None],innovation[...,None],lv[...,None],signed_log(mu)[...,None],signed_log(y)[...,None],signed_log(inputs['own'])],-1)
   h=self.local(node);degree=graph.sum(0);outdegree=graph.sum(1)
