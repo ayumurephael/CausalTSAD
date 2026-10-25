@@ -24,7 +24,7 @@ def evaluate(model,cache,rows,arm,cfg):
     y=b['labels'][j].cpu().numpy();s=out['x']['logit'][j].cpu().numpy();root=None
     mask=b['root_window'][j].bool()&b['labels'][j].bool();root_evidence_points+=int(mask.sum())
     if r['channels']>1 and mask.any():
-     scores=out['x']['root_log_prob'][j,mask].exp().mean(0).cpu().numpy();ranking=np.argsort(-scores,kind='stable');rank=int(np.flatnonzero(ranking==int(b['root'][j]))[0])+1
+     scores=out['x']['root_log_prob'][j,mask].exp().mean(0).cpu().numpy();ranking=np.argsort(-scores,kind='stable');rank=int(np.flatnonzero(ranking==int(b['true_root'][j]))[0])+1
      root=dict(Top1=int(rank==1),Top3=int(rank<=min(3,r['channels'])),MRR=1/rank,rank=rank)
     results[r['key']]=dict(channels=r['channels'],AP=float(average_precision_score(y,s)) if len(np.unique(y))>1 else None,
      base_AP=float(average_precision_score(y,b['x_base'][j].cpu().numpy())) if len(np.unique(y))>1 else None,
