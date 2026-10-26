@@ -56,7 +56,7 @@ def evidence(values,graph,signature='full',state=None):
     for k,beta in enumerate(SCALES):factors[start:start+len(tt),root,mode*3+k]=covariance_log_ratio(rr,vv,m,beta)
    context_factors+=len(tt)*6
  assert torch.isfinite(factors).all()
- return dict(log_factors=factors,normal_NLL=.5*(var.log()+res.square()/var+math.log(2*math.pi))[FIRST-L:].mean(),factorizations=context_factors,normal_mean=mu,context_state=state)
+ return dict(log_factors=factors,normal_NLL=.5*(var.log()+res.square()/var+math.log(2*math.pi))[FIRST-L:].mean(),factorizations=context_factors,normal_mean=mu,context_state=state,ready_residual=res[FIRST-L:],ready_variance=var[FIRST-L:])
 class SyndromePrior(nn.Module):
  def __init__(self,seed=348):
   super().__init__();g=torch.Generator().manual_seed(seed);self.weights=nn.Parameter(torch.randn(6,generator=g,dtype=torch.float64)*.01);self.bias=nn.Parameter(torch.zeros((),dtype=torch.float64))
