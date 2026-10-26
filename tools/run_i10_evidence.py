@@ -45,7 +45,7 @@ def preflight(plan,output):
  pe=max(float((e[k]-ep[k]).abs().max()) for k in ['density_uniform','density_learned','mean_uniform','mean_learned'])
  assert pe<1e-8
  atomic_json(output,dict(status='passed',baseline_error=errors,mixture_identity_error=d['identity_error'],permutation_error=pe,
-  cache_reads=2,optimizer_updates=0,new_basis_forwards=0,new_context_factorizations=0))
+  unique_cache_reads=1,readout_passes=2,optimizer_updates=0,new_basis_forwards=0,new_context_factorizations=0))
 
 @torch.inference_mode()
 def run(a):

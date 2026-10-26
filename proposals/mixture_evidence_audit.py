@@ -28,6 +28,8 @@ def readouts(z,selector):
 def normal_target_nll(z,selector):
  target=z['training_response'];lw=selector(z['features'],z['valid']);ul=torch.full_like(lw,-math.log(5))
  per=.5*(math.log(2*math.pi)+z['variance'].log()+(target[...,None]-z['mu']).square()/z['variance'])
- return dict(full=float(per[...,0].mean()),uniform=float(-mixture_logpdf(target,z['mu'],z['variance'],ul).mean()),
-  learned=float(-mixture_logpdf(target,z['mu'],z['variance'],lw).mean()),components=per.mean((0,1)).cpu().tolist(),
+ uniform=-mixture_logpdf(target,z['mu'],z['variance'],ul);learned=-mixture_logpdf(target,z['mu'],z['variance'],lw)
+ return dict(full=float(per[...,0].mean()),uniform=float(uniform.mean()),
+  learned=float(learned.mean()),components=per.mean((0,1)).cpu().tolist(),
+  per_node=dict(full=per[...,0].mean(0).cpu().tolist(),uniform=uniform.mean(0).cpu().tolist(),learned=learned.mean(0).cpu().tolist()),
   privileged_pointwise_best_component=float(per.min(-1).values.mean()))
