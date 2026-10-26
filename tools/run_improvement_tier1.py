@@ -4,7 +4,7 @@ views, never the benchmark's paired normal view to fit an anomalous case.
 """
 import os
 for key in ['OMP_NUM_THREADS','MKL_NUM_THREADS','OPENBLAS_NUM_THREADS']:os.environ[key]='1'
-import sys,json,pickle,time,argparse,traceback,hashlib
+import sys,json,pickle,time,argparse,traceback,hashlib,gc
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np,torch
@@ -74,50 +74,79 @@ def run(a):
         score=np.stack([v['score'] for v in read]);root=np.stack([v['root'] for v in read])
         assert np.isfinite(score).all() and np.isfinite(root).all();scores[tag]=score;metrics[tag]=evaluate(score,root,y,events)
     def progress(stage):atomic_json(a.root/'task_progress'/(ident+'.json'),dict(status='running',stage=stage,seconds=time.time()-start))
+    partial=a.root/'partials'/ident;partial.mkdir(parents=True,exist_ok=True)
+    statefile=partial/'causal_state.pkl';statehash=partial/'causal_state.json'
     configs=configurations()
-    for mode in ['true','empty','rewired']:
-        gg=graph_for(g,row['key'],mode) if source else g if mode=='true' else np.zeros_like(g) if mode=='empty' else wrong(g,key)
-        graph=torch.tensor(gg,dtype=torch.float64,device='cuda')
-        # Reuse exact old prefix residuals where available; verify file SHA.
-        oldident=row.get('task_id','target_'+row.get('id',''))
-        old=Path(plan['probe'])/'innovation_cache'/f'{oldident}__s{seed}__{mode}.npz'
-        oldrecord=Path(plan['probe'])/'records'/(oldident+'.json')
-        prefix=[]
-        if old.is_file() and oldrecord.is_file():
-            meta=json.loads(oldrecord.read_text());entry=next(e for e in meta['innovation_cache'] if Path(e['path']).name==old.name);assert sha256(old)==entry['SHA256']
-            assert meta['input_SHA256']==array_sha(x)
-            with np.load(old) as f:rr=f['residual'];vv=f['variance']
-            prefix=[dict(residual=rr[i],variance=vv[i]) for i in range(len(x))]
-            audits['prefix_'+mode]=dict(cache=str(old),SHA256=sha256(old),reused=True)
-        else:
-            for v in x:
-                with torch.no_grad():out=model(torch.tensor(v,device='cuda',dtype=torch.float64)[None],graph)
-                prefix.append(dict(residual=out['residual'][0].cpu().numpy(),variance=out['variance'][0].cpu().numpy()))
-                factors+=out['context_factorizations'];raw_slots+=v.size
-            audits['prefix_'+mode]=dict(reused=False)
-        put('prefix__'+mode+'__point',[readouts(v['residual'],v['variance'],temp,bias)['point'] for v in prefix])
-        selected=list(configs) if mode=='true' else ['xfit','online','period_parent32']
-        for name in selected:
-            progress(name+'_'+mode);outviews=[]
-            for v in x:
-                out=predict(model,torch.tensor(v,device='cuda',dtype=torch.float64),graph,configs[name])
-                factors+=out['audit']['factorizations'];feature_rows+=out['audit']['feature_node_rows'];raw_slots+=v.size
-                outviews.append({k:out[k].cpu().numpy() if k!='audit' else out[k] for k in out})
-            audits[name+'__'+mode]=[v['audit'] for v in outviews]
-            reads=[readouts(v['residual'],v['variance'],temp,bias) for v in outviews]
-            for readname in reads[0] if name in ['xfit','period_parent32'] else ['point']:
-                put(name+'__'+mode+'__'+readname,[r[readname] for r in reads])
-            if name=='xfit':contexts[mode]=outviews
+    if statehash.exists():
+        receipt=json.loads(statehash.read_text());assert sha256(statefile)==receipt['SHA256']
+        assert receipt['input_SHA256']==array_sha(x) and receipt['weight_SHA256']==sha256(weight)
+        assert receipt['parameter_SHA256']==initial
+        with statefile.open('rb') as f:state=pickle.load(f)
+        scores,metrics,audits,contexts,factors,feature_rows,raw_slots=state
+    else:
+        for mode in ['true','empty','rewired']:
+            gg=graph_for(g,row['key'],mode) if source else g if mode=='true' else np.zeros_like(g) if mode=='empty' else wrong(g,key)
+            graph=torch.tensor(gg,dtype=torch.float64,device='cuda')
+            # Reuse exact old prefix residuals where available; verify file SHA.
+            oldident=row.get('task_id','target_'+row.get('id',''))
+            old=Path(plan['probe'])/'innovation_cache'/f'{oldident}__s{seed}__{mode}.npz'
+            oldrecord=Path(plan['probe'])/'records'/(oldident+'.json')
+            prefix=[]
+            if old.is_file() and oldrecord.is_file():
+                meta=json.loads(oldrecord.read_text());entry=next(e for e in meta['innovation_cache'] if Path(e['path']).name==old.name);assert sha256(old)==entry['SHA256']
+                assert meta['input_SHA256']==array_sha(x)
+                with np.load(old) as f:rr=f['residual'];vv=f['variance']
+                prefix=[dict(residual=rr[i],variance=vv[i]) for i in range(len(x))]
+                audits['prefix_'+mode]=dict(cache=str(old),SHA256=sha256(old),reused=True)
+            else:
+                for v in x:
+                    with torch.no_grad():out=model(torch.tensor(v,device='cuda',dtype=torch.float64)[None],graph)
+                    prefix.append(dict(residual=out['residual'][0].cpu().numpy(),variance=out['variance'][0].cpu().numpy()))
+                    factors+=out['context_factorizations'];raw_slots+=v.size
+                audits['prefix_'+mode]=dict(reused=False)
+            put('prefix__'+mode+'__point',[readouts(v['residual'],v['variance'],temp,bias)['point'] for v in prefix])
+            selected=list(configs) if mode=='true' else ['xfit','online','period_parent32']
+            for name in selected:
+                progress(name+'_'+mode);outviews=[]
+                for v in x:
+                    out=predict(model,torch.tensor(v,device='cuda',dtype=torch.float64),graph,configs[name])
+                    factors+=out['audit']['factorizations'];feature_rows+=out['audit']['feature_node_rows'];raw_slots+=v.size
+                    outviews.append({k:out[k].cpu().numpy() if k!='audit' else out[k] for k in out})
+                audits[name+'__'+mode]=[v['audit'] for v in outviews]
+                reads=[readouts(v['residual'],v['variance'],temp,bias) for v in outviews]
+                for readname in reads[0] if name in ['xfit','period_parent32'] else ['point']:
+                    put(name+'__'+mode+'__'+readname,[r[readname] for r in reads])
+                if name=='xfit':contexts[mode]=outviews
+        with statefile.with_suffix('.partial').open('wb') as f:pickle.dump((scores,metrics,audits,contexts,factors,feature_rows,raw_slots),f,protocol=5)
+        statefile.with_suffix('.partial').replace(statefile)
+        atomic_json(statehash,dict(SHA256=sha256(statefile),input_SHA256=array_sha(x),weight_SHA256=sha256(weight),parameter_SHA256=initial,code=plan['code']))
     # E4 uses the common primary xfit residual. No root outputs from TimeRCD.
+    allocated_before_gc=torch.cuda.memory_allocated();gc.collect();torch.cuda.empty_cache()
+    atomic_json(partial/'memory_before_E4.json',dict(before_gc=allocated_before_gc,after_gc=torch.cuda.memory_allocated()))
     detector=FrozenDetector(plan['detector_code'],plan['detector_weights']);progress('E4')
+    detector_budget=dict(actual_input_scalars=0,padded_forward_scalars=0,encoder_calls=0)
     def detput(tag,values,kind):
-        output=[]
+        part=partial/(tag+'.npz');meta=partial/(tag+'.json')
+        if meta.exists():
+            saved=json.loads(meta.read_text());assert sha256(part)==saved['SHA256']
+            with np.load(part) as f:scores[tag]=f['score']
+            metrics[tag]=saved['metrics']
+            for k,v in saved['budget'].items():detector_budget[k]+=v
+            return
+        before={k:getattr(detector,k) for k in detector_budget};output=[]
+        gc.collect();torch.cuda.empty_cache()
+        atomic_json(partial/'memory_current_E4.json',dict(tag=tag,allocated=torch.cuda.memory_allocated(),reserved=torch.cuda.memory_reserved()))
         for v in values:
             if kind=='uni':
                 per=[detector.predict(v[:,j:j+1],'selftrained_uni','native')['logit'] for j in range(v.shape[1])]
                 output.append(np.max(np.stack(per),axis=0))
             else:output.append(detector.predict(v,'selftrained_multi','native')['logit'])
         scores[tag]=np.stack(output);metrics[tag]=evaluate(scores[tag],None,y,events)
+        budget={k:getattr(detector,k)-v for k,v in before.items()}
+        with part.with_suffix('.partial').open('wb') as f:np.savez_compressed(f,score=scores[tag])
+        part.with_suffix('.partial').replace(part)
+        atomic_json(meta,dict(SHA256=sha256(part),metrics=metrics[tag],budget=budget,code=plan['code'],peak_cuda_bytes=torch.cuda.max_memory_allocated()))
+        for k,v in budget.items():detector_budget[k]+=v
     # Matched suffix input for raw/residual/parent-removed inputs. Original full
     # sequence TimeRCD reference is added separately in analysis, not conflated.
     raw=x[:,FIRST:]
@@ -143,8 +172,8 @@ def run(a):
         weight_SHA256=sha256(weight),parameter_SHA256=initial,parameters_unchanged=True,scores_SHA256=sha256(dst.with_suffix('.npz')),
         context_cache_SHA256=sha256(a.root/'context_cache'/(ident+'.npz')),metrics=metrics,audits=audits,
         budget=dict(raw_input_slots=raw_slots,feature_node_rows=feature_rows,context_factorizations=factors,
-                    TimeRCD_actual_input_scalars=detector.actual_input_scalars,TimeRCD_padded_scalars=detector.padded_forward_scalars,
-                    TimeRCD_encoder_calls=detector.encoder_calls,optimizer_updates=0),seconds=time.time()-start,
+                    TimeRCD_actual_input_scalars=detector_budget['actual_input_scalars'],TimeRCD_padded_scalars=detector_budget['padded_forward_scalars'],
+                    TimeRCD_encoder_calls=detector_budget['encoder_calls'],optimizer_updates=0),seconds=time.time()-start,
         peak_cuda_bytes=torch.cuda.max_memory_allocated(),TimeRCD_RCA=False,validation_locked_opened=False,
         execution_code=plan['code'],worker_GiB=plan.get('worker_GiB',8),
         RCA_scope='conditional supplied true event window, not detected event'))
