@@ -7,6 +7,15 @@ Offline context inference is disclosed; this is not an online predictor.
 import math
 import torch
 from proposals.context_crossfit import context_mask,blocks,design
+from proposals.matched_pairs import rewire
+
+def graph_input(graph,key,wrong=False):
+    g=torch.as_tensor(graph,dtype=torch.float64)
+    if not wrong:return g
+    out=rewire(g,str(key))
+    assert torch.equal(out.sum(0),g.sum(0)) and torch.equal(out.sum(1),g.sum(1))
+    assert not out.diag().any()
+    return out
 
 FEATURES=('log_count','log_dimension','log_noise','mean_irls_weight',
           'design_energy','inverse_trace','own_beta_norm','intercept',

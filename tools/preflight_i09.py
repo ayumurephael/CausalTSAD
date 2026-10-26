@@ -5,7 +5,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np,torch
 from causal_tsad.io import atomic_json,sha256
 from causal_tsad.frozen_detector import parameter_sha
-from proposals.context_mixture import components,ContextSelector,mixture_logpdf,node_evidence
+from proposals.context_mixture import components,ContextSelector,mixture_logpdf,node_evidence,graph_input
 from proposals.context_crossfit import predict,configurations,blocks
 from tools.run_i09_mixture import load_model
 
@@ -36,7 +36,14 @@ def main(a):
     loss=-mixture_logpdf(o['response'].detach(),o['mu'].detach(),o['variance'].detach(),lw).mean();loss.backward()
     assert all(p.grad is None for p in model.parameters()) and any(p.grad is not None and p.grad.abs().sum()>0 for p in sel.parameters())
     opt=torch.optim.Adam(sel.parameters(),lr=.001);opt.step();assert parameter_sha(model)==initial
-    atomic_json(a.output,dict(status='passed',full_residual_error=e1,full_variance_error=e2,full_energy_error=energyerr,
+    graph_checks=[]
+    for folder in [plan['source_train'],plan['source_eval']]:
+        for row2 in json.loads((Path(folder)/'manifest.json').read_text())['rows']:
+            with np.load(Path(folder)/row2['path']) as data:gg=data['graph']
+            wrong=graph_input(gg,row2['key'],True).numpy()
+            assert np.array_equal(gg.sum(0),wrong.sum(0)) and np.array_equal(gg.sum(1),wrong.sum(1))
+            graph_checks.append(dict(key=row2['key'],same_as_true=bool(np.array_equal(gg,wrong))))
+    atomic_json(a.output,dict(status='passed',graph_degree_checks=graph_checks,wrong_graph_unchanged=sum(r['same_as_true'] for r in graph_checks),full_residual_error=e1,full_variance_error=e2,full_energy_error=energyerr,
         zero_selector_uniform_error=initerr,component_permutation_error=err,protected_context_feature_error=protected,
         own_current_future_feature_error=ownerr,frozen_basis_unchanged=True,gradients_selector_only=True,selector_parameters=sum(p.numel() for p in sel.parameters()),
         technical_component_input_scalars=2*x.numel(),technical_reference_input_scalars=x.numel(),technical_selector_updates=1,

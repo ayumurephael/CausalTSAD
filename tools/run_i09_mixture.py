@@ -8,8 +8,7 @@ import numpy as np,torch
 from causal_tsad.io import atomic_json,sha256,array_sha
 from causal_tsad.frozen_detector import parameter_sha
 from proposals.causal_meta_basis import CausalMetaBasis
-from proposals.context_mixture import components,ContextSelector,mixture_logpdf,node_evidence,aggregate
-from tools.train_meta_basis import graph_for
+from proposals.context_mixture import components,ContextSelector,mixture_logpdf,node_evidence,aggregate,graph_input
 from tools.run_i06_controls import metrics
 
 def load_model(plan):
@@ -31,14 +30,16 @@ def run(a):
     train_manifest=Path(plan['source_train'])/'manifest.json';eval_manifest=Path(plan['source_eval'])/'manifest.json'
     assert sha256(train_manifest)==plan['train_manifest_SHA256'] and sha256(eval_manifest)==plan['eval_manifest_SHA256']
     train=json.loads(train_manifest.read_text())['rows'];ev=json.loads(eval_manifest.read_text())['rows'];budget={}
-    files=[];train_cases=[];eval_cases=[]
+    files=[];train_cases=[];eval_cases=[];graph_audits=[]
     def progress(stage,**kw):atomic_json(a.root/'task_progress'/(ident+'.json'),dict(stage=stage,seconds=time.time()-start,**kw))
     for split,rows,source in [('train',train,plan['source_train']),('eval',ev,plan['source_eval'])]:
         for row in rows:
             p=Path(source)/row['path'];assert sha256(p)==row['SHA256']
             with np.load(p) as z:values=z['values'];graph=z['graph'];target=z['normal_response'] if split=='train' else None
             assert array_sha(values)==row['input_SHA256']
-            graph=torch.as_tensor(graph_for(graph,row['key'],'wrong' if task['arm']=='wrong_all' else 'true'),device='cuda',dtype=torch.float64)
+            original=graph.copy();graph=graph_input(graph,row['key'],task['arm']=='wrong_all').cuda()
+            graph_audits.append(dict(key=row['key'],same_as_true=bool(np.array_equal(graph.cpu().numpy(),original)),graph_SHA256=array_sha(graph.cpu().numpy()),
+                each_node_in_out_degree_preserved=bool(np.array_equal(graph.cpu().numpy().sum(0),original.sum(0)) and np.array_equal(graph.cpu().numpy().sum(1),original.sum(1)))))
             for view,x in enumerate(values):
                 if time.time()>plan['deadline_unix']:raise TimeoutError('Fixed campaign time limit; no budget extension')
                 out=components(model,torch.as_tensor(x,device='cuda',dtype=torch.float64),graph)
@@ -105,7 +106,7 @@ def run(a):
         selector_initial_SHA256=init,selector_final_SHA256=parameter_sha(selector),checkpoint_SHA256=sha256(p),selector_parameters=sum(p.numel() for p in selector.parameters()),
         source_train_manifest_SHA256=plan['train_manifest_SHA256'],source_eval_manifest_SHA256=plan['eval_manifest_SHA256'],weight_SHA256=plan['weight_SHA256'],
         updates=512,observed_exposure=exposure,normal_target_exposure=target_exposure,budget=budget,seconds=time.time()-start,
-        cache_manifest_SHA256=sha256(cache/'manifest.json'),benchmark_arrays_opened=False,normal_twin_in_selector_input=False,TimeRCD_RCA=False,
+        cache_manifest_SHA256=sha256(cache/'manifest.json'),graph_audits=graph_audits,benchmark_arrays_opened=False,normal_twin_in_selector_input=False,TimeRCD_RCA=False,
         extra_selector_eval_passes=2*576+2*128,peak_cuda_bytes=torch.cuda.max_memory_allocated(),code=plan['code']))
     progress('complete',step=512)
 if __name__=='__main__':
