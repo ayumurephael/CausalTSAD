@@ -26,7 +26,7 @@ def graph_for(row,mode):
  g=torch.from_numpy(row['graph']).cuda()
  return rewire(g,row['key']) if mode=='wrong' else g
 
-def evaluate(model,data,mode,deadline=float('inf')):
+def evaluate(model,data,mode,deadline=float('inf'),tensor_dtype=torch.float32):
  from sklearn.metrics import average_precision_score,roc_auc_score
  model.eval();normal=[];records={};queries=0
  with torch.no_grad():
@@ -34,13 +34,13 @@ def evaluate(model,data,mode,deadline=float('inf')):
    assert time.time()<deadline,'Campaign deadline during calibration'
    g=graph_for(r,mode)
    for k in [0,1]:
-    v=torch.tensor(r['cases'][k],dtype=torch.float32,device='cuda');p=model(v,g,mode);normal.extend(p['logit'].cpu().tolist());queries+=704*v.shape[1]
+    v=torch.tensor(r['cases'][k],dtype=tensor_dtype,device='cuda');p=model(v,g,mode);normal.extend(p['logit'].cpu().tolist());queries+=704*v.shape[1]
   threshold=float(np.quantile(normal,.99))
   for r in data['source_validation']:
    assert time.time()<deadline,'Campaign deadline during validation'
    g=graph_for(r,mode);scores=[];normal_scores=[];roots=[];nll=[];outputs=[]
    for k in range(4):
-    v=torch.tensor(r['cases'][k],dtype=torch.float32,device='cuda');p=model(v,g,mode);s=p['logit'].cpu().numpy();scores.append(s);outputs.append(s)
+    v=torch.tensor(r['cases'][k],dtype=tensor_dtype,device='cuda');p=model(v,g,mode);s=p['logit'].cpu().numpy();scores.append(s);outputs.append(s)
     if k<2:normal_scores.extend(s.tolist());nll.append(float(p['normal_NLL'].mean()))
     else:roots.append(int(p['root_logits'].mean(0).argmax())==r['root'])
     queries+=704*v.shape[1]
