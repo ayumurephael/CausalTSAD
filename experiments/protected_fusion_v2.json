@@ -1,0 +1,16 @@
+{
+ "base_checkpoint_SHA256":"9a22a4a2e42d1fa147a4f4d0d09aa0ad6be1ef15c90f7a124fa846603cbf638e",
+ "seeds":[348,349,350],"arms":["basecal","degree","true","wrong"],"source_passes":1,"updates_per_run":568,
+ "ready_query_scalar_exposures_per_run":15561216,"full_source_input_exposures_per_run":22634496,
+ "total_ready_query_scalar_exposures":186734592,"total_full_source_input_exposures":271613952,
+ "data_seed":348,"learning_rate":0.001,"weight_decay":0.0001,"old_source_trust_weight":0.25,"residual_cap_in_source_base_IQR_scales":4,
+ "head_parameters":434,"old_source_train_groups":312,"new_source_train_groups":256,
+ "old_new_total_group_loss_weight":"50:50 via per-group reweighting; cases remain dependent within groups",
+ "frozen_teacher_source_query_predictions":216235008,"new_TimeRCD_source_forward_scalars":16515072,
+ "C1":"native selftrained_uni baseline unchanged","warmup":"first320 exact baseline",
+ "scoring":"same cached native raw logit baseline for all arms; original probability baseline reported separately",
+ "target":"540 development systems, fixed100 subset separate; no target gradient, no validation/locked arrays",
+ "endpoint":"fixed one pass/final, no benchmark-best selection","hours_per_head":1,"cache_hours":2,
+ "RCA":"C04 frozen root posterior, separate from fusion detector features; conditional ready root metrics separate",
+ "scope":"finite head integration, not full TimeRCD or foundation pretraining"
+}
