@@ -35,9 +35,11 @@ def innovations(values,state):
    parent,lag,kind=item;derivative=torch.ones_like(mu) if kind=='own' else state['scale'][parent]*torch.ones_like(mu) if kind=='raw' else state['scale'][parent]*(1-values[L-lag:t-lag,parent].tanh().square());a[L:,node,parent,lag]-=s['mean'][j]/s['scale'][j]*derivative
  mu=torch.stack(mus,-1);variance=torch.stack(variances,-1);residual=(values[L:]-state['center'])/state['scale']-mu
  return residual,variance,a[L:],mu
-def covariance_log_ratio(residual,variance,matrix,amplitude):
- # Exact Gaussian covariance ratio conditional on supplied diagonal noise and M.
- q=(matrix/variance[...,None]).transpose(-1,-2)@matrix;v=(matrix/variance[...,None]).transpose(-1,-2)@residual[...,None];eye=torch.eye(matrix.shape[-1],dtype=matrix.dtype,device=matrix.device);chol=torch.linalg.cholesky(eye+amplitude*q);solution=torch.cholesky_solve(v,chol);return .5*(amplitude*(v*solution).sum((-2,-1))-2*chol.diagonal(dim1=-2,dim2=-1).log().sum(-1))
+def covariance_log_ratio(residual,variance,matrix,amplitude,nu=4.):
+ # R20 covariance parametrization: cov=K, Mahalanobis denominator nu-2.
+ # This is a finite joint t likelihood ratio, not a complete Student-t process.
+ white=residual/variance.sqrt();u=matrix/variance.sqrt()[...,None];q=u.transpose(-1,-2)@u;v=u.transpose(-1,-2)@white[...,None];eye=torch.eye(matrix.shape[-1],dtype=matrix.dtype,device=matrix.device);chol=torch.linalg.cholesky(eye+amplitude*q);solution=torch.cholesky_solve(v,chol);gain=amplitude*(v*solution).sum((-2,-1));remaining=white-amplitude*(u@solution).squeeze(-1);quad=remaining.square().sum(-1)+amplitude*solution.square().sum((-2,-1));logdet=2*chol.diagonal(dim1=-2,dim2=-1).log().sum(-1)
+ return -.5*logdet+.5*(nu+residual.shape[-1])*torch.log1p(gain/(nu-2+quad))
 @torch.no_grad()
 def evidence(values,graph,signature='full',state=None):
  state=condition(values[:256],graph) if state is None else state;res,var,a,mu=innovations(values,state);c=values.shape[1];times=torch.arange(FIRST,len(values),device=values.device);factors=torch.empty((len(times),c,6),dtype=values.dtype,device=values.device);row_time=torch.arange(W,device=values.device);lag_ids=torch.arange(L+1,device=values.device);context_factors=0
@@ -56,7 +58,7 @@ def evidence(values,graph,signature='full',state=None):
     for k,beta in enumerate(SCALES):factors[start:start+len(tt),root,mode*3+k]=covariance_log_ratio(rr,vv,m,beta)
    context_factors+=len(tt)*6
  assert torch.isfinite(factors).all()
- return dict(log_factors=factors,normal_NLL=.5*(var.log()+res.square()/var+math.log(2*math.pi))[FIRST-L:].mean(),factorizations=context_factors,normal_mean=mu,context_state=state)
+ return dict(log_factors=factors,normal_NLL=.5*(var.log()+res.square()/var+math.log(2*math.pi))[FIRST-L:].mean(),factorizations=context_factors,normal_mean=mu,context_state=state,ready_residual=res[FIRST-L:],ready_variance=var[FIRST-L:])
 class SyndromePrior(nn.Module):
  def __init__(self,seed=348):
   super().__init__();g=torch.Generator().manual_seed(seed);self.weights=nn.Parameter(torch.randn(6,generator=g,dtype=torch.float64)*.01);self.bias=nn.Parameter(torch.zeros((),dtype=torch.float64))

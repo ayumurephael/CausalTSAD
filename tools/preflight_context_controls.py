@@ -1,0 +1,14 @@
+"""Independent dense t density, Gaussian limit and unchanged normal predictor."""
+import sys,argparse,math
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+import torch
+from proposals.causal_syndromes import covariance_log_ratio,evidence,condition,innovations,SyndromePrior
+from proposals.raw_context import parameter_sha
+from causal_tsad.io import atomic_json
+if __name__=='__main__':
+ p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);a=p.parse_args();torch.set_num_threads(1);torch.manual_seed(348);torch.cuda.set_per_process_memory_fraction(1*2**30/torch.cuda.get_device_properties(0).total_memory);d='cuda';r=torch.randn(2,12,dtype=torch.float64,device=d);v=torch.rand_like(r)+1;m=torch.randn(2,12,5,dtype=r.dtype,device=d);base=torch.diag_embed(v);alt=base+2*m@m.transpose(-1,-2)
+ def density(k):return -.5*torch.linalg.slogdet(k).logabsdet-.5*(4+12)*torch.log1p((r[...,None]*torch.linalg.solve(k,r[...,None])).sum((-2,-1))/2)
+ direct=density(alt)-density(base);actual=covariance_log_ratio(r,v,m,2);error=float((direct-actual).abs().max());assert error<1e-9;assert torch.equal(covariance_log_ratio(r,v,m,0),torch.zeros(2,dtype=r.dtype,device=d));gauss=.5*(torch.linalg.slogdet(base).logabsdet-torch.linalg.slogdet(alt).logabsdet+(r[...,None]*(torch.linalg.solve(base,r[...,None])-torch.linalg.solve(alt,r[...,None]))).sum((-2,-1)));lim=float((covariance_log_ratio(r,v,m,2,nu=1e10)-gauss).abs().max());assert lim<1e-6;assert torch.isfinite(covariance_log_ratio(r*1e10,v,m,2)).all()
+ x=torch.randn(336,3,dtype=r.dtype,device=d);g=torch.zeros(3,3,dtype=r.dtype,device=d);g[0,1]=g[1,2]=1;state=condition(x[:256],g);mu=innovations(x,state)[3];z=x.clone();z[326,1]+=100;assert mu[318,1]==innovations(z,state)[3][318,1];ev=evidence(x,g);future=x.clone();future[330:]+=100;assert torch.equal(ev['log_factors'][:10],evidence(future,g)['log_factors'][:10]);perm=torch.tensor([2,0,1],device=d);prior=SyndromePrior().cuda().requires_grad_(False);before=parameter_sha(prior);other=evidence(x[:,perm],g[perm][:,perm]);perror=float((prior(ev['log_factors'])['logit']-prior(other['log_factors'])['logit']).abs().max());assert perror<1e-6 and parameter_sha(prior)==before
+ big=torch.randn(336,20,dtype=r.dtype,device=d);bg=torch.zeros(20,20,dtype=r.dtype,device=d);bg[torch.arange(19),torch.arange(1,20)]=1;large=evidence(big,bg);assert torch.isfinite(large['log_factors']).all();atomic_json(a.output,dict(status='passed',dense_t_max_error=error,Gaussian_limit_error=lim,null_exact=True,matched_covariance_not_scale=True,huge_residual_finite=True,current_target_blind=True,future_isolation_exact=True,permutation_error=perror,C20_finite=True,global_parameters_unchanged=True,technical_query=16*3*3+16*20,technical_full_input_slots=336*3*3+336*20,optimizer_updates=0,benchmark_arrays_opened=False,peak_cuda_bytes=torch.cuda.max_memory_allocated()))
