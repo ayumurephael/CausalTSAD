@@ -6,7 +6,15 @@ from causal_tsad.io import atomic_json,sha256
 def main(a):
     plan=json.loads(a.plan.read_text());lock=a.root/'controller.lock'
     with lock.open('x') as f:f.write(str(os.getpid()))
-    todo=list(range(len(plan['tasks'])));active={};done=[]
+    done=[]
+    for i,task in enumerate(plan['tasks']):
+        p=a.root/'records'/(task['id']+'.json')
+        if p.exists():
+            old=json.loads(p.read_text());assert old['task']==task
+            assert sha256(p.with_suffix('.npz'))==old['scores_SHA256']
+            assert sha256(a.root/'context_cache'/(task['id']+'.npz'))==old['context_cache_SHA256']
+            done.append(i)
+    reused=len(done);todo=[i for i in range(len(plan['tasks'])) if i not in done];active={}
     while todo or active:
         failed=list((a.root/'errors').glob('*.json'))
         if failed or time.time()>plan['deadline_unix']:
@@ -21,16 +29,17 @@ def main(a):
                 done.append(i)
         free={int(l.split(',')[0]):float(l.split(',')[1]) for l in subprocess.check_output(['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits']).decode().strip().splitlines()}
         for gpu in plan['gpus']:
-            if gpu not in active and todo and free.get(gpu,0)>=10000:
-                i=todo.pop(0);env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=str(gpu)
+            fits=[i for i in todo if free.get(gpu,0)>=plan.get('task_memory_MiB',{}).get(plan['tasks'][i]['id'],10000)]
+            if gpu not in active and fits:
+                i=fits[0];todo.remove(i);env=os.environ.copy();env['CUDA_VISIBLE_DEVICES']=str(gpu)
                 f=(a.root/'logs'/f'task{i}.log').open('x')
                 p=subprocess.Popen([sys.executable,plan['code']+'/tools/run_improvement_tier1.py','--root',str(a.root),'--plan',str(a.plan),'--task',str(i)],env=env,stdin=subprocess.DEVNULL,stdout=f,stderr=subprocess.STDOUT)
                 active[gpu]=(p,f,i)
-        atomic_json(a.root/'progress.json',dict(status='running',completed=len(done),total=len(plan['tasks']),active={str(g):dict(pid=p.pid,task=i) for g,(p,f,i) in active.items()},pending=len(todo)))
+        atomic_json(a.root/'progress.json',dict(status='running',completed=len(done),reused_verified=reused,total=len(plan['tasks']),active={str(g):dict(pid=p.pid,task=i) for g,(p,f,i) in active.items()},pending=len(todo)))
         time.sleep(5)
     files=[]
     for p in sorted((a.root/'records').iterdir()):files.append(dict(path=str(p.relative_to(a.root)),SHA256=sha256(p),bytes=p.stat().st_size))
-    atomic_json(a.root/'manifest.json',dict(status='complete',tasks=len(done),files=files,plan_SHA256=sha256(a.plan)))
+    atomic_json(a.root/'manifest.json',dict(status='complete',tasks=len(done),reused_verified=reused,files=files,plan_SHA256=sha256(a.plan)))
     atomic_json(a.root/'progress.json',dict(status='metrics_running',completed=len(done),total=len(plan['tasks'])))
     with (a.root/'logs/metrics_controller.log').open('x') as f:
         p=subprocess.run([sys.executable,plan['code']+'/tools/metrics_improvement_tier1.py','--root',str(a.root),'--plan',str(a.plan)],stdout=f,stderr=subprocess.STDOUT,timeout=28800)

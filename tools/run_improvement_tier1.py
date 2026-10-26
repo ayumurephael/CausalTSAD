@@ -62,8 +62,8 @@ def evaluate(score,root,y,events):
 
 def run(a):
     torch.set_num_threads(1);torch.backends.cuda.matmul.allow_tf32=False
-    torch.cuda.set_per_process_memory_fraction(8*2**30/torch.cuda.get_device_properties(0).total_memory)
     plan=json.loads(a.plan.read_text());task=plan['tasks'][a.task];row=task['row'];seed=task['seed'];ident=task['id'];start=time.time()
+    torch.cuda.set_per_process_memory_fraction(plan.get('worker_GiB',8)*2**30/torch.cuda.get_device_properties(0).total_memory)
     dst=a.root/'records'/ident;assert not dst.with_suffix('.json').exists()
     x,g,y,events=load(row,plan);source=row['kind']=='calibration';key=str(row.get('system_id',row.get('key')))
     weight=Path(plan['weights'])/f'normal_only_s{seed}.pth';assert sha256(weight)==plan['weight_SHA256'][f'normal_only_s{seed}']
@@ -146,6 +146,7 @@ def run(a):
                     TimeRCD_actual_input_scalars=detector.actual_input_scalars,TimeRCD_padded_scalars=detector.padded_forward_scalars,
                     TimeRCD_encoder_calls=detector.encoder_calls,optimizer_updates=0),seconds=time.time()-start,
         peak_cuda_bytes=torch.cuda.max_memory_allocated(),TimeRCD_RCA=False,validation_locked_opened=False,
+        execution_code=plan['code'],worker_GiB=plan.get('worker_GiB',8),
         RCA_scope='conditional supplied true event window, not detected event'))
     atomic_json(a.root/'task_progress'/(ident+'.json'),dict(status='complete',seconds=time.time()-start))
 
