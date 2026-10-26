@@ -26,30 +26,36 @@ def run(a):
     model=load_model(plan);initial=parameter_sha(model);temp=float(model.log_temperature.exp().clamp(.1,10));bias=float(model.bias)
     selector=ContextSelector(task['seed'],task['arm']=='true_hidden_parent').cuda().double();init=parameter_sha(selector)
     opt=torch.optim.Adam(selector.parameters(),lr=.001)
-    cache=a.root/'cache'/ident;cache.mkdir(parents=True,exist_ok=False)
+    cache=a.root/'cache'/ident;reuse=ident in plan.get('reuse_cache',{});cache.mkdir(parents=True,exist_ok=reuse)
     train_manifest=Path(plan['source_train'])/'manifest.json';eval_manifest=Path(plan['source_eval'])/'manifest.json'
     assert sha256(train_manifest)==plan['train_manifest_SHA256'] and sha256(eval_manifest)==plan['eval_manifest_SHA256']
     train=json.loads(train_manifest.read_text())['rows'];ev=json.loads(eval_manifest.read_text())['rows'];budget={}
     files=[];train_cases=[];eval_cases=[];graph_audits=[]
     def progress(stage,**kw):atomic_json(a.root/'task_progress'/(ident+'.json'),dict(stage=stage,seconds=time.time()-start,**kw))
-    for split,rows,source in [('train',train,plan['source_train']),('eval',ev,plan['source_eval'])]:
-        for row in rows:
-            p=Path(source)/row['path'];assert sha256(p)==row['SHA256']
-            with np.load(p) as z:values=z['values'];graph=z['graph'];target=z['normal_response'] if split=='train' else None
-            assert array_sha(values)==row['input_SHA256']
-            original=graph.copy();graph=graph_input(graph,row['key'],task['arm']=='wrong_all').cuda()
-            graph_audits.append(dict(key=row['key'],same_as_true=bool(np.array_equal(graph.cpu().numpy(),original)),graph_SHA256=array_sha(graph.cpu().numpy()),
-                each_node_in_out_degree_preserved=bool(np.array_equal(graph.cpu().numpy().sum(0),original.sum(0)) and np.array_equal(graph.cpu().numpy().sum(1),original.sum(1)))))
-            for view,x in enumerate(values):
-                if time.time()>plan['deadline_unix']:raise TimeoutError('Fixed campaign time limit; no budget extension')
-                out=components(model,torch.as_tensor(x,device='cuda',dtype=torch.float64),graph)
-                for k,v in out.pop('audit').items():budget[k]=budget.get(k,0)+v
-                if split=='train':out['training_response']=(torch.as_tensor(target[view,320:],device='cuda')-out['center'])/out['scale']
-                p=cache/f'{row["key"]}_{view}.npz'
-                np.savez_compressed(p,**{k:v.cpu().numpy() for k,v in out.items()})
-                record=dict(path=str(p),SHA256=sha256(p),key=row['key'],view=view,C=row['C'],row=row)
-                files.append(record);(train_cases if split=='train' else eval_cases).append(record)
-            progress('cache_'+split,completed_cases=len(files),budget=budget)
+    reuse_audit=None
+    if reuse:
+        from tools.i09_cache_reuse import restore
+        files,train_cases,eval_cases,graph_audits,budget,reuse_audit=restore(plan,task,initial,train,ev)
+        progress('cache_reused',completed_cases=len(files),new_component_input_scalars=0)
+    else:
+        for split,rows,source in [('train',train,plan['source_train']),('eval',ev,plan['source_eval'])]:
+            for row in rows:
+                p=Path(source)/row['path'];assert sha256(p)==row['SHA256']
+                with np.load(p) as z:values=z['values'];graph=z['graph'];target=z['normal_response'] if split=='train' else None
+                assert array_sha(values)==row['input_SHA256']
+                original=graph.copy();graph=graph_input(graph,row['key'],task['arm']=='wrong_all').cuda()
+                graph_audits.append(dict(key=row['key'],same_as_true=bool(np.array_equal(graph.cpu().numpy(),original)),graph_SHA256=array_sha(graph.cpu().numpy()),
+                    each_node_in_out_degree_preserved=bool(np.array_equal(graph.cpu().numpy().sum(0),original.sum(0)) and np.array_equal(graph.cpu().numpy().sum(1),original.sum(1)))))
+                for view,x in enumerate(values):
+                    if time.time()>plan['deadline_unix']:raise TimeoutError('Fixed campaign time limit; no budget extension')
+                    out=components(model,torch.as_tensor(x,device='cuda',dtype=torch.float64),graph)
+                    for k,v in out.pop('audit').items():budget[k]=budget.get(k,0)+v
+                    if split=='train':out['training_response']=(torch.as_tensor(target[view,320:],device='cuda')-out['center'])/out['scale']
+                    p=cache/f'{row["key"]}_{view}.npz'
+                    np.savez_compressed(p,**{k:v.cpu().numpy() for k,v in out.items()})
+                    record=dict(path=str(p),SHA256=sha256(p),key=row['key'],view=view,C=row['C'],row=row)
+                    files.append(record);(train_cases if split=='train' else eval_cases).append(record)
+                progress('cache_'+split,completed_cases=len(files),budget=budget)
     assert len(train_cases)==512 and len(eval_cases)==576
     atomic_json(cache/'manifest.json',dict(files=files,budget=budget,basis_SHA256=initial,graph=task['arm'],input_manifest_SHA256=plan['train_manifest_SHA256']))
     curves=[];exposure=0;target_exposure=0
@@ -107,6 +113,7 @@ def run(a):
         source_train_manifest_SHA256=plan['train_manifest_SHA256'],source_eval_manifest_SHA256=plan['eval_manifest_SHA256'],weight_SHA256=plan['weight_SHA256'],
         updates=512,observed_exposure=exposure,normal_target_exposure=target_exposure,budget=budget,seconds=time.time()-start,
         cache_manifest_SHA256=sha256(cache/'manifest.json'),graph_audits=graph_audits,benchmark_arrays_opened=False,normal_twin_in_selector_input=False,TimeRCD_RCA=False,
+        cache_reuse=reuse_audit,actual_new_component_budget={k:(0 if reuse else v) for k,v in budget.items()},execution_plan_SHA256=sha256(a.plan),
         extra_selector_eval_passes=2*576+2*128,peak_cuda_bytes=torch.cuda.max_memory_allocated(),code=plan['code']))
     progress('complete',step=512)
 if __name__=='__main__':
