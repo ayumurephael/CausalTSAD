@@ -5,7 +5,7 @@ import numpy as np
 T=1024
 FORK=256
 
-def generate(channels,seed,family):
+def generate(channels,seed,family,fork=FORK):
  rng=np.random.default_rng(seed);c=channels;g=np.zeros((c,c),np.float32)
  for child in range(1,c):
   if rng.random()<.2:continue
@@ -25,20 +25,20 @@ def generate(channels,seed,family):
     a[t,i]=(rho[i]*a[t-1,i] if t else 0)+noise[t-start,i]
     if good.any():a[t,i]+=np.dot(coeff[p[good],i],f(a[delay[good],p[good]]))
   return a
- prefix=simulate(None,0,FORK,int(rng.integers(0,2**63)))
- a=simulate(prefix,FORK,T,int(rng.integers(0,2**63)));b=simulate(prefix,FORK,T,int(rng.integers(0,2**63)))
- root=int(rng.choice(np.flatnonzero(g.sum(0)+g.sum(1)>0)));x=a.copy();y=b.copy();x[FORK:,root]=b[FORK:,root];y[FORK:,root]=a[FORK:,root]
- cases=np.stack([a,b,x,y]);labels=np.zeros((4,T),np.int8);labels[2:,FORK:]=1
+ prefix=simulate(None,0,fork,int(rng.integers(0,2**63)))
+ a=simulate(prefix,fork,T,int(rng.integers(0,2**63)));b=simulate(prefix,fork,T,int(rng.integers(0,2**63)))
+ root=int(rng.choice(np.flatnonzero(g.sum(0)+g.sum(1)>0)));x=a.copy();y=b.copy();x[fork:,root]=b[fork:,root];y[fork:,root]=a[fork:,root]
+ cases=np.stack([a,b,x,y]);labels=np.zeros((4,T),np.int8);labels[2:,fork:]=1
  contaminated=bool(rng.random()<.25)
  if contaminated:
-  node=int(rng.integers(c));start=int(rng.integers(64,192));length=int(rng.integers(2,9));amplitude=3*max(float(prefix[:FORK,node].std()),.1)
+  node=int(rng.integers(c));start=int(rng.integers(64,192));length=int(rng.integers(2,9));amplitude=3*max(float(prefix[:fork,node].std()),.1)
   cases[:,start:start+length,node]+=amplitude;labels[:,start:start+length]=1
  perm=rng.permutation(c);cases=cases[:,:,perm];g=g[perm][:,perm];root=int(np.flatnonzero(perm==root)[0])
  # Each channel's complete normal trajectories are exactly the same multiset as
  # the two faulty trajectories. No pointwise-only or histogram approximation.
  for i in range(c):
   lhs=sorted(hashlib.sha256(z.tobytes()).hexdigest() for z in cases[:2,:,i]);rhs=sorted(hashlib.sha256(z.tobytes()).hexdigest() for z in cases[2:,:,i]);assert lhs==rhs
- assert np.array_equal(cases[:,:FORK],np.repeat(cases[:1,:FORK],4,0))
+ assert np.array_equal(cases[:,:fork],np.repeat(cases[:1,:fork],4,0))
  return dict(cases=cases,labels=labels,graph=g,root=root,seed=seed,family=family,prefix_contaminated=contaminated,
   audit_parameters=dict(rho=rho.tolist(),sigma=sigma.tolist(),coefficient_before_permutation=coeff.tolist(),lag_before_permutation=lag.tolist(),new_to_old=perm.tolist()),
   labels_detail=dict(effect=None,anomaly_channel=None,anomaly_time=None),fault='measurement trajectory replacement; descendants retain original physical branch')
