@@ -7,6 +7,7 @@ from causal_tsad.io import atomic_json
 from proposals.causal_meta_basis import CausalMetaBasis
 from proposals.context_crossfit import configurations,context_mask,blocks,predict
 from proposals.relative_context_scores import readouts,average
+import tools.run_improvement_tier1  # All worker imports must resolve in snapshot.
 def run(a):
     torch.set_num_threads(1);torch.backends.cuda.matmul.allow_tf32=False
     m=CausalMetaBasis(348).cuda().eval().requires_grad_(False)
@@ -32,9 +33,16 @@ def run(a):
     for name in ['period','parent32','period_parent32']:
         result=predict(m,x,g,configurations()[name]);assert torch.isfinite(result['residual']).all()
     assert all(not p.requires_grad for p in m.parameters())
+    from causal_tsad.frozen_detector import FrozenDetector
+    detector=FrozenDetector(a.detector_code,a.detector_weights)
+    for name,data in [('selftrained_uni',raw[:128,:1]),('selftrained_multi',raw[:128]),('selftrained_multi',np.concatenate([raw[:128],raw[:128]],axis=1))]:
+        d=detector.predict(data,name,'native');assert len(d['logit'])==128 and np.isfinite(d['logit']).all()
+    detector.verify_frozen()
     atomic_json(a.output,dict(status='passed',own_current_prediction_error=selferr,online_future_prediction_error=futureerr,
         strict_holdout_response_and_lag_support_purge=True,empty_graph_parentremoval_identity=True,raw_energy_error=err,
         trailing_average_exact=True,E2_finite=True,technical_input_scalar_slots=8*raw.size,global_updates=0,
-        benchmark_opened=False,notes='Full-sequence ACF/statistic controls are explicitly offline, not strict holdout-independent statistics.'))
+        benchmark_opened=False,worker_imports_passed=True,TimeRCD_technical_scalars=detector.actual_input_scalars,TimeRCD_technical_calls=detector.encoder_calls,
+        notes='Full-sequence ACF/statistic controls are explicitly offline, not strict holdout-independent statistics.'))
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);run(p.parse_args())
+    p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--detector-code',type=Path,required=True);p.add_argument('--detector-weights',type=Path,required=True);run(p.parse_args())

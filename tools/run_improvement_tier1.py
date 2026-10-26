@@ -15,7 +15,24 @@ from proposals.causal_meta_basis import CausalMetaBasis
 from proposals.context_crossfit import predict,configurations,FIRST
 from proposals.relative_context_scores import readouts
 from tools.train_meta_basis import nuisance,graph_for
-from tools.infer_meta_transfer import rca,wrong
+
+def wrong(g,key):
+    rng=np.random.RandomState(int.from_bytes(hashlib.sha256(str(key).encode()).digest()[:4],'little'))
+    p=rng.permutation(len(g));return g[p][:,p]
+
+def rca(root,events,length,c):
+    out=[];excluded=[]
+    for event in events:
+        if not event.get('applied',True):continue
+        mask=np.zeros(length,bool)
+        for lo,hi in event['annotation_intervals']:mask[lo:hi]=True
+        mask=mask[FIRST:]
+        if not mask.any() or not event['root_channels']:excluded.append(event['event_id']);continue
+        mean=root[mask].mean(0);order=np.argsort(-mean,kind='stable')
+        ranks=[int(np.flatnonzero(order==k)[0])+1 for k in event['root_channels']]
+        out.append(dict(event_id=event['event_id'],root_ranks=ranks,Top1=int(min(ranks)==1),Top3=int(min(ranks)<=min(3,c)),
+                        MRR=1/min(ranks),ready_points=int(mask.sum()),mean_root_probabilities=mean.tolist()))
+    return out,excluded
 
 def load(row,plan):
     if row['kind']=='calibration':
