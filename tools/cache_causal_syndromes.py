@@ -10,7 +10,7 @@ from proposals.matched_pairs import rewire
 from causal_tsad.io import atomic_json,sha256,array_sha
 MODES=['true_signature','true_self','true_unit','wrong_signature','empty_signature']
 def run(a):
- a.output.mkdir(parents=True,exist_ok=True);torch.set_num_threads(1);torch.cuda.set_per_process_memory_fraction(2*2**30/torch.cuda.get_device_properties(0).total_memory);manifest=json.loads((a.source/'manifest.json').read_text());assert all(m in MODES for m in a.modes);tasks=[(mode,row) for mode in a.modes for row in manifest['files']];order=np.random.RandomState(348).permutation(len(tasks));records=[];query=slots=factors=conditioning=0;start=time.monotonic()
+ a.output.mkdir(parents=True,exist_ok=True);torch.set_num_threads(1);torch.cuda.set_per_process_memory_fraction(1*2**30/torch.cuda.get_device_properties(0).total_memory);manifest=json.loads((a.source/'manifest.json').read_text());assert all(m in MODES for m in a.modes);tasks=[(mode,row) for mode in a.modes for row in manifest['files']];order=np.random.RandomState(348).permutation(len(tasks));records=[];query=slots=factors=conditioning=0;start=time.monotonic()
  for pos in range(a.worker,len(tasks),a.workers):
   assert time.monotonic()-start<3*3600 and time.time()<a.deadline;mode,row=tasks[int(order[pos])];path=a.source/row['path'];assert sha256(path)==row['SHA256']
   with np.load(path) as f:cases=f['cases'];graph=f['graph'];assert array_sha(cases)==row['input_cases_SHA256'] and array_sha(graph)==row['graph_SHA256']
