@@ -35,11 +35,15 @@ def innovations(values,state):
    parent,lag,kind=item;derivative=torch.ones_like(mu) if kind=='own' else state['scale'][parent]*torch.ones_like(mu) if kind=='raw' else state['scale'][parent]*(1-values[L-lag:t-lag,parent].tanh().square());a[L:,node,parent,lag]-=s['mean'][j]/s['scale'][j]*derivative
  mu=torch.stack(mus,-1);variance=torch.stack(variances,-1);residual=(values[L:]-state['center'])/state['scale']-mu
  return residual,variance,a[L:],mu
-def covariance_log_ratio(residual,variance,matrix,amplitude):
+def covariance_log_ratio(residual,variance,matrix,amplitude,structure='full',channels=None):
  # Exact Gaussian covariance ratio conditional on supplied diagonal noise and M.
- q=(matrix/variance[...,None]).transpose(-1,-2)@matrix;v=(matrix/variance[...,None]).transpose(-1,-2)@residual[...,None];eye=torch.eye(matrix.shape[-1],dtype=matrix.dtype,device=matrix.device);chol=torch.linalg.cholesky(eye+amplitude*q);solution=torch.cholesky_solve(v,chol);return .5*(amplitude*(v*solution).sum((-2,-1))-2*chol.diagonal(dim1=-2,dim2=-1).log().sum(-1))
+ if structure=='diagonal':
+  alternative=variance+amplitude*matrix.square().sum(-1);return .5*(variance.log()-alternative.log()+residual.square()*(1/variance-1/alternative)).sum(-1)
+ if structure=='channel_block':
+  assert channels and residual.shape[-1]%channels==0;w=residual.shape[-1]//channels;b=residual.shape[0];r=residual.reshape(b,w,channels).transpose(1,2);v=variance.reshape(b,w,channels).transpose(1,2);m=matrix.reshape(b,w,channels,-1).transpose(1,2)/v.sqrt()[...,None];r=r/v.sqrt();eye=torch.eye(w,dtype=matrix.dtype,device=matrix.device);chol=torch.linalg.cholesky(eye+amplitude*m@m.transpose(-1,-2));sol=torch.cholesky_solve(r[...,None],chol).squeeze(-1);return .5*(r.square().sum(-1)-(r*sol).sum(-1)-2*chol.diagonal(dim1=-2,dim2=-1).log().sum(-1)).sum(-1)
+ assert structure=='full';q=(matrix/variance[...,None]).transpose(-1,-2)@matrix;v=(matrix/variance[...,None]).transpose(-1,-2)@residual[...,None];eye=torch.eye(matrix.shape[-1],dtype=matrix.dtype,device=matrix.device);chol=torch.linalg.cholesky(eye+amplitude*q);solution=torch.cholesky_solve(v,chol);return .5*(amplitude*(v*solution).sum((-2,-1))-2*chol.diagonal(dim1=-2,dim2=-1).log().sum(-1))
 @torch.no_grad()
-def evidence(values,graph,signature='full',state=None):
+def evidence(values,graph,signature='full',state=None,covariance_structure='full'):
  state=condition(values[:256],graph) if state is None else state;res,var,a,mu=innovations(values,state);c=values.shape[1];times=torch.arange(FIRST,len(values),device=values.device);factors=torch.empty((len(times),c,6),dtype=values.dtype,device=values.device);row_time=torch.arange(W,device=values.device);lag_ids=torch.arange(L+1,device=values.device);context_factors=0
  for root in range(c):
   for start in range(0,len(times),64):
@@ -53,8 +57,8 @@ def evidence(values,graph,signature='full',state=None):
     else:mat[:,j,root,j+L]=1
    mats=[physical.reshape(len(tt),W*c,W+L),mat.reshape(len(tt),W*c,W+L)]
    for mode,m in enumerate(mats):
-    for k,beta in enumerate(SCALES):factors[start:start+len(tt),root,mode*3+k]=covariance_log_ratio(rr,vv,m,beta)
-   context_factors+=len(tt)*6
+    for k,beta in enumerate(SCALES):factors[start:start+len(tt),root,mode*3+k]=covariance_log_ratio(rr,vv,m,beta,structure=covariance_structure,channels=c)
+   context_factors+=len(tt)*6*(c if covariance_structure=='channel_block' else 0 if covariance_structure=='diagonal' else 1)
  assert torch.isfinite(factors).all()
  return dict(log_factors=factors,normal_NLL=.5*(var.log()+res.square()/var+math.log(2*math.pi))[FIRST-L:].mean(),factorizations=context_factors,normal_mean=mu,context_state=state)
 class SyndromePrior(nn.Module):
