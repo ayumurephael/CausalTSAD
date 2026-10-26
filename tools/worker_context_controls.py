@@ -45,10 +45,16 @@ def run(a):
  if a.kind=='source':
   manifest=json.loads((Path(plan['source'])/'manifest.json').read_text());assert sha256(Path(plan['source'])/'manifest.json')==plan['source_manifest_SHA256'];rows=[r for r in manifest['files'] if r['split'] in ['calibration','source_validation']];assert len(rows)==48;tasks=[(r,b) for r in rows for b in ['plain','smooth']];tasks=[tasks[i] for i in np.random.RandomState(348).permutation(len(tasks))][a.worker::a.workers];cache=json.loads((Path(plan['old_source_cache'])/'manifest.json').read_text());cached={(r['mode'],r['key']):r for r in cache['records']};mode=plan['source_mode']
  else:tasks=plan['target_rows'][a.worker::a.workers]
- for task in tasks:
+ previous=0
+ if a.resume and (a.root/(tag+'_progress.json')).exists():
+  saved=json.loads((a.root/(tag+'_progress.json')).read_text());previous=saved['completed'];assert a.kind=='source';counts={k:saved[k] for k in counts}
+ for position,task in enumerate(tasks):
   assert time.time()<a.deadline
   if a.kind=='source':
-   row,bg=task;path=Path(plan['source'])/row['path'];assert sha256(path)==row['SHA256']
+   row,bg=task;output=a.root/'source'/a.variant/plan['source_mode']/(row['key']+'_'+bg)
+   if position<previous:
+    saved=json.loads(output.with_suffix('.json').read_text());assert saved['source_file_SHA256']==row['SHA256'] and sha256(output.with_suffix('.npz'))==saved['scores_SHA256'];records.append(str(output.with_suffix('.json').relative_to(a.root)));continue
+   path=Path(plan['source'])/row['path'];assert sha256(path)==row['SHA256']
    with np.load(path) as f:raw=f['cases'];g=f['graph']
    values=background(raw,row['key'],bg);c=row['C'];ident=row['key']+'_'+bg;used_graph=g if mode=='true_signature' else np.zeros_like(g);gg=torch.tensor(used_graph,dtype=torch.float64,device='cuda');scores=[];rootranks=[];stats=[];reused=a.variant=='fixed' and bg=='plain'
    # Exact full-column class matching survives the same deterministic nuisance.
@@ -65,15 +71,15 @@ def run(a):
       if k in out:counts[k]+=out[k]
    scores=np.asarray(scores).transpose(1,0,2);rootranks=np.asarray(rootranks).transpose(1,0,2,3);methods={}
    for si,seed in enumerate(SEEDS):
-    metrics={}
-    for scope,views in [('matched_measurement',[0,1,2,3]),('paired_measurement',[0,1,4,5]),('physical',[0,1,6,7])]:
+    metrics={};scopes=[] if row['split']=='calibration' else [('matched_measurement',[0,1,2,3]),('paired_measurement',[0,1,4,5]),('physical',[0,1,6,7])]
+    for scope,views in scopes:
      y=np.repeat([int(v>=2) for v in views],len(scores[si,0]));metrics[scope]=dict(AP=float(average_precision_score(y,scores[si,views].reshape(-1))),ROC_AUC=float(roc_auc_score(y,scores[si,views].reshape(-1))))
     rca=[]
-    for view in range(2,8):
+    for view in range(2,8) if row['split']!='calibration' else []:
      order=np.argsort(-rootranks[si,view].mean(0),kind='stable');rank=int(np.flatnonzero(order==row['root'])[0])+1;rca.append(dict(view=view,kind=row['case_kind'][view],Top1=int(rank==1),Top3=int(rank<=3),MRR=1/rank))
     methods[str(seed)]=dict(metrics=metrics,RCA=rca)
-   record=dict(key=row['key'],split=row['split'],C=c,family=row['family'],background=bg,mode=mode,variant=a.variant,source_file_SHA256=row['SHA256'],input_SHA256=array_sha(values),graph_SHA256=array_sha(used_graph),matched_quartet_exact=True,methods=methods,normal_prediction_stats=stats[:2],old_raw_evidence_reused=reused)
-   counts['cached_prior_query_applications']+=3*8*(len(values[0])-320)*c
+   record=dict(key=row['key'],split=row['split'],C=c,family=row['family'],background=bg,mode=mode,variant=a.variant,source_file_SHA256=row['SHA256'],input_SHA256=array_sha(values),graph_SHA256=array_sha(used_graph),matched_quartet_exact=True,methods=methods,normal_prediction_stats=stats[:2],old_raw_evidence_reused=reused,scored_views=int(scores.shape[1]),calibration_uses_first_two_normal_views_only=row['split']=='calibration')
+   counts['cached_prior_query_applications']+=3*scores.shape[1]*(len(values[0])-320)*c
    output=a.root/'source'/a.variant/mode/ident
   else:
    row=task;assert row['split']=='development' and row['pilot100'] and row['channels']>1;ident=row['id'];c=row['channels']
@@ -97,6 +103,6 @@ def run(a):
 if __name__=='__main__':
  p=argparse.ArgumentParser()
  for k in ['root','plan']:p.add_argument('--'+k,type=Path,required=True)
- p.add_argument('--kind',choices=['source','target'],required=True);p.add_argument('--variant',choices=['fixed','rolling','student'],required=True);p.add_argument('--worker',type=int,required=True);p.add_argument('--workers',type=int,required=True);p.add_argument('--deadline',type=float,required=True);a=p.parse_args()
+ p.add_argument('--kind',choices=['source','target'],required=True);p.add_argument('--variant',choices=['fixed','rolling','student'],required=True);p.add_argument('--worker',type=int,required=True);p.add_argument('--workers',type=int,required=True);p.add_argument('--deadline',type=float,required=True);p.add_argument('--resume',action='store_true');p.add_argument('--error-root',type=Path);a=p.parse_args()
  try:run(a)
- except Exception:atomic_json(a.root/'errors'/(a.kind+'_'+a.variant+'_w'+str(a.worker)+'.json'),dict(error=traceback.format_exc()));raise
+ except Exception:atomic_json((a.error_root or a.root/'errors')/(a.kind+'_'+a.variant+'_w'+str(a.worker)+'.json'),dict(error=traceback.format_exc()));raise
