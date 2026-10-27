@@ -219,6 +219,16 @@ def frozen_evaluation(root,plan,profile):
     atomic_json(root/'records'/('frozen_'+profile+'.json'),dict(status='complete',thresholds=thresholds,metrics=out,training_exposure=0))
 
 def preflight(plan,output):
+    # Exercise normal, missed and detected event records, including RCA.
+    # r1 failed before optimization because event bounds were NumPy scalars.
+    event_labels=np.array([0,0,1,1,0,0],dtype=np.int8)
+    event_nodes=np.tile(np.array([[0.,1.]]),(6,1))
+    event_probe=[evaluate(np.arange(6.),event_labels,t,event_nodes,1) for t in [2.,10.]]
+    event_probe.append(evaluate(np.arange(6.),np.zeros(6,dtype=np.int8),2.))
+    event_probe.append(evaluate(np.arange(6.),event_labels,2.))
+    assert json.loads(json.dumps(event_probe,allow_nan=False))==event_probe
+    assert event_probe[0]['events'][0]['onset']==2 and event_probe[0]['events'][0]['detected'] is True
+    assert event_probe[1]['events'][0]['detected'] is False
     basis,det=init(plan);sample=generate(0,'confirmation');v=torch.as_tensor(sample['values'][0],device='cuda');g=torch.as_tensor(sample['graph'],device='cuda')
     z=components(basis,v,g);old=predict(basis,v,g,dict(configurations()['xfit'],first=32))
     residual_error=float(((z['response']-z['mu'][...,0])-old['residual']).abs().max())
@@ -274,6 +284,7 @@ def preflight(plan,output):
       decomposition=dd,gradient_L1=grads,zero_causal_increment_exact=True,
       technical_causal_input_scalars=5*v.numel(),technical_backward_calls=len(ARMS)+2,technical_detector_scalars=det.actual_input_scalars,
       private_RCA_detector_gradient_error=gradient_error,
+      event_metrics_strict_JSON_roundtrip=True,
       end_to_end_writer=writer_audit,
       basis_weight_SHA256=plan['weight_SHA256'],optimizer_steps=0))
 
