@@ -7,7 +7,10 @@ import numpy as np
 from sklearn.metrics import average_precision_score,roc_auc_score,precision_recall_curve,auc
 
 def spans(mask):
-    d=np.diff(np.r_[0,np.asarray(mask,dtype=np.int8),0]);return list(zip(np.flatnonzero(d==1),np.flatnonzero(d==-1)))
+    d=np.diff(np.r_[0,np.asarray(mask,dtype=np.int8),0])
+    # Event bounds also enter differences and comparisons below. Native ints
+    # keep the complete event record JSON-safe without changing the metric.
+    return [(int(a),int(b)) for a,b in zip(np.flatnonzero(d==1),np.flatnonzero(d==-1))]
 
 def evaluate(score,label,threshold,node=None,root=None):
     s=np.asarray(score);y=np.asarray(label,dtype=np.int8);assert s.shape==y.shape and np.isfinite(s).all()
