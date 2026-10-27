@@ -1,0 +1,17 @@
+{
+  "title": "I12 边结构化残差与未知起点扫描",
+  "branch": "proposal/i12-edge-segment-source-v1",
+  "arms": [],
+  "source_only": true,
+  "source_train_systems": 64,
+  "calibration_systems": 16,
+  "confirmation_systems": 32,
+  "seeds": [
+    348,
+    349,
+    350
+  ],
+  "fixed_updates": 384,
+  "locked_opened": false,
+  "protocol": "docs/IMPROVEMENT3_PROTOCOL.md"
+}
