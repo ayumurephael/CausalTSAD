@@ -1,6 +1,6 @@
 {
-  "title": "I12 边结构化残差与未知起点扫描",
-  "branch": "proposal/i12-edge-segment-source-v1",
+  "title": "I17 来源冻结后的432系统迁移",
+  "branch": "diagnostic/i17-frozen-development-transfer-v1",
   "arms": [],
   "source_only": true,
   "source_train_systems": 64,

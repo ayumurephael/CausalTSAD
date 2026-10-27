@@ -1,8 +1,8 @@
-# I12 边结构化残差与未知起点扫描
+# I17 来源冻结后的432系统迁移
 
 本分支实现已落地，实验是否完成以项目根目录STATUS和实际回执为准；此处不宣称性能已通过。
 
-分支：`proposal/i12-edge-segment-source-v1`。共同引擎继承I12，但本分支只承担下列实验，不修改旧proposal分支。
+分支：`diagnostic/i17-frozen-development-transfer-v1`。共同引擎继承I12，但本分支只承担下列实验，不修改旧proposal分支。
 
 [完整覆盖、输入边界、预算与停止规则](docs/IMPROVEMENT3_PROTOCOL.md)。主要代码在 `proposals/improvement3/`；来源入口 `tools/run_improvement3.py`；目标入口 `tools/transfer_improvement3.py` 与 `tools/metrics_improvement3.py`。
 
@@ -10,13 +10,13 @@
 
 | Research Insight Card | 内容 |
 |---|---|
-| Problem | 节点幅度可能不能分辨传感器观测故障、过程扰动与边改变；原关系评测含case区分成分。 |
-| Evidence | 旧I11关系AP59.31/条件Top142.45仅是已探索来源32系统。外部线性代理提示边覆盖可能有效，但未证明对当前神经模型有效。 |
-| Failure Mechanism | 沿父贡献方向累积的残差可能呈现不同故障签名；度数、窗口长度、整体能量也可能解释提升。 |
-| Key Insight | 在同一个正常预测下分开测量节点偏差、方向对齐和时间持续性，才有机会识别有用的结构证据。 |
-| Novel Mechanism | 精确提取神经父块贡献，配套尾随多尺度、结构签名、同窗口节点/时间错配边/degree-only定位控制。 |
-| Closest Prior Work | C04r、CIRCA、Chen–Liu；结构残差和时间扫描成熟，不把基本算子称新颖。 |
-| Falsifiable Prediction | 真边证据应超过同窗口节点和时间错配边，并在未知起点/新系统保留；反之撤回方向性解释。 |
-| Minimal Experiment | 64训练/16正常校准/32确认系统的冻结前向；I12自身0参数更新，三个故障成因分列。 |
+| Problem | 来源机制有效不代表生成开发性能改善，且原新评测点集不同。 |
+| Evidence | E1–E4后尚无新I系列目标迁移，旧最好结果仍只能按既定后缀解释。 |
+| Failure Mechanism | 源目标的动态、故障、尺度/背景和评测范围可能改变排名。 |
+| Key Insight | 先在来源确定方案与阈值，再以共同可评分点检验迁移和互补。 |
+| Novel Mechanism | 有SHA冻结文件门控的开发专用推断与原四指标入口；每点32..T-1恰好输出一次，锁定/验证拒绝。 |
+| Closest Prior Work | 原TimeRCD与E1–E4，采用既有指标实现；本分支是评测，不包装成新模型。 |
+| Falsifiable Prediction | 同时报告留出边故障、原机制、正常误报及下降例；只有来源好不能宣称真实SOTA。 |
+| Minimal Experiment | 待来源完成后固定全432系统，目标零梯度、零目标选参；互补oracle不进入路由。 |
 
 原始权重、数据、逐系统结果不包含在公开仓库。来源数据、上下文闭式估计、额外计算均需披露；无目标反传，TimeRCD不测RCA。
