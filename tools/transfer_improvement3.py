@@ -52,7 +52,8 @@ def main(a):
     assert len(freeze['development_rows'])==432 and len({r['system_id'] for r in freeze['development_rows']})==432
     row=freeze['development_rows'][a.task];assert row['split']=='development' and row['channels']>1
     assert all(r['split']=='development' for r in freeze['development_rows'])
-    basis,detector=init(freeze);methods={};basis_before=parameter_sha(basis)
+    memory=a.worker_memory_GiB or freeze['worker_GiB']
+    basis,detector=init(dict(freeze,worker_GiB=memory));methods={};basis_before=parameter_sha(basis)
     for r in freeze['models']:
         p=Path(r['checkpoint']);assert sha256(p)==r['SHA256'];cp=torch.load(p,map_location='cpu',weights_only=False)
         m=CandidateMethod(cp['arm'],cp['seed']).cuda().eval();m.load_state_dict(cp['model']);m.requires_grad_(False);methods[r['name']]=m
@@ -80,7 +81,9 @@ def main(a):
       budgets=budgets,detector_input_scalars=detector.actual_input_scalars,detector_padded_scalars=detector.padded_forward_scalars,
       detector_calls=detector.encoder_calls,root_array_path=str(rootpath),root_array_SHA256=sha256(rootpath),basis_parameter_SHA256=basis_before,
       global_updates=0,TimeRCD_RCA=False,locked_opened=False,
+      runtime_worker_GiB=memory,execution_entry_SHA256=sha256(__file__),
       metric_followup='Original four-metric worker must run on these same suffix scores; AP/PR-AUC are already separate'))
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--freeze',type=Path,required=True);p.add_argument('--task',type=int,required=True);p.add_argument('--output',type=Path,required=True);main(p.parse_args())
+    p=argparse.ArgumentParser();p.add_argument('--freeze',type=Path,required=True);p.add_argument('--task',type=int,required=True);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--worker-memory-GiB',type=int,default=None);main(p.parse_args())

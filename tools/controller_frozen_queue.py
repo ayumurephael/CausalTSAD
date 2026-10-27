@@ -6,9 +6,11 @@ from causal_tsad.io import atomic_json,sha256
 
 def main(a):
     r=a.root;p=json.loads(a.plan.read_text());plan_sha=sha256(a.plan)
-    (r/'controller.lock').open('x').close();active={};done=[];pending=list(p['jobs']);start=time.time()
+    (r/'controller.lock').open('x').close();active={};done=list(p.get('precompleted',[]));pending=list(p['jobs']);start=time.time()
+    for item in done:assert sha256(item['path'])==item['SHA256']
+    total=len(done)+len(pending)
     def write(status):
-        atomic_json(r/'progress.json',dict(status=status,completed=len(done),total=len(p['jobs']),pending=len(pending),
+        atomic_json(r/'progress.json',dict(status=status,completed=len(done),total=total,pending=len(pending),
           active=[dict(id=x['job']['id'],gpu=g,pid=x['proc'].pid) for g,x in active.items()],seconds=time.time()-start,plan_SHA256=plan_sha))
     try:
         while pending or active:
