@@ -1,7 +1,11 @@
 {
-  "title": "I12 边结构化残差与未知起点扫描",
-  "branch": "proposal/i12-edge-segment-source-v1",
-  "arms": [],
+  "title": "I16 原始TimeRCD路径与有界因果增量",
+  "branch": "proposal/i16-protected-causal-increment-v1",
+  "arms": [
+    "protected",
+    "raw_adapt",
+    "concat_adapt"
+  ],
   "source_only": true,
   "source_train_systems": 64,
   "calibration_systems": 16,
