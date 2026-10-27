@@ -1,27 +1,18 @@
-# I15 最终统计量监督与故障签名定位
+# I18：固定权重换图与根因读出诊断
 
-本分支实现已落地，实验是否完成以项目根目录STATUS和实际回执为准；此处不宣称性能已通过。
-
-分支：`proposal/i15-segment-signature-supervision-v1`。共同引擎继承I12，但本分支只承担下列实验，不修改旧proposal分支。
-
-[完整覆盖、输入边界、预算与停止规则](docs/IMPROVEMENT3_PROTOCOL.md)。主要代码在 `proposals/improvement3/`；来源入口 `tools/run_improvement3.py`；目标入口 `tools/transfer_improvement3.py` 与 `tools/metrics_improvement3.py`。
-
-训练臂：stat_pair, stat_temporal, stat_typed。
+独立分支 `diagnostic/i18-root-null-graph-cross-v1`。复用I15固定384步权重和来源缓存，0优化、0新基函数/TimeRCD前向，不能与已删除的旧P18混淆。
 
 | Research Insight Card | 内容 |
 |---|---|
-| Problem | 关系case分类改善不等于找到故障时刻；单一节点最大残差也可能混淆传播与起因。 |
-| Evidence | I11关系改善伴随短故障/长定位下降；外部建议提供边级时间签名假说。 |
-| Failure Mechanism | 跨视图排序可走整条case捷径；不同故障成因对节点及入出边的作用不同。 |
-| Key Insight | 监督实际部署的时间统计，并让根因解释故障产生的联合模式。 |
-| Novel Mechanism | 同容量pair vs pair+within-view；正常NLL0.05正则；独立故障类型/RCA头含无解释类，不回写检测读出。 |
-| Closest Prior Work | C04s私有头、CIRCA、Chen–Liu；故障签名须以跨类型控制验证，不能靠名称拼接。 |
-| Falsifiable Prediction | within-view应改善同视图AP及起点/漏检组合；typed应在相同检测下提高定位，不能仅靠root入度先验。 |
-| Minimal Experiment | 三臂×3seed×真错图；384步、固定最终权重，报告条件Top1及报警后联合成功率。 |
+| Problem | 确认固定模型推断时是否需要正确DAG，解释类型定位下降和保护增量的能力限制。 |
+| Evidence | 32来源系统时间统计量AP69.068%、条件Top1 64.583%；类型头定位下降5.295pp；此前真假图分别训练。 |
+| Failure Mechanism | 待检验：正常解释参与根因排序；±2修正不能逆转raw差距超过4的排序。前者是待证假说，后者是算术约束。 |
+| Key Insight | 分离学习、输入图、最终读出的作用，避免把流程差异当成纯图效应。 |
+| Novel Mechanism | 本轮是固定checkpoint跨图、三故障类读出、故障对正常log-odds控制，没有新增可训练机制。 |
+| Closest Prior Work | 已全文阅读的CIRCA/ALPaCA和似然比检测提供接口；本轮不强造novelty。 |
+| Falsifiable Prediction | 换错图无下降削弱图必要性；去正常类不恢复定位则该解释不足；标签oracle上界很高则±2不是主要瓶颈。 |
+| Minimal Experiment | 24次固定头跨图评估、6次类型头重读出、两份来源oracle扫描；三seed、32确认系统，2小时终点。 |
 
-原始权重、数据、逐系统结果不包含在公开仓库。来源数据、上下文闭式估计、额外计算均需披露；无目标反传，TimeRCD不测RCA。
+神经头最多247,726,080缓存输入标量，实际逐任务记录；三优化种子不是96个独立系统。原检测数组逐位复用。所有标签只作指标，oracle明确不可部署。TimeRCD不评RCA。来源确认集已经探索，结论为解释性诊断，不当全新盲测。
 
-
-## r2：事件指标 JSON 保存修复
-
-2026-10-27：r1在初始评估保存时遇到NumPy整数无法写入JSON，尚未执行优化步。r2仅把事件边界转为Python整数，并加入严格JSON回读检查；模型、损失、指标数值和固定预算不变。旧快照/错误保留，已完成缓存先核验SHA再复用，原技术截止时间不延长。本修复不构成新的性能结果。
+实现入口：`tools/frozen_root_graph_diagnostics.py`；调度：`tools/controller_frozen_queue.py`。按系统及故障/背景分析正反案例，禁止按诊断结果回写旧实验。
