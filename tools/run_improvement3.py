@@ -62,14 +62,14 @@ def cache_task(root,plan,task):
     assert array_sha(values)==row['input_SHA256']
     g=graph_input(graph,row['key'],wrong=task['graph']=='wrong').cuda()
     if task['graph']=='empty':g.zero_()
-    name=task['id'];out=root/'cache'/name;out.mkdir(parents=True,exist_ok=False)
+    ident=task['id'];out=root/'cache'/ident;out.mkdir(parents=True,exist_ok=False)
     files=[];frozen_scores={};frozen_roots={};budgets=[];decomp_errors=[]
     old_selectors={}
     for item in plan.get('i11_frozen',[]):
         cp=Path(item['path']);assert sha256(cp)==item['SHA256']
         sel=ContextSelector(item['seed']).cuda().double().eval().requires_grad_(False)
         sel.load_state_dict(torch.load(cp,map_location='cpu',weights_only=False)['selector']);old_selectors[item['name']]=sel
-    for view,v in enumerate(values):
+    for view,v in enumerate(values[:task.get('technical_smoke_views',len(values))]):
         if time.time()>plan['deadline_unix']:raise TimeoutError('finite campaign deadline')
         z=components(basis,torch.as_tensor(v,device='cuda',dtype=torch.float64),g,task['nuisance'])
         # Original raw input path is exactly unchanged; no causal tokens inside.
@@ -88,19 +88,19 @@ def cache_task(root,plan,task):
         ss,rr,dd=frozen(z);decomp_errors.append(dd['decomposition_max_error'])
         if task['profile']==plan['primary_profile']:
             with torch.no_grad():
-                for name,sel in old_selectors.items():
+                for method_name,sel in old_selectors.items():
                     lw=sel(z['features'][...,:12],z['valid'])
                     ev=(((z['response'][...,None]-z['mu']).square()/(3*z['variance'])-.5*math.log(3))*lw.exp()).sum(-1)
-                    ss[name]=aggregate(ev,float(basis.log_temperature.exp().clamp(.1,10)),float(basis.bias));rr[name]=ev
+                    ss[method_name]=aggregate(ev,float(basis.log_temperature.exp().clamp(.1,10)),float(basis.bias));rr[method_name]=ev
         native=((z['response']-z['mu'][...,0]).square()/(3*z['variance'][...,0])-.5*math.log(3))
         ss['full_native']=aggregate(native,float(basis.log_temperature.exp().clamp(.1,10)),float(basis.bias));rr['full_native']=native
         for k,s in ss.items():frozen_scores.setdefault(k,[]).append(s.cpu().numpy())
         for k,s in rr.items():frozen_roots.setdefault(k,[]).append(s.cpu().numpy())
         budgets.append(z['audit'])
-        atomic_json(root/'task_progress'/(name+'.json'),dict(stage='cache',view=view+1,total=16,seconds=time.time()-start))
+        atomic_json(root/'task_progress'/(ident+'.json'),dict(stage='cache',view=view+1,total=16,seconds=time.time()-start))
     detector.verify_frozen();assert parameter_sha(basis)==before
     p=out/'frozen.npz';save_npz(p,**{k:np.stack(v) for k,v in frozen_scores.items()},**{'root__'+k:np.stack(v) for k,v in frozen_roots.items()})
-    atomic_json(root/'records'/(name+'.json'),dict(status='complete',task=task,files=files,frozen_path=str(p.relative_to(root)),frozen_SHA256=sha256(p),
+    atomic_json(root/'records'/(ident+'.json'),dict(status='complete',task=task,files=files,frozen_path=str(p.relative_to(root)),frozen_SHA256=sha256(p),
       source_SHA256=sha256(src),basis_parameter_SHA256=before,basis_unchanged=True,graph_SHA256=array_sha(g.cpu().numpy()),
       graph_changed=not np.array_equal(g.cpu().numpy(),graph),decomposition_max_error=max(decomp_errors),
       budget=dict(causal_input_scalars=sum(b['input_scalars'] for b in budgets),factorizations=sum(b['factorizations'] for b in budgets),
@@ -171,11 +171,20 @@ def train_task(root,plan,task):
         ni,fi,row,vi=pairs[int(idx)];n,_,_=load(root,ni);f,target,label=load(root,fi)
         kind='relation' if vi in [2,3] else row['fault_names'][vi]
         optimizer.zero_grad();obj,diag=loss(model,n,f,target,label,row['root'],kind)
-        assert torch.isfinite(obj);obj.backward();norm=torch.nn.utils.clip_grad_norm_(params,1.);optimizer.step()
+        assert torch.isfinite(obj);obj.backward()
+        # Private root loss cannot rescale the detection gradient via a shared
+        # global norm clip. Both task groups have their own matched norm cap.
+        det_params=[p for name,p in model.named_parameters() if p.requires_grad and not name.startswith('root_head.')]
+        root_params=[p for name,p in model.named_parameters() if p.requires_grad and name.startswith('root_head.')]
+        norm=torch.nn.utils.clip_grad_norm_(det_params,1.)
+        if root_params:torch.nn.utils.clip_grad_norm_(root_params,1.)
+        optimizer.step()
         exposure+=ni['input_scalars']+fi['input_scalars']
         if arm.startswith(('context','query')):targets+=2*1024*row['C']
         elif arm.startswith('stat_'):targets+=1024*row['C']
         curves.append(dict(step=step,loss=float(obj.detach()),gradient_norm=float(norm),**diag,observed_exposure=exposure,key=row['key'],view=fi['view']))
+        with (root/'task_progress'/(ident+'_updates.jsonl')).open('a') as f:
+            f.write(json.dumps(curves[-1])+'\n');f.flush()
         if step%16==0:atomic_json(root/'task_progress'/(ident+'.json'),dict(stage='training',step=step,observed_exposure=exposure,seconds=time.time()-start))
     final,arrays=evaluate_model(root,model,records)
     cp=root/'records'/(ident+'_checkpoint.pth');assert not cp.exists()
@@ -236,11 +245,36 @@ def preflight(plan,output):
     assert own_current_error<1e-10 and query_feature_error<1e-10
     for nuisance in ['fourier','orthogonal']:
         zz=components(basis,v,g,nuisance);assert torch.isfinite(zz['mu']).all()
+    # Equal private-head detector gradients, including context selector.
+    aa=CandidateMethod('stat_temporal',348).cuda();bb=CandidateMethod('stat_typed',348).cuda()
+    ga,_=loss(aa,z,z,z['response'],y,sample['root'],'relation');gb,_=loss(bb,z,z,z['response'],y,sample['root'],'relation');ga.backward();gb.backward()
+    gradient_error=0.
+    for key,param in aa.named_parameters():
+        if param.grad is not None:gradient_error=max(gradient_error,float((param.grad-dict(bb.named_parameters())[key].grad).abs().max()))
+    assert gradient_error<1e-10
+    # End-to-end writer smoke includes an old I11 selector, the code path that
+    # previously shadowed the task ID. This is technical work, not a train run.
+    smoke_root=Path(output).parent/('smoke_'+Path(plan['code']).name)
+    for d in ['records','cache','task_progress']:(smoke_root/d).mkdir(parents=True,exist_ok=True)
+    campaign=Path(plan['code']).parent
+    manifest=campaign/'source_pool/manifest.json'
+    if manifest.exists():
+        row=json.loads(manifest.read_text())['rows'][0]
+        cp=next((campaign.parent/'i11_objective_alignment_v1/records').glob('*_relation_rank_s348_checkpoint.pth'))
+        smoke_plan=dict(plan,source=str(manifest.parent),primary_profile='smoke',deadline_unix=time.time()+120,
+            i11_frozen=[dict(name='i11_smoke_control',path=str(cp),SHA256=sha256(cp),seed=348)])
+        task=dict(id='smoke_writer',profile='smoke',graph='true',nuisance='none',row=row,technical_smoke_views=1)
+        cache_task(smoke_root,smoke_plan,task)
+        writer=json.loads((smoke_root/'records/smoke_writer.json').read_text());assert writer['task']['id']=='smoke_writer' and len(writer['files'])==1
+        writer_audit=dict(status='passed',record_SHA256=sha256(smoke_root/'records/smoke_writer.json'),budget=writer['budget'])
+    else:writer_audit=dict(status='source_not_yet_prepared')
     det.verify_frozen()
     atomic_json(output,dict(status='passed',residual_equivalence_error=residual_error,variance_equivalence_error=variance_error,
       own_current_mean_error=own_current_error,own_current_query_feature_error=query_feature_error,
       decomposition=dd,gradient_L1=grads,zero_causal_increment_exact=True,
-      technical_causal_input_scalars=5*v.numel(),technical_backward_calls=len(ARMS),technical_detector_scalars=det.actual_input_scalars,
+      technical_causal_input_scalars=5*v.numel(),technical_backward_calls=len(ARMS)+2,technical_detector_scalars=det.actual_input_scalars,
+      private_RCA_detector_gradient_error=gradient_error,
+      end_to_end_writer=writer_audit,
       basis_weight_SHA256=plan['weight_SHA256'],optimizer_steps=0))
 
 if __name__=='__main__':
