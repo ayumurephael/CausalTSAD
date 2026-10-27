@@ -1,3 +1,9 @@
+# I17：完整开发迁移已完成
+
+432系统、888 JSON SHA和原四指标完成；时间统计量AP24.42%、VUS22.30%，原TimeRCD AP46.31%、VUS41.42%。来源优势未迁移。见[I17结果](I17_RESULTS.md)及[完整分层/配对/预算](results/I17_summary.json)。原执行快照d9fb13b；本提交只增加分析和说明，不修改冻结科学选择。
+
+下面是部署时保留的历史说明，运行状态不从其推断。
+
 # I17：来源冻结后的完整多变量开发迁移
 
 分支 `diagnostic/i17-frozen-development-transfer-v1`。依据改进3来源结果固定四臂（stat_pair、stat_temporal、protected、raw_adapt）×种子348/349/350，加六个冻结基线raw/full/uniform/node_scan/edge_scan/concat。全部432多变量开发系统，每个观测和正常case分别推断；不得根据开发标签挑模型。
