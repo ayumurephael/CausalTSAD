@@ -1,7 +1,14 @@
 {
-  "title": "I12 边结构化残差与未知起点扫描",
-  "branch": "proposal/i12-edge-segment-source-v1",
-  "arms": [],
+  "title": "I13 查询条件上下文与证据分解",
+  "branch": "proposal/i13-query-context-decomposition-v1",
+  "arms": [
+    "context_nll",
+    "query_nll",
+    "query_shuffled_nll",
+    "query_rank",
+    "decompose_learned",
+    "generic_calibrator"
+  ],
   "source_only": true,
   "source_train_systems": 64,
   "calibration_systems": 16,
