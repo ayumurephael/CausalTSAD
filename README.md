@@ -1,27 +1,26 @@
-# I17 来源冻结后的432系统迁移
+# I17：来源冻结后的完整多变量开发迁移
 
-本分支实现已落地，实验是否完成以项目根目录STATUS和实际回执为准；此处不宣称性能已通过。
-
-分支：`diagnostic/i17-frozen-development-transfer-v1`。共同引擎继承I12，但本分支只承担下列实验，不修改旧proposal分支。
-
-[完整覆盖、输入边界、预算与停止规则](docs/IMPROVEMENT3_PROTOCOL.md)。主要代码在 `proposals/improvement3/`；来源入口 `tools/run_improvement3.py`；目标入口 `tools/transfer_improvement3.py` 与 `tools/metrics_improvement3.py`。
-
-训练臂：本分支无全局参数训练。
+分支 `diagnostic/i17-frozen-development-transfer-v1`。依据改进3来源结果固定四臂（stat_pair、stat_temporal、protected、raw_adapt）×种子348/349/350，加六个冻结基线raw/full/uniform/node_scan/edge_scan/concat。全部432多变量开发系统，每个观测和正常case分别推断；不得根据开发标签挑模型。
 
 | Research Insight Card | 内容 |
 |---|---|
-| Problem | 来源机制有效不代表生成开发性能改善，且原新评测点集不同。 |
-| Evidence | E1–E4后尚无新I系列目标迁移，旧最好结果仍只能按既定后缀解释。 |
-| Failure Mechanism | 源目标的动态、故障、尺度/背景和评测范围可能改变排名。 |
-| Key Insight | 先在来源确定方案与阈值，再以共同可评分点检验迁移和互补。 |
-| Novel Mechanism | 有SHA冻结文件门控的开发专用推断与原四指标入口；每点32..T-1恰好输出一次，锁定/验证拒绝。 |
-| Closest Prior Work | 原TimeRCD与E1–E4，采用既有指标实现；本分支是评测，不包装成新模型。 |
-| Falsifiable Prediction | 同时报告留出边故障、原机制、正常误报及下降例；只有来源好不能宣称真实SOTA。 |
-| Minimal Experiment | 待来源完成后固定全432系统，目标零梯度、零目标选参；互补oracle不进入路由。 |
+| Problem | 来源有效的时间监督与因果增量能否迁移到原机制和机制留出生成数据，同时保留定位和误报表现？ |
+| Evidence | 来源时间统计量AP69.068%、条件Top1 64.583%；protected相对raw适配AP+1.632pp。但时间统计量未稳定胜过固定节点扫描，短故障和平滑背景有退化。 |
+| Failure Mechanism | 待验证：来源异常占比、长度、故障族与目标不同，扫描/上下文和分数校准可能不能迁移。 |
+| Key Insight | 必须同时比较可学习模块和强冻结统计量，才能区分学到了可迁移机制还是只适配来源。 |
+| Novel Mechanism | 此分支是冻结迁移与完整事件评测，不新增学习算法。正常基函数、TimeRCD、12小头均冻结。 |
+| Closest Prior Work | 前序ALPaCA/CIRCA式条件创新与原TimeRCD；原四指标复用固定入口。 |
+| Falsifiable Prediction | temporal未胜pair则时间目标迁移失败；protected未胜raw_adapt则来源因果增量未迁移；不能仅报告个别胜出系统。 |
+| Minimal Experiment | 432系统×18检测条件，两个case独立推断；0训练。推断12小时、随后CPU指标8小时技术上限；4A100+6H100共享显存调度。 |
 
-原始权重、数据、逐系统结果不包含在公开仓库。来源数据、上下文闭式估计、额外计算均需披露；无目标反传，TimeRCD不测RCA。
+评t≥32；上下文块5000，每块带32历史，末小块向左扩展到256再裁掉额外输出，每点恰好一次。块外保护交叉拟合是离线case内闭式估计，不是在线检测，也不是无目标侧计算。多尺度扫描在块内重启，不能声称与整条无限上下文相同；concat基线按块拼接，raw保持全序列原生输入。
 
+阈值固定为各方法来源正常校准99分位；所有新方法同点集，AP与梯形PR-AUC分列、原四指标另算，正常FPR与尾部单列。原四指标周期复用已有完整开发基线的native周期元数据，不按新结果选周期。
 
-## r2：事件指标 JSON 保存修复
+根因：按每个生成事件的原annotation_intervals给条件窗口；多根事件以任一真根为Top1命中并单列根数/逐根名次。自动报警用原始连续超阈值段，以全局交叠点数降序的一对一贪心匹配（事件/报警索引破同分）；漏检算联合失败。根标签不用于匹配，TimeRCD及其增量分支不测RCA。正常case独立运行，正常孪生不能帮助异常case。
 
-2026-10-27：r1在初始评估保存时遇到NumPy整数无法写入JSON，尚未执行优化步。r2仅把事件边界转为Python整数，并加入严格JSON回读检查；模型、损失、指标数值和固定预算不变。旧快照/错误保留，已完成缓存先核验SHA再复用，原技术截止时间不延长。本修复不构成新的性能结果。
+预检只使用来源数组，验证单块对既有分数等价、末块覆盖、一个报警不能匹配两个事件、冻结权重不变。真正目标读取前保存选择、代码/输入/权重哈希与阈值。250M任何划分不反传；只读development，validation与150M锁定不开。
+
+输入因果/TimeRCD原标量、填充标量、因子分解、head点通道量、各指标计算另行记录，不能声称参数相同就FLOPs相同。每系统/轨/通道数/故障类型分析配对区间与全部退化。来源与开发的数字不能跨表直接相减，更不能称真实SOTA。
+
+入口：`tools/transfer_improvement3.py`、`tools/metrics_improvement3.py`、`proposals/improvement3/event_localization.py`。

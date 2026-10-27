@@ -15,12 +15,15 @@ from proposals.improvement3.components import components
 from proposals.improvement3.models import CandidateMethod
 from proposals.improvement3.evidence import frozen
 from proposals.improvement3.metrics import evaluate
+from proposals.improvement3.event_localization import localization
+from causal_tsad.frozen_detector import parameter_sha
 
+@torch.no_grad()
 def infer(values,graph,basis,detector,methods,nuisance='none',chunk=5000):
     # Complete eligible suffix: 32 history points for every subsequent chunk;
     # each output point32..T-1 appears exactly once. Never label-driven chunks.
     T,C=values.shape;raw=detector.predict(values,'selftrained_multi','native')['logit']
-    outputs={};roots={};budget=0
+    outputs={};roots={};budget=dict(causal_input_scalars=0,factorizations=0,feature_node_rows=0,head_point_channels=0)
     for lo in range(32,T,chunk):
         hi=min(T,lo+chunk);start=lo-32
         # A last small chunk still needs >=64 context rows: extend LEFT only,
@@ -38,7 +41,9 @@ def infer(values,graph,basis,detector,methods,nuisance='none',chunk=5000):
             if p['root'] is not None:rr[name]=p['root']
         for k,v in ss.items():outputs.setdefault(k,[]).append(v[take:].cpu().numpy())
         for k,v in rr.items():roots.setdefault(k,[]).append(v[take:].cpu().numpy())
-        budget+=x.size
+        budget['causal_input_scalars']+=x.size
+        for k in ['factorizations','feature_node_rows']:budget[k]+=int(z['audit'][k])
+        budget['head_point_channels']+=len(methods)*len(z['response'])*C
     return {k:np.concatenate(v) for k,v in outputs.items()},{k:np.concatenate(v) for k,v in roots.items()},budget
 
 def main(a):
@@ -47,37 +52,34 @@ def main(a):
     assert len(freeze['development_rows'])==432 and len({r['system_id'] for r in freeze['development_rows']})==432
     row=freeze['development_rows'][a.task];assert row['split']=='development' and row['channels']>1
     assert all(r['split']=='development' for r in freeze['development_rows'])
-    basis,detector=init(freeze);methods={}
+    basis,detector=init(freeze);methods={};basis_before=parameter_sha(basis)
     for r in freeze['models']:
         p=Path(r['checkpoint']);assert sha256(p)==r['SHA256'];cp=torch.load(p,map_location='cpu',weights_only=False)
         m=CandidateMethod(cp['arm'],cp['seed']).cuda().eval();m.load_state_dict(cp['model']);m.requires_grad_(False);methods[r['name']]=m
     shard=Path(freeze['benchmark'])/'data'/row['shard'];assert sha256(shard)==row['shard_SHA256']
     with shard.open('rb') as f:s=pickle.load(f)[row['offset']]
     assert s['system_id']==row['system_id'] and array_sha(s['time_series'])==row['time_series_sha256']
-    g=adjacency(s['graph'],row['channels']);metrics=[];scores={};rca=[];exposure=0
+    assert array_sha(s['normal_time_series'])==row['normal_sha256'] and array_sha(s['labels'])==row['labels_sha256']
+    g=adjacency(s['graph'],row['channels']);metrics=[];scores={};rca=[];budgets=[];root_arrays={}
     for vi,x in enumerate([s['time_series'],s['normal_time_series']]):
         # Each case gets independent context fitting, including the normal case.
         y=np.asarray(s['labels'][32:]) if vi==0 else np.zeros(len(x)-32,np.int8)
-        ss,rr,b=infer(x,g,basis,detector,methods,freeze.get('nuisance','none'));exposure+=b
+        ss,rr,b=infer(x,g,basis,detector,methods,freeze.get('nuisance','none'));budgets.append(b)
         for name,score in ss.items():
             if name not in freeze['thresholds']:continue
             assert len(score)==len(y);scores[name+'__'+str(vi)]=score
             metrics.append(dict(method=name,view=vi,**evaluate(score,y,freeze['thresholds'][name])))
             if vi==0 and name in rr:
-                # Multi-event roots evaluated per actual event, not one root per
-                # whole system. Full end-to-end matching is separately stored.
-                for event in s['events']:
-                    if not event.get('applied',True) or not event['root_channels']:continue
-                    mask=np.zeros(len(x),np.int8)
-                    for lo,hi in event['annotation_intervals']:mask[lo:hi]=1
-                    if not mask[32:].any():continue
-                    per=[evaluate(score,mask[32:],freeze['thresholds'][name],rr[name],int(root)) for root in event['root_channels']]
-                    rca.append(dict(method=name,event_id=event['event_id'],per_root=per))
-    detector.verify_frozen();a.output.mkdir(parents=True,exist_ok=True)
+                root_arrays[name]=rr[name]
+                rca.append(dict(method=name,**localization(score,rr[name],s['events'],freeze['thresholds'][name])))
+    detector.verify_frozen();assert parameter_sha(basis)==basis_before;a.output.mkdir(parents=True,exist_ok=True)
     dst=a.output/row['system_id'];save_npz(dst.with_suffix('.npz'),**scores)
+    rootpath=dst.with_name(dst.name+'_roots.npz');save_npz(rootpath,**root_arrays)
     atomic_json(dst.with_suffix('.json'),dict(status='complete',row=row,metrics=metrics,conditional_and_detected_RCA=rca,
       first=32,context_chunk=5000,source_freeze_SHA256=sha256(a.freeze),scores_SHA256=sha256(dst.with_suffix('.npz')),
-      input_scalars=exposure,global_updates=0,TimeRCD_RCA=False,locked_opened=False,
+      budgets=budgets,detector_input_scalars=detector.actual_input_scalars,detector_padded_scalars=detector.padded_forward_scalars,
+      detector_calls=detector.encoder_calls,root_array_path=str(rootpath),root_array_SHA256=sha256(rootpath),basis_parameter_SHA256=basis_before,
+      global_updates=0,TimeRCD_RCA=False,locked_opened=False,
       metric_followup='Original four-metric worker must run on these same suffix scores; AP/PR-AUC are already separate'))
 
 if __name__=='__main__':
