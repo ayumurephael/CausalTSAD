@@ -14,8 +14,15 @@ def main(a):
     for i,t in enumerate(p['cache_tasks']):jobs.append(dict(kind='cache',index=i,id=t['id'],profile=t['profile']))
     for i,t in enumerate(p['train_tasks']):jobs.append(dict(kind='train',index=i,id=t['id'],profile=t['profile']))
     for profile in p['profiles']:jobs.append(dict(kind='frozen',id='frozen_'+profile,profile=profile))
-    # New root only; never silently resume an incompatible/partial stage.
-    for j in jobs:assert not (a.root/'records'/(j['id']+'.json')).exists()
+    # A recovery revision may import ONLY completed, SHA-verified cache jobs.
+    # No incomplete cache or training checkpoint is silently resumed.
+    for j in jobs:
+        path=a.root/'records'/(j['id']+'.json')
+        if path.exists():
+            r=json.loads(path.read_text());assert j['kind']=='cache' and r['status']=='complete'
+            assert r['task']==p['cache_tasks'][j['index']]
+            for item in r['files']:assert sha256(a.root/item['path'])==item['SHA256']
+            assert sha256(a.root/r['frozen_path'])==r['frozen_SHA256'];done.add(j['id'])
     while len(done)<len(jobs):
         if list((a.root/'errors').glob('*.json')) or (a.root/'STOP_NEW').exists() or time.time()>p['deadline_unix']:
             for child,log,j in active.values():child.terminate();log.close()
@@ -27,7 +34,9 @@ def main(a):
                 if child.returncode:
                     atomic_json(a.root/'errors'/('exit_'+j['id']+'.json'),dict(returncode=child.returncode,job=j))
                 else:
-                    r=json.loads((a.root/'records'/(j['id']+'.json')).read_text());assert r['status']=='complete';done.add(j['id'])
+                    path=a.root/'records'/(j['id']+'.json')
+                    if not path.exists():atomic_json(a.root/'errors'/('missing_'+j['id']+'.json'),dict(job=j,error='worker exited0 without expected completion record'));continue
+                    r=json.loads(path.read_text());assert r['status']=='complete';done.add(j['id'])
         if list((a.root/'errors').glob('*.json')):continue
         free={int(x.split(',')[0]):float(x.split(',')[1]) for x in subprocess.check_output(['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits']).decode().strip().splitlines()}
         ready_profiles={profile for profile in p['profiles'] if all(t['id'] in done for t in p['cache_tasks'] if t['profile']==profile)}
