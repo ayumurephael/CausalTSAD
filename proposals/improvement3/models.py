@@ -47,7 +47,7 @@ class CandidateMethod(torch.nn.Module):
             x,_,_=temporal_features(z,lw);node=node+self.stat(x).squeeze(-1)
             score=pooled(node)
             if arm=='stat_typed':
-                types=self.root_head(x)+m['e'][...,None]
+                types=self.root_head(x.detach())+m['e'].detach()[...,None]
                 # Private RCA evidence does not feed detection loss/readout.
                 root=torch.logsumexp(types,-1)-math.log(4)
             else:root=node
