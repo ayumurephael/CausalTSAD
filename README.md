@@ -1,22 +1,22 @@
-# I12 边结构化残差与未知起点扫描
+# I15 最终统计量监督与故障签名定位
 
 本分支实现已落地，实验是否完成以项目根目录STATUS和实际回执为准；此处不宣称性能已通过。
 
-分支：`proposal/i12-edge-segment-source-v1`。共同引擎继承I12，但本分支只承担下列实验，不修改旧proposal分支。
+分支：`proposal/i15-segment-signature-supervision-v1`。共同引擎继承I12，但本分支只承担下列实验，不修改旧proposal分支。
 
 [完整覆盖、输入边界、预算与停止规则](docs/IMPROVEMENT3_PROTOCOL.md)。主要代码在 `proposals/improvement3/`；来源入口 `tools/run_improvement3.py`；目标入口 `tools/transfer_improvement3.py` 与 `tools/metrics_improvement3.py`。
 
-训练臂：本分支无全局参数训练。
+训练臂：stat_pair, stat_temporal, stat_typed。
 
 | Research Insight Card | 内容 |
 |---|---|
-| Problem | 节点幅度可能不能分辨传感器观测故障、过程扰动与边改变；原关系评测含case区分成分。 |
-| Evidence | 旧I11关系AP59.31/条件Top142.45仅是已探索来源32系统。外部线性代理提示边覆盖可能有效，但未证明对当前神经模型有效。 |
-| Failure Mechanism | 沿父贡献方向累积的残差可能呈现不同故障签名；度数、窗口长度、整体能量也可能解释提升。 |
-| Key Insight | 在同一个正常预测下分开测量节点偏差、方向对齐和时间持续性，才有机会识别有用的结构证据。 |
-| Novel Mechanism | 精确提取神经父块贡献，配套尾随多尺度、结构签名、同窗口节点/时间错配边/degree-only定位控制。 |
-| Closest Prior Work | C04r、CIRCA、Chen–Liu；结构残差和时间扫描成熟，不把基本算子称新颖。 |
-| Falsifiable Prediction | 真边证据应超过同窗口节点和时间错配边，并在未知起点/新系统保留；反之撤回方向性解释。 |
-| Minimal Experiment | 64训练/16正常校准/32确认系统的冻结前向；I12自身0参数更新，三个故障成因分列。 |
+| Problem | 关系case分类改善不等于找到故障时刻；单一节点最大残差也可能混淆传播与起因。 |
+| Evidence | I11关系改善伴随短故障/长定位下降；外部建议提供边级时间签名假说。 |
+| Failure Mechanism | 跨视图排序可走整条case捷径；不同故障成因对节点及入出边的作用不同。 |
+| Key Insight | 监督实际部署的时间统计，并让根因解释故障产生的联合模式。 |
+| Novel Mechanism | 同容量pair vs pair+within-view；正常NLL0.05正则；独立故障类型/RCA头含无解释类，不回写检测读出。 |
+| Closest Prior Work | C04s私有头、CIRCA、Chen–Liu；故障签名须以跨类型控制验证，不能靠名称拼接。 |
+| Falsifiable Prediction | within-view应改善同视图AP及起点/漏检组合；typed应在相同检测下提高定位，不能仅靠root入度先验。 |
+| Minimal Experiment | 三臂×3seed×真错图；384步、固定最终权重，报告条件Top1及报警后联合成功率。 |
 
 原始权重、数据、逐系统结果不包含在公开仓库。来源数据、上下文闭式估计、额外计算均需披露；无目标反传，TimeRCD不测RCA。

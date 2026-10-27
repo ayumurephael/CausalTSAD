@@ -1,7 +1,11 @@
 {
-  "title": "I12 边结构化残差与未知起点扫描",
-  "branch": "proposal/i12-edge-segment-source-v1",
-  "arms": [],
+  "title": "I15 最终统计量监督与故障签名定位",
+  "branch": "proposal/i15-segment-signature-supervision-v1",
+  "arms": [
+    "stat_pair",
+    "stat_temporal",
+    "stat_typed"
+  ],
   "source_only": true,
   "source_train_systems": 64,
   "calibration_systems": 16,
